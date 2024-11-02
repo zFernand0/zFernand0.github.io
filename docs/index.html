@@ -1,169 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rijo.dev home page" />
+    <link rel="stylesheet" href="css/style.css">
+    <title>Fernando R.C.</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rijo.dev home page">
-  <title>Fernando Rijo Cedeno</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <body>
+    <nav>
+      <a href="#home" class="first-link" onclick="hideMenu()">FRC</a>
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+      <ul class="navbar">
+        <li><a href="#projects" onclick="hideMenu()">Projects</a></li>
+        <li><a href="#interests" onclick="hideMenu()">Interests</a></li>
+        <!-- <li><a href="#about">About</a></li> -->
+        <li><a href="#social" onclick="hideMenu()">Social Media</a></li>
+      </ul>
+    </nav>
+    <section id="home">
+      <h1><p>Meet</p><p>Fernando<p>Rijo Cedeño!</p></p></h1>
+      <div class="social-links">
+        <a
+          href="https://linkedin.com/in/fernandorijocedeno"
+          class="social-media-icons"
+        >
+          <img
+            src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/li.png"
+            alt="LinkedIn"
+            class="social-media-icons"
+          />
+        </a>
+        <a href="https://github.com/zFernand0" class="social-media-icons">
+          <img
+            src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/gh.png"
+            alt="GitHub"
+            class="social-media-icons"
+          />
+        </a>
+        <a href="https://www.instagram.com/rijo0206" class="social-media-icons">
+          <img
+            src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/ig.png"
+            alt="Instagram"
+            class="social-media-icons"
+          />
+        </a>
+        <a href="https://twitter.com/Rijo0206" class="social-media-icons">
+          <img
+            src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/tw.png"
+            alt="Twitter"
+            class="social-media-icons"
+          />
+        </a>
+        <a
+          href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC."
+          class="social-media-icons"
+        >
+          <img
+            src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/ps.png"
+            alt="Link"
+            class="social-media-icons"
+          />
+        </a>
+      </div>
+      <h2>
+        <a href="https://discord.gg/En7u6t8RYt" class="social-links"
+          >Let's chat on Discord!</a
+        >
+      </h2>
+    </section>
+    <section id="projects">
+      <h2>My Projects</h2>
+      <ul>
+        <li><a href="https://rijo.dev/fcstudio/">FC Studio (rijo.dev)</a></li>
+        <li>
+          <a href="https://github.com/zFernand0">Zowe Contributor on GitHub</a>
+        </li>
+        <li>
+          <a
+            href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC."
+            >Android Apps by FC Studio, LLC. on Google Play</a
+          >
+        </li>
+      </ul>
+    </section>
 
-    body {
-      font-family: 'Lucida Sans Unicode', sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
-    }
-
-    a {
-      text-decoration: none;
-      color:#4b94e7bc
-    }
-
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: linear-gradient(270deg, magenta, green);
-    }
-
-    h1 {
-      font-size: 5rem;
-      color: #fff;
-    }
-
-    h2 {
-      font-size: 2rem;
-    }
+    <section id="interests">
+      <h2>My Interests</h2>
+      <ul>
+        <li>Application Development</li>
+        <li>Problem Solving</li>
+        <li>Home Network</li>
+        <li>Machine Learning</li>
+        <li>Photography</li>
+        <li>Gaming</li>
+      </ul>
+    </section>
 
 
-    .social-links {
-      margin: 20px 0;
-    }
+    <section id="social">
+      <h2>Social Media</h2>
+      <ul>
+        <li>
+          <a href="https://linkedin.com/in/fernandorijocedeno">LinkedIn</a>
+        </li>
+        <li><a href="https://github.com/zFernand0">GitHub</a></li>
+        <li><a href="https://www.instagram.com/rijo0206/">Instagram</a></li>
+        <li><a href="https://twitter.com/Rijo0206">X / Twitter</a></li>
+        <li>
+          <a
+            href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC."
+            >Google Play Store</a
+          >
+        </li>
+        <li><a href="https://www.facebook.com/Fernando.Rijo">Facebook</a></li>
+        <li><a href="https://www.twitch.tv/rijo0206">Twitch</a></li>
+      </ul>
+    </section>
 
-    .social-links a {
-      margin: 0 10px;
-    }
+    <footer>
+      <p>© 2024 Fernando Rijo Cedeno. All Rights Reserved.</p>
+    </footer>
 
-    .social-media-icons {
-      width: 32px;
-      height: 32px;
-    }
-
-    .social-links a:hover {
-      opacity: 0.8;
-    }
-
-    section {
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #c9d1d9;
-    }
-
-    section ul {
-      list-style-type: none;
-      font-size: 1.2rem;
-      color: #8b949e;
-    }
-
-    section ul li {
-      margin-bottom: 10px;
-    }
-
-    footer {
-      padding: 20px;
-      text-align: center;
-      background-color: #161b22;
-      color: #8b949e;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <h1>Rijo.dev</h1>
-    <div class="social-links">
-      <a href="https://linkedin.com/in/fernandorijocedeno" class="social-media-icons">
-        <img
-          src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/li.png"
-          alt="LinkedIn" class="social-media-icons">
-      </a>
-      <a href="https://github.com/zFernand0" class="social-media-icons">
-        <img
-          src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/gh.png"
-          alt="GitHub" class="social-media-icons">
-      </a>
-      <a href="https://www.instagram.com/rijo0206" class="social-media-icons">
-        <img
-          src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/ig.png"
-          alt="Instagram" class="social-media-icons">
-      </a>
-      <a href="https://twitter.com/Rijo0206" class="social-media-icons">
-        <img
-          src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/tw.png"
-          alt="Twitter" class="social-media-icons">
-      </a>
-      <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="social-media-icons">
-        <img
-          src="https://raw.githubusercontent.com/zFernand0/zFernand0.github.io/806658a7fc94ed491555c4a832fde040915b62af/docs/img/ps.png"
-          alt="Link" class="social-media-icons">
-      </a>
-    </div>
-    <h2><a href="https://discord.gg/En7u6t8RYt" class="social-links">Join our discord!</a></h2>
-  </header>
-
-  <section>
-    <h2>My Interests</h2>
-    <ul>
-      <li>Application Development</li>
-      <li>Problem Solving</li>
-      <li>Home Network</li>
-      <li>Machine Learning</li>
-      <li>Photography</li>
-      <li>Gaming</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>My Projects</h2>
-    <ul>
-      <li><a href="https://rijo.dev/fcstudio/">FC Studio (rijo.dev)</a></li>
-      <li><a href="https://github.com/zFernand0">Zowe Contributor on GitHub</a></li>
-      <li><a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC.">Android Apps by FC Studio, LLC. on
-          Google Play</a></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Social Media</h2>
-    <ul>
-      <li><a href="https://linkedin.com/in/fernandorijocedeno">LinkedIn</a></li>
-      <li><a href="https://github.com/zFernand0">GitHub</a></li>
-      <li><a href="https://www.instagram.com/rijo0206/">Instagram</a></li>
-      <li><a href="https://twitter.com/Rijo0206">X / Twitter</a></li>
-      <li><a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC.">Google Play Store</a></li>
-      <li><a href="https://www.facebook.com/Fernando.Rijo">Facebook</a></li>
-      <li><a href="https://www.twitch.tv/rijo0206">Twitch</a></li>
-    </ul>
-  </section>
-
-  <footer>
-    <p>© 2024 Fernando Rijo Cedeno. All Rights Reserved.</p>
-  </footer>
-
-</body>
-
+    <script src="js/main.js"></script>
+  </body>
 </html>
