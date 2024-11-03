@@ -43,20 +43,24 @@ a {
 section#home {
   height: 100vh;
   display: flex;
+  background-image: url('../img/fernando.png'), var(--header-bg); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-width: 100vh;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   text-align: center;
-  background: var(--header-bg);
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
   color: #fff;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .social-links {
