@@ -29,6 +29,7 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  width: fit-content;
 }
 
 html {
@@ -41,6 +42,7 @@ a {
 }
 
 section#home {
+  position: relative;
   height: 100vh;
   display: flex;
   background-image: url('../img/fernando.png'), var(--header-bg); 
@@ -50,8 +52,22 @@ section#home {
   min-width: 100vh;
   flex-direction: column;
   align-items: center;
+  color: #c9d1d9;
   justify-content: end;
   text-align: center;
+  z-index: 1;
+}
+
+/* Add the overlay with opacity */
+section#home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: -1;
 }
 
 h1 {
@@ -181,5 +197,92 @@ nav {
   /* Show navbar links when menu is toggled */
   .navbar.show {
     display: flex;
+  }
+}
+
+/* Mobile L (425px) */
+@media (max-width: 425px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  section ul {
+    font-size: 0.9rem;
+  }
+
+  .social-media-icons {
+    width: 18px;
+    height: 18px;
+  }
+
+  .navbar li a {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+
+  footer {
+    font-size: 0.75rem;
+  }
+}
+
+/* Mobile M (375px) */
+@media (max-width: 375px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  section ul {
+    font-size: 0.85rem;
+  }
+
+  .social-media-icons {
+    width: 16px;
+    height: 16px;
+  }
+
+  .navbar li a {
+    font-size: 0.75rem;
+    padding: 4px 7px;
+  }
+
+  footer {
+    font-size: 0.7rem;
+  }
+}
+
+/* Mobile S (325px) */
+@media (max-width: 325px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  section ul {
+    font-size: 0.8rem;
+  }
+
+  .social-media-icons {
+    width: 14px;
+    height: 14px;
+  }
+
+  .navbar li a {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+
+  footer {
+    font-size: 0.65rem;
   }
 }
