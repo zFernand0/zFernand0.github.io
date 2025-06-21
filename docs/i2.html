@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Fernando R.C. home page" />
+    <title>Fernando R.C.</title>
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for 'Raleway' font -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+      /* Custom CSS for the Raleway font and smooth transitions */
+      body {
+        font-family: 'Raleway', sans-serif;
+        /* Apply custom background and text colors using CSS variables defined below */
+        background-color: var(--background-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+      }
+
+      /* Ensure smooth transitions for theme changes (reiterated for clarity) */
+      .transition-colors {
+        transition-property: background-color, color;
+        transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Additional styles for responsive navigation menu on small screens */
+      .navbar.open {
+        display: flex;
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Default Theme (Dark Mode) - Applied when html has 'dark' class */
+      html.dark {
+        --background-color: #0d1117;
+        --text-color: #c9d1d9;
+        --link-color: #4b94e7bc; /* Keep original alpha for hover effect consistency */
+        --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
+        --footer-nav-bg: #161b22;
+        --text-color-on-hero: #fff; /* White text for h1 on hero section in dark mode */
+      }
+
+      /* Light Theme - Applied when html has 'light' class */
+      html.light {
+        --background-color: #f5f5f5;
+        --text-color: #0d1117;
+        --link-color: #0066cc;
+        --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
+        --footer-nav-bg: #eaeaea;
+        --text-color-on-hero: #0d1117; /* Dark text for h1 on hero section in light mode, adjust as needed */
+      }
+
+      /* Hero section styling with background image and gradient overlay */
+      #home {
+        position: relative;
+        height: 100vh; /* Make it take the full viewport height */
+        display: flex;
+        background-image: url('./img/fernando.png'), var(--header-bg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover; /* Cover the entire section */
+        flex-direction: column;
+        align-items: center;
+        justify-content: end; /* Align content to the bottom */
+        text-align: center;
+        z-index: 1; /* Ensure content is above the overlay */
+        padding-bottom: 5rem; /* Add padding at bottom to lift content from edge */
+        color: var(--text-color-on-hero); /* Text color specifically for hero section's h1 */
+      }
+
+      /* Add the overlay with opacity for the hero section */
+      #home::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+        z-index: -1; /* Place behind the content */
+      }
+
+      /* Navbar and Footer background colors from CSS variables */
+      nav, footer {
+        background-color: var(--footer-nav-bg);
+      }
+
+      /* Link colors from CSS variables */
+      a {
+        color: var(--link-color);
+      }
+
+      /* Navbar link colors and hover effects */
+      nav .first-link, nav .menu-icon, .navbar li a {
+        color: var(--text-color); /* Default text color for nav items */
+      }
+
+      .navbar li a:hover {
+        background-color: var(--link-color); /* Hover background color same as link color */
+        color: var(--background-color); /* Text color changes to background color on hover */
+        border-radius: 4px; /* Maintain rounded corners on hover */
+      }
+
+      /* Override Tailwind's default H1 color if needed for the hero section */
+      #home h1 {
+        color: var(--text-color-on-hero); /* Use specific hero text color */
+      }
+      #home p {
+        color: var(--text-color-on-hero); /* Use specific hero text color for paragraph */
+      }
+      /* Ensure other section headings use the general text color */
+      section:not(#home) h2 {
+        color: var(--text-color);
+      }
+    </style>
+  </head>
+  <body class="transition-colors">
+    <!--
+      Navigation bar:
+      - Fixed to the top, full width, centered content
+      - Responsive layout with flexbox
+      - Applied custom background color via CSS variable
+      - Rounded bottom corners and shadow for a modern look
+    -->
+    <nav class="p-4 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
+      <!-- "FRC" brand link: Large, bold, with hover effects -->
+      <a href="#home" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="hideMenu()">FRC</a>
+
+      <!-- Menu icon (hamburger) for mobile devices:
+           - Visible only on small screens (hidden on md and larger)
+           - Toggles the navigation menu visibility
+      -->
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="toggleMenu()">
+        ☰
+      </div>
+
+      <!-- Navigation links:
+           - Hidden by default on small screens, shown as block on medium screens and up
+           - Flex column on mobile when open, flex row on desktop
+           - Space between items
+      -->
+      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
+                 absolute top-16 left-0 w-full shadow-lg p-4
+                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+                 style="background-color: var(--footer-nav-bg);">
+        <li><a href="#projects" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Projects</a></li>
+        <li><a href="#interests" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Interests</a></li>
+        <li><a href="#social" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Social Media</a></li>
+        <!-- Theme toggle link: Calls toggleTheme function -->
+        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
+      </ul>
+    </nav>
+
+    <!--
+      Home section:
+      - Custom styling for background image, overlay, and text colors
+      - Padding for spacing
+      - Top padding to clear the fixed navigation bar
+    -->
+    <section id="home" class="pt-20">
+      <!-- Main heading: Large, bold, responsive font size, distinct color -->
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Meet Fernando Rijo&nbsp;Cedeño!</h1>
+      <!-- Introduction paragraph: Readable width, relaxed line height -->
+      <p class="text-lg md:text-xl max-w-2xl leading-relaxed mb-8">
+        Fernando Rijo Cedeno is a passionate Node.js developer with a wealth of experience in creating scalable
+        applications. His journey is enriched by diverse travel experiences, bringing a unique perspective to his work.
+      </p>
+      <!-- Social links:
+           - Flex container for horizontal alignment
+           - Wraps items to new line on smaller screens
+           - Gap for spacing between icons
+      -->
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://linkedin.com/in/fernandorijocedeno" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=LI';"/>
+        </a>
+        <a href="https://github.com/zFernand0" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=GH';"/>
+        </a>
+        <a href="https://www.instagram.com/rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=IG';"/>
+        </a>
+        <a href="https://twitter.com/Rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=X';"/>
+        </a>
+        <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=PS';"/>
+        </a>
+        <a href="https://discord.gg/En7u6t8RYt" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=DI';"/>
+        </a>
+      </div>
+    </section>
+
+    <!-- Projects section: Similar layout to home, with specific heading color -->
+    <section id="projects" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Projects</h2>
+      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
+        <li><a href="https://rijo.dev/fcstudio/" class="hover:underline">FC Studio (rijo.dev)</a></li>
+        <li>
+          <a href="https://github.com/zFernand0" class="hover:underline">Zowe Contributor on GitHub</a>
+        </li>
+        <li>
+          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Android Apps by FC Studio, LLC. on
+            Google Play</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Interests section: Simple list, similar layout -->
+    <section id="interests" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Interests</h2>
+      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
+        <li class="text-lg md:text-xl">Application Development</li>
+        <li class="text-lg md:text-xl">Problem Solving</li>
+        <li class="text-lg md:text-xl">Home Network</li>
+        <li class="text-lg md:text-xl">Machine Learning</li>
+        <li class="text-lg md:text-xl">Photography</li>
+        <li class="text-lg md:text-xl">Gaming</li>
+      </ul>
+    </section>
+
+    <!-- Social Media section: List of links, similar layout -->
+    <section id="social" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">Social Media</h2>
+      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
+        <li>
+          <a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a>
+        </li>
+        <li><a href="https://github.com/zFernand0" class="hover:underline">GitHub</a></li>
+        <li><a href="https://www.instagram.com/rijo0206/" class="hover:underline">Instagram</a></li>
+        <li><a href="https://twitter.com/Rijo0206" class="hover:underline">X / Twitter</a></li>
+        <li>
+          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Google Play Store</a>
+        </li>
+        <li><a href="https://www.facebook.com/Fernando.Rijo" class="hover:underline">Facebook</a></li>
+        <li><a href="https://www.twitch.tv/rijo0206" class="hover:underline">Twitch</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer: Background from CSS variable, centered text, rounded top corners -->
+    <footer class="p-6 text-center mt-12 rounded-t-lg shadow-inner">
+      <p class="text-sm">&copy; 2024 Fernando Rijo Cedeno. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript for menu and theme toggling -->
+    <script>
+      const navbar = document.querySelector('.navbar');
+      const htmlElement = document.documentElement;
+
+      // Function to toggle the mobile navigation menu
+      function toggleMenu() {
+        navbar.classList.toggle('hidden');
+        navbar.classList.toggle('open'); // Add 'open' class for styling when open
+      }
+
+      // Function to hide the mobile navigation menu (e.g., when a link is clicked)
+      function hideMenu() {
+        if (navbar.classList.contains('open')) {
+          navbar.classList.add('hidden');
+          navbar.classList.remove('open');
+        }
+      }
+
+      // Function to toggle between light and dark themes
+      function toggleTheme() {
+        if (htmlElement.classList.contains('dark')) {
+          // If currently dark, switch to light
+          htmlElement.classList.remove('dark');
+          htmlElement.classList.add('light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          // If currently light, switch to dark
+          htmlElement.classList.remove('light');
+          htmlElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+
+      // Initialize theme on page load based on local storage or system preference
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          htmlElement.classList.add(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          // If no saved theme, check system preference
+          htmlElement.classList.add('dark');
+        } else {
+          htmlElement.classList.add('light');
+        }
+      });
+
+      // Add a resize event listener to hide the menu if screen size increases
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) { // Tailwind's 'md' breakpoint is 768px
+          hideMenu();
+        }
+      });
+    </script>
+  </body>
+</html>
