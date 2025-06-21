@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Fernando R.C. home page" />
-    <title>Fernando R.C.</title>
+    <meta name="description" content="Fernando R.C.'s Blog - Exploring various topics in tech, lifestyle, and more." />
+    <title>Fernando R.C.'s Blog</title>
     <!-- Tailwind CSS CDN for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for 'Raleway' font -->
@@ -44,6 +44,8 @@
         --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
         --footer-nav-bg: #161b22;
         --text-color-on-hero: #fff; /* White text for h1 on hero section in dark mode */
+        --card-bg: #161b22; /* Dark background for blog topic cards */
+        --card-text: #c9d1d9; /* Light text for blog topic cards */
       }
 
       /* Light Theme - Applied when html has 'light' class */
@@ -54,6 +56,8 @@
         --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
         --footer-nav-bg: #eaeaea;
         --text-color-on-hero: #0d1117; /* Dark text for h1 on hero section in light mode, adjust as needed */
+        --card-bg: #ffffff; /* Light background for blog topic cards */
+        --card-text: #0d1117; /* Dark text for blog topic cards */
       }
 
       /* Hero section styling with background image and gradient overlay */
@@ -61,16 +65,15 @@
         position: relative;
         height: 100vh; /* Make it take the full viewport height */
         display: flex;
-        background-image: url('./img/fernando.png'), var(--header-bg);
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover; /* Cover the entire section */
         flex-direction: column;
         align-items: center;
-        justify-content: end; /* Align content to the bottom */
+        justify-content: center; /* Center content vertically */
         text-align: center;
         z-index: 1; /* Ensure content is above the overlay */
-        padding-bottom: 5rem; /* Add padding at bottom to lift content from edge */
+        padding: 2rem; /* Add padding */
         color: var(--text-color-on-hero); /* Text color specifically for hero section's h1 */
       }
 
@@ -107,16 +110,15 @@
         border-radius: 4px; /* Maintain rounded corners on hover */
       }
 
-      /* Override Tailwind's default H1 color if needed for the hero section */
-      #home h1 {
-        color: var(--text-color-on-hero); /* Use specific hero text color */
-      }
-      #home p {
-        color: var(--text-color-on-hero); /* Use specific hero text color for paragraph */
-      }
-      /* Ensure other section headings use the general text color */
-      section:not(#home) h2 {
+      /* Ensure section headings use the general text color */
+      section h2 {
         color: var(--text-color);
+      }
+
+      /* Styles for blog topic cards */
+      .blog-card {
+        background-color: var(--card-bg);
+        color: var(--card-text);
       }
     </style>
   </head>
@@ -129,8 +131,8 @@
       - Rounded bottom corners and shadow for a modern look
     -->
     <nav class="p-4 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
-      <!-- "FRC" brand link: Large, bold, with hover effects -->
-      <a href="#home" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="hideMenu()">FRC</a>
+      <!-- "FRC Blog" brand link: Large, bold, with hover effects -->
+      <a href="#home" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="hideMenu()">FRC Blog</a>
 
       <!-- Menu icon (hamburger) for mobile devices:
            - Visible only on small screens (hidden on md and larger)
@@ -149,96 +151,118 @@
                  absolute top-16 left-0 w-full shadow-lg p-4
                  flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
                  style="background-color: var(--footer-nav-bg);">
-        <li><a href="#projects" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Projects</a></li>
-        <li><a href="#interests" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Interests</a></li>
-        <li><a href="#social" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Social Media</a></li>
+        <li><a href="#topics" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Topics</a></li>
+        <li><a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">About</a></li>
+        <li><a href="#contact" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Contact</a></li>
         <!-- Theme toggle link: Calls toggleTheme function -->
         <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
       </ul>
     </nav>
 
     <!--
-      Home section:
+      Home (Hero) section:
       - Custom styling for background image, overlay, and text colors
       - Padding for spacing
       - Top padding to clear the fixed navigation bar
     -->
     <section id="home" class="pt-20">
       <!-- Main heading: Large, bold, responsive font size, distinct color -->
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Meet Fernando Rijo&nbsp;Cedeño!</h1>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Welcome to My Blog!</h1>
       <!-- Introduction paragraph: Readable width, relaxed line height -->
-      <p class="text-lg md:text-xl max-w-2xl leading-relaxed mb-8">
-        Fernando Rijo Cedeno is a passionate Node.js developer with a wealth of experience in creating scalable
-        applications. His journey is enriched by diverse travel experiences, bringing a unique perspective to his work.
+      <p class="text-lg md:text-xl max-w-3xl leading-relaxed mb-8 drop-shadow-md">
+        Join me as I explore a wide array of topics, from cutting-edge web development and the intricacies of machine learning to practical productivity tips and exciting travel experiences. Get ready for insightful discussions and engaging content!
       </p>
-      <!-- Social links:
-           - Flex container for horizontal alignment
-           - Wraps items to new line on smaller screens
-           - Gap for spacing between icons
-      -->
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="https://linkedin.com/in/fernandorijocedeno" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=LI';"/>
-        </a>
-        <a href="https://github.com/zFernand0" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=GH';"/>
-        </a>
-        <a href="https://www.instagram.com/rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=IG';"/>
-        </a>
-        <a href="https://twitter.com/Rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=X';"/>
-        </a>
-        <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=PS';"/>
-        </a>
-        <a href="https://discord.gg/En7u6t8RYt" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=DI';"/>
-        </a>
+      <!-- Call to action button -->
+      <a href="#topics" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+        Explore Topics
+      </a>
+    </section>
+
+    <!--
+      Topics section:
+      - Grid layout for blog topic cards
+      - Responsive columns based on screen size
+      - Padding and margin for spacing
+    -->
+    <section id="topics" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center">Explore Blog Topics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Blog Topic Card 1: Web Development -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Web Development</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Dive into the world of front-end and back-end development, modern frameworks, and best practices for building scalable web applications.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
+
+        <!-- Blog Topic Card 2: Machine Learning & AI -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Machine Learning & AI</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Unravel the complexities of artificial intelligence, data science, machine learning algorithms, and their real-world applications.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
+
+        <!-- Blog Topic Card 3: Productivity & Habits -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Productivity & Habits</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Discover effective strategies, tools, and habits to boost your productivity, manage your time, and achieve your goals.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
+
+        <!-- Blog Topic Card 4: Travel Experiences -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Travel Experiences</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Embark on a journey through diverse cultures and breathtaking landscapes with my travel stories, tips, and destination guides.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
+
+        <!-- Blog Topic Card 5: Personal Growth -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Personal Growth</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Explore insights on self-improvement, mindset shifts, continuous learning, and building a more fulfilling life.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
+
+        <!-- Blog Topic Card 6: Home Network & IoT -->
+        <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-2xl font-bold mb-3">Home Network & IoT</h3>
+          <p class="text-base leading-relaxed mb-4">
+            Demystify home networking, smart devices, and the Internet of Things with practical guides and project ideas.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
+        </div>
       </div>
     </section>
 
-    <!-- Projects section: Similar layout to home, with specific heading color -->
-    <section id="projects" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Projects</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li><a href="https://rijo.dev/fcstudio/" class="hover:underline">FC Studio (rijo.dev)</a></li>
-        <li>
-          <a href="https://github.com/zFernand0" class="hover:underline">Zowe Contributor on GitHub</a>
-        </li>
-        <li>
-          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Android Apps by FC Studio, LLC. on
-            Google Play</a>
-        </li>
-      </ul>
+    <!-- About Section (Placeholder) -->
+    <section id="about" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">About Me</h2>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+        I'm Fernando Rijo Cedeño, a passionate Node.js developer with a diverse background and a love for continuous learning. This blog is where I share my thoughts, experiences, and expertise across various domains.
+      </p>
     </section>
 
-    <!-- Interests section: Simple list, similar layout -->
-    <section id="interests" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Interests</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li class="text-lg md:text-xl">Application Development</li>
-        <li class="text-lg md:text-xl">Problem Solving</li>
-        <li class="text-lg md:text-xl">Home Network</li>
-        <li class="text-lg md:text-xl">Machine Learning</li>
-        <li class="text-lg md:text-xl">Photography</li>
-        <li class="text-lg md:text-xl">Gaming</li>
-      </ul>
-    </section>
-
-    <!-- Social Media section: List of links, similar layout -->
-    <section id="social" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">Social Media</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li>
-          <a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a>
-        </li>
+    <!-- Contact Section (Placeholder) -->
+    <section id="contact" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">Get in Touch</h2>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
+        Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.
+      </p>
+      <!-- Simple social links as text, consistent with your previous request's footer links -->
+      <ul class="list-none flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg">
+        <li><a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a></li>
         <li><a href="https://github.com/zFernand0" class="hover:underline">GitHub</a></li>
         <li><a href="https://www.instagram.com/rijo0206/" class="hover:underline">Instagram</a></li>
         <li><a href="https://twitter.com/Rijo0206" class="hover:underline">X / Twitter</a></li>
-        <li>
-          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Google Play Store</a>
-        </li>
         <li><a href="https://www.facebook.com/Fernando.Rijo" class="hover:underline">Facebook</a></li>
         <li><a href="https://www.twitch.tv/rijo0206" class="hover:underline">Twitch</a></li>
       </ul>
@@ -246,7 +270,7 @@
 
     <!-- Footer: Background from CSS variable, centered text, rounded top corners -->
     <footer class="p-6 text-center mt-12 rounded-t-lg shadow-inner">
-      <p class="text-sm">&copy; 2024 Fernando Rijo Cedeno. All Rights Reserved.</p>
+      <p class="text-sm">&copy; 2025 Fernando Rijo Cedeño. All Rights Reserved.</p>
     </footer>
 
     <!-- JavaScript for menu and theme toggling -->
