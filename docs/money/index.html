@@ -3,300 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Financial Jumpstart Pilot Program - Infographic</title>
+    <title>Financial Freedom Coaching - Your Path to a Desired Financial Future</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            height: 320px;
-            max-height: 320px;
-            width: 100%;
-            max-width: 320px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-                max-height: 350px;
-                max-width: 350px;
-            }
-        }
-        .timeline-container::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: #118AB2;
-            opacity: 0.3;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+            color: #073B4C; /* Dark Teal/Blue from Energetic & Playful palette */
         }
     </style>
 </head>
-<body class="bg-slate-50" style="color: #073B4C;">
+<body class="bg-slate-50">
 
-    <header class="text-center py-12 px-4 bg-white shadow-sm">
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Your Financial Jumpstart</h1>
-        <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">An exclusive pilot program designed to give you clarity and momentum towards your financial goals.</p>
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4 px-6 md:px-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold" style="color: #118AB2;">Financial Freedom</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#hero" class="text-slate-600 hover:text-slate-900 transition-colors duration-200">Home</a></li>
+                    <li><a href="#approach" class="text-slate-600 hover:text-slate-900 transition-colors duration-200">Our Approach</a></li>
+                    <li><a href="#what-we-do" class="text-slate-600 hover:text-slate-900 transition-colors duration-200">Services</a></li>
+                    <li><a href="#about" class="text-slate-600 hover:text-slate-900 transition-colors duration-200">About Us</a></li>
+                    <li><a href="#contact" class="text-slate-600 hover:text-slate-900 transition-colors duration-200">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-        <section id="partnership" class="mb-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold">A Mutually Beneficial Partnership</h2>
-                <p class="mt-2 text-slate-600 max-w-2xl mx-auto">This program is built on a simple, powerful model of shared commitment.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center border-t-4 border-[#06D6A0]">
-                    <h3 class="text-2xl font-bold mb-2">Your Commitment</h3>
-                    <p class="text-slate-600 mb-4">A symbolic deposit signifies your dedication to active participation and completing the work.</p>
-                    <div class="my-6">
-                        <span class="text-6xl font-extrabold" style="color: #06D6A0;">$75</span>
-                        <span class="block text-slate-500 mt-1">One-Time Non-Refundable Deposit</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-8 text-center border-t-4 border-[#FFD166]">
-                    <h3 class="text-2xl font-bold mb-2">Our Commitment</h3>
-                    <p class="text-slate-600 mb-4">You receive our full dedication and personalized coaching, with your success as our top priority.</p>
-                    <div class="my-6">
-                        <span class="text-6xl font-extrabold" style="color: #FFD166;">5</span>
-                        <span class="block text-slate-500 mt-1">Exclusive Spots in this Pilot</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="program-core" class="mb-16 bg-white rounded-xl shadow-lg p-8 md:p-12">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left">
-                    <h2 class="text-3xl font-bold">Program at a Glance</h2>
-                    <p class="mt-2 text-slate-600">The program is structured to deliver tangible results in a focused timeframe. Here are the core components.</p>
-                    <div class="mt-8 space-y-4 text-left max-w-md mx-auto lg:mx-0">
-                        <div class="flex items-center bg-slate-100 rounded-lg p-4">
-                            <span class="text-3xl mr-4" style="color: #118AB2;">🗓️</span>
-                            <div>
-                                <h4 class="font-bold text-lg">4 Focused Sessions</h4>
-                                <p class="text-slate-600 text-sm">Personalized 60-minute coaching calls via Google Meet.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center bg-slate-100 rounded-lg p-4">
-                           <span class="text-3xl mr-4" style="color: #118AB2;">⏳</span>
-                            <div>
-                                <h4 class="font-bold text-lg">2-3 Month Duration</h4>
-                                <p class="text-slate-600 text-sm">Spaced to allow time for implementing actions between sessions.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-center mb-4">Core Topic Distribution</h3>
-                    <div class="chart-container">
-                        <canvas id="topicsChart"></canvas>
-                    </div>
-                    <p class="text-center text-sm text-slate-500 mt-4">A balanced approach covering the essential pillars of personal finance.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="journey" class="mb-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold">Your 4-Session Journey</h2>
-                <p class="mt-2 text-slate-600 max-w-2xl mx-auto">A step-by-step path from defining your vision to building lasting financial habits.</p>
-            </div>
-            <div class="relative timeline-container max-w-3xl mx-auto py-8">
-                <div class="mb-8 flex justify-between items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-10 flex items-center order-1 bg-[#118AB2] shadow-xl w-12 h-12 rounded-full">
-                        <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
-                    </div>
-                    <div class="order-1 bg-white rounded-xl shadow-lg w-5/12 px-6 py-4 border-l-4 border-[#118AB2]">
-                        <h3 class="font-bold text-lg mb-1">Vision & Assessment</h3>
-                        <p class="text-sm leading-snug tracking-tight text-slate-600">Define your ideal financial life and assess your current financial snapshot.</p>
-                    </div>
-                </div>
-                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-10 flex items-center order-1 bg-[#06D6A0] shadow-xl w-12 h-12 rounded-full">
-                        <h1 class="mx-auto font-semibold text-lg text-white">2</h1>
-                    </div>
-                    <div class="order-1 bg-white rounded-xl shadow-lg w-5/12 px-6 py-4 border-r-4 border-[#06D6A0]">
-                        <h3 class="font-bold text-lg mb-1">Spending & Debt Strategy</h3>
-                        <p class="text-sm leading-snug tracking-tight text-slate-600">Create a purposeful spending plan and choose a debt payoff method.</p>
-                    </div>
-                </div>
-                <div class="mb-8 flex justify-between items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-10 flex items-center order-1 bg-[#FFD166] shadow-xl w-12 h-12 rounded-full">
-                        <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
-                    </div>
-                    <div class="order-1 bg-white rounded-xl shadow-lg w-5/12 px-6 py-4 border-l-4 border-[#FFD166]">
-                        <h3 class="font-bold text-lg mb-1">Investing & Optimization</h3>
-                        <p class="text-sm leading-snug tracking-tight text-slate-600">Learn investing basics and find quick wins to optimize your finances.</p>
-                    </div>
-                </div>
-                <div class="flex justify-between flex-row-reverse items-center w-full">
-                    <div class="order-1 w-5/12"></div>
-                    <div class="z-10 flex items-center order-1 bg-[#FF6B6B] shadow-xl w-12 h-12 rounded-full">
-                        <h1 class="mx-auto font-semibold text-lg text-white">4</h1>
-                    </div>
-                    <div class="order-1 bg-white rounded-xl shadow-lg w-5/12 px-6 py-4 border-r-4 border-[#FF6B6B]">
-                        <h3 class="font-bold text-lg mb-1">Accountability & Feedback</h3>
-                        <p class="text-sm leading-snug tracking-tight text-slate-600">Solidify your ongoing plan and provide feedback for our program.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="outcomes" class="mb-16">
-             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold">What You Will Achieve</h2>
-                <p class="mt-2 text-slate-600 max-w-2xl mx-auto">By the end of this program, you will have gained clarity, control, and confidence.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">🎯</span>
-                    <div>
-                        <h3 class="font-bold">A Clear Financial Vision</h3>
-                        <p class="text-slate-600 text-sm">Align your money with your personal values and life goals.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">💸</span>
-                    <div>
-                        <h3 class="font-bold">Mastery Over Spending</h3>
-                        <p class="text-slate-600 text-sm">Create a purposeful plan that prioritizes what matters to you.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">💳</span>
-                    <div>
-                        <h3 class="font-bold">An Actionable Debt Plan</h3>
-                        <p class="text-slate-600 text-sm">Develop a clear strategy to efficiently tackle and eliminate debt.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">📈</span>
-                    <div>
-                        <h3 class="font-bold">Simple Investing Foundation</h3>
-                        <p class="text-slate-600 text-sm">Take your first automated steps toward building long-term wealth.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">⚙️</span>
-                    <div>
-                        <h3 class="font-bold">Sustainable Financial Habits</h3>
-                        <p class="text-slate-600 text-sm">Implement automation to make managing money effortless.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-lg p-6 flex items-start space-x-4">
-                    <span class="text-3xl mt-1">💡</span>
-                    <div>
-                        <h3 class="font-bold">Confidence and Control</h3>
-                        <p class="text-slate-600 text-sm">Feel empowered and in control of your financial journey.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-white border-t mt-12">
-        <div class="container mx-auto py-8 px-6 text-center">
-            <h2 class="text-2xl font-bold">Ready to Unlock Your Financial Potential?</h2>
-            <p class="text-slate-600 mt-2 mb-4">Let's build your desired financial future together. Reach out to get started.</p>
-            <a href="mailto:fernando@rijo.dev" class="inline-block bg-[#118AB2] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#073B4C] transition-colors">
-                Contact Us at fernando@rijo.dev
+    <!-- Hero Section -->
+    <section id="hero" class="bg-gradient-to-br from-[#118AB2] to-[#06D6A0] text-white py-24 px-6 md:px-8 text-center">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">Unlock Your Financial Potential</h1>
+            <p class="mt-6 text-xl md:text-2xl font-light">Personalized coaching to build your desired financial future with clarity and confidence.</p>
+            <a href="#pilot-program" class="mt-10 inline-block bg-[#FFD166] text-[#073B4C] font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#FF6B6B] hover:text-white transition-all duration-300 transform hover:scale-105">
+                Discover Our Pilot Program
             </a>
-            <p class="text-sm text-slate-400 mt-8">Presented by Candy and Fernando</p>
+        </div>
+    </section>
+
+    <!-- Our Approach Section -->
+    <section id="approach" class="py-16 px-6 md:px-8 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Personalized Approach</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-slate-50 rounded-xl shadow-md p-8 text-center flex flex-col items-center">
+                    <span class="text-5xl mb-4" style="color: #FFD166;">🤝</span>
+                    <h3 class="text-xl font-bold mb-2">Partnership, Not Prescription</h3>
+                    <p class="text-slate-600">We work *with* you to create actionable plans tailored to your unique goals, fostering a collaborative environment for lasting change.</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl shadow-md p-8 text-center flex flex-col items-center">
+                    <span class="text-5xl mb-4" style="color: #06D6A0;">✨</span>
+                    <h3 class="text-xl font-bold mb-2">Clarity & Confidence</h3>
+                    <p class="text-slate-600">Break down complex financial concepts into simple, understandable steps, empowering you to make informed decisions.</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl shadow-md p-8 text-center flex flex-col items-center">
+                    <span class="text-5xl mb-4" style="color: #118AB2;">🌱</span>
+                    <h3 class="text-xl font-bold mb-2">Sustainable Habits</h3>
+                    <p class="text-slate-600">Focus on building practical, automated systems that make managing your money effortless and consistent over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Help With Section -->
+    <section id="what-we-do" class="py-16 px-6 md:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What We Help You Achieve</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#FF6B6B]">
+                    <h3 class="text-xl font-bold mb-2">Define Your Financial Vision</h3>
+                    <p class="text-slate-600">Gain profound clarity on what financial well-being truly means for *you*, aligning your money with your deepest values and aspirations.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#118AB2]">
+                    <h3 class="text-xl font-bold mb-2">Master Your Spending</h3>
+                    <p class="text-slate-600">Develop a purposeful spending plan that effectively supports your priorities, allowing you to direct resources towards what genuinely matters.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#06D6A0]">
+                    <h3 class="text-xl font-bold mb-2">Conquer Debt Strategically</h3>
+                    <p class="text-slate-600">Craft a clear, actionable strategy to tackle and systematically reduce your debts, moving towards financial freedom.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#FFD166]">
+                    <h3 class="text-xl font-bold mb-2">Begin Investing Simply</h3>
+                    <p class="text-slate-600">Understand the fundamentals of accessible, low-cost investing and take confident first steps towards building long-term wealth.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#FF6B6B]">
+                    <h3 class="text-xl font-bold mb-2">Build Sustainable Habits</h3>
+                    <p class="text-slate-600">Implement automation and consistent routines to make managing your money effortless, consistent, and less stressful.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#118AB2]">
+                    <h3 class="text-xl font-bold mb-2">Gain Control & Confidence</h3>
+                    <p class="text-slate-600">Feel empowered and in full control of your financial future, regardless of your starting point.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 px-6 md:px-8 bg-slate-100">
+        <div class="container mx-auto text-center max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Meet Your Coaches</h2>
+            <p class="text-lg text-slate-700 leading-relaxed">
+                We are Candy S.S. and Fernando R.C., and we are passionate about empowering individuals to achieve their financial aspirations.
+                With a commitment to personalized guidance, we believe that everyone deserves the tools and knowledge to build a secure and prosperous future.
+                Our approach is rooted in clarity, practicality, and building sustainable habits that truly transform your relationship with money.
+            </p>
+        </div>
+    </section>
+
+    <!-- Call to Action Section (Pilot Program) -->
+    <section id="pilot-program" class="bg-gradient-to-br from-[#06D6A0] to-[#118AB2] text-white py-20 px-6 md:px-8 text-center">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="text-3xl md:text-4xl font-bold leading-tight">Ready for a Financial Jumpstart?</h2>
+            <p class="mt-4 text-xl font-light">Our exclusive pilot program is designed to give you direct, high-touch support as you define and build your desired financial future.</p>
+            <p class="mt-2 text-lg italic opacity-90">Limited spots available for personalized guidance.</p>
+            <a href="mailto:fernando@rijo.dev" class="mt-8 inline-block bg-[#FFD166] text-[#073B4C] font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#FF6B6B] hover:text-white transition-all duration-300 transform hover:scale-105">
+                Join the Pilot Program
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#073B4C] text-white py-8 px-6 md:px-8">
+        <div class="container mx-auto text-center">
+            <p class="text-lg mb-2">Questions? We're here to help.</p>
+            <a href="mailto:fernando@rijo.dev" class="text-white hover:text-[#06D6A0] transition-colors duration-200 text-xl font-semibold">fernando@rijo.dev</a>
+            <p class="mt-4 text-sm text-slate-400">&copy; 2024 Financial Freedom Coaching. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        function wrapText(text, maxLength) {
-            if (typeof text !== 'string' || text.length <= maxLength) {
-                return text;
-            }
-            const words = text.split(' ');
-            const lines = [];
-            let currentLine = '';
-            for (const word of words) {
-                if ((currentLine + word).length > maxLength) {
-                    lines.push(currentLine.trim());
-                    currentLine = '';
-                }
-                currentLine += word + ' ';
-            }
-            lines.push(currentLine.trim());
-            return lines;
-        }
-
-        const ctx = document.getElementById('topicsChart').getContext('2d');
-        const originalLabels = ['Vision & Planning', 'Spending & Debt Strategy', 'Investing & Optimization', 'Habits & Accountability'];
-
-        const chartData = {
-            labels: originalLabels.map(label => wrapText(label, 16)),
-            datasets: [{
-                label: 'Program Focus',
-                data: [25, 30, 25, 20],
-                backgroundColor: [
-                    '#118AB2', 
-                    '#06D6A0',
-                    '#FFD166',
-                    '#FF6B6B'
-                ],
-                borderColor: '#FFFFFF',
-                borderWidth: 4,
-                hoverOffset: 16
-            }]
-        };
-
-        const topicsChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '60%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: {
-                                size: 12,
-                                family: 'Inter'
-                            },
-                            color: '#073B4C',
-                            boxWidth: 15,
-                            padding: 20,
-                            usePointStyle: true,
-                            pointStyle: 'rectRounded'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            title: function(tooltipItems) {
-                                const item = tooltipItems[0];
-                                let label = item.chart.data.labels[item.dataIndex];
-                                if (Array.isArray(label)) {
-                                  return label.join(' ');
-                                } else {
-                                  return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>
