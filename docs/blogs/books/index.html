@@ -94,12 +94,15 @@
                  absolute top-16 left-0 w-full shadow-lg p-4
                  flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
                  style="background-color: var(--footer-nav-bg);">
+        <li><a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">Home</a></li>
+        <li><a href="#latest-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">Latest</a></li>
+        <li><a href="#more-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">More</a></li>
         <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
       </ul>
     </nav>
 
     <!-- Hero Section for Learning & Books -->
-    <section id="hero" class="pt-24 pb-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+    <section id="home" class="pt-24 pb-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
       <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Learning & Books</h1>
       <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
         Deep dives into effective learning techniques, summaries of impactful books, and recommendations for continuous knowledge acquisition.
@@ -107,7 +110,7 @@
     </section>
 
     <!-- Blog Posts List Section -->
-    <section id="blog-posts" class="py-12 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
+    <section id="latest-blogs" class="py-12 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Latest Learning & Book Reviews</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Placeholder Blog Post Card 1 -->
@@ -142,6 +145,32 @@
 
         <!-- Add more blog post cards as needed -->
       </div>
+    </section>
+
+    <section id="more-blogs" class="py-12 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">All Learning & Books Blogs</h2>
+      <ul class="list-disc list-inside text-lg md:text-xl space-y-3 mx-auto max-w-2xl text-left">
+        <li>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Deep Dive into "Atomic Habits": Key Takeaways and Application</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(June 10, 2025)</span>
+        </li>
+        <li>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">The Feynman Technique: Learn Anything Faster</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(May 20, 2025)</span>
+        </li>
+        <li>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">My Top 5 Books for Boosting Creativity</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(April 25, 2025)</span>
+        </li>
+        <li>
+            <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Effective Note-Taking Strategies for Students and Professionals</a>
+            <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(March 12, 2025)</span>
+        </li>
+        <li>
+            <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Beyond the Syllabus: Lifelong Learning in the Digital Age</a>
+            <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(February 18, 2025)</span>
+        </li>
+      </ul>
     </section>
 
     <footer class="p-6 text-center mt-12 rounded-t-lg shadow-inner">
