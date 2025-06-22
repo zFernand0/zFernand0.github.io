@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Fernando R.C.'s Blog - Learning & Books." />
+    <title>Learning & Books - FRC Blog</title>
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for 'Raleway' font -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+      /* Custom CSS for the Raleway font and smooth transitions */
+      body {
+        font-family: 'Raleway', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .transition-colors {
+        transition-property: background-color, color;
+        transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .navbar.open {
+        display: flex;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Theme Variables */
+      html.dark {
+        --background-color: #0d1117;
+        --text-color: #c9d1d9;
+        --link-color: #4b94e7bc;
+        --footer-nav-bg: #161b22;
+        --card-bg: #161b22;
+        --card-text: #c9d1d9;
+      }
+
+      html.light {
+        --background-color: #f5f5f5;
+        --text-color: #0d1117;
+        --link-color: #0066cc;
+        --footer-nav-bg: #eaeaea;
+        --card-bg: #ffffff;
+        --card-text: #0d1117;
+      }
+
+      /* Navbar and Footer background colors from CSS variables */
+      nav, footer {
+        background-color: var(--footer-nav-bg);
+      }
+
+      /* Link colors from CSS variables */
+      a {
+        color: var(--link-color);
+      }
+
+      /* Navbar link colors and hover effects */
+      nav .first-link, nav .menu-icon, .navbar li a {
+        color: var(--text-color);
+      }
+
+      .navbar li a:hover {
+        background-color: var(--link-color);
+        color: var(--background-color);
+        border-radius: 4px;
+      }
+
+      /* Section headings color */
+      section h2 {
+        color: var(--text-color);
+      }
+
+      /* Styles for blog topic cards (if used on these pages) */
+      .blog-post-card {
+        background-color: var(--card-bg);
+        color: var(--card-text);
+      }
+    </style>
+  </head>
+  <body class="transition-colors">
+    <nav class="p-4 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
+      <a href="./" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="hideMenu()">FRC Blog</a>
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="toggleMenu()">
+        ☰
+      </div>
+      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
+                 absolute top-16 left-0 w-full shadow-lg p-4
+                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+                 style="background-color: var(--footer-nav-bg);">
+        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section for Learning & Books -->
+    <section id="hero" class="pt-24 pb-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Learning & Books</h1>
+      <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+        Deep dives into effective learning techniques, summaries of impactful books, and recommendations for continuous knowledge acquisition.
+      </p>
+    </section>
+
+    <!-- Blog Posts List Section -->
+    <section id="blog-posts" class="py-12 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Latest Learning & Book Reviews</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Placeholder Blog Post Card 1 -->
+        <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-xl font-bold mb-2">Atomic Habits: A Summary and Key Takeaways</h3>
+          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: June 12, 2024</p>
+          <p class="text-base leading-relaxed mb-4">
+            Unpacking James Clear's bestseller and how tiny changes can lead to remarkable results.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
+        </div>
+
+        <!-- Placeholder Blog Post Card 2 -->
+        <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-xl font-bold mb-2">Effective Spaced Repetition Techniques for Learning</h3>
+          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: May 30, 2024</p>
+          <p class="text-base leading-relaxed mb-4">
+            Improve your memory retention with these scientifically-backed learning methods.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
+        </div>
+
+        <!-- Placeholder Blog Post Card 3 -->
+        <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-xl font-bold mb-2">My Top 5 Books for Tech Enthusiasts</h3>
+          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: May 10, 2024</p>
+          <p class="text-base leading-relaxed mb-4">
+            A curated list of must-read books for anyone passionate about technology and innovation.
+          </p>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
+        </div>
+
+        <!-- Add more blog post cards as needed -->
+      </div>
+    </section>
+
+    <footer class="p-6 text-center mt-12 rounded-t-lg shadow-inner">
+      <p class="text-sm">&copy; 2024 Fernando Rijo Cedeño. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      const navbar = document.querySelector('.navbar');
+      const htmlElement = document.documentElement;
+      function toggleMenu() {
+        navbar.classList.toggle('hidden');
+        navbar.classList.toggle('open');
+      }
+      function hideMenu() {
+        if (navbar.classList.contains('open')) {
+          navbar.classList.add('hidden');
+          navbar.classList.remove('open');
+        }
+      }
+      function toggleTheme() {
+        if (htmlElement.classList.contains('dark')) {
+          htmlElement.classList.remove('dark');
+          htmlElement.classList.add('light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          htmlElement.classList.remove('light');
+          htmlElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          htmlElement.classList.add(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          htmlElement.classList.add('dark');
+        } else {
+          htmlElement.classList.add('light');
+        }
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+          hideMenu();
+        }
+      });
+    </script>
+  </body>
+</html>
