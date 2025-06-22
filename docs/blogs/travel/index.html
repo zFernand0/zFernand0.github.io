@@ -203,7 +203,7 @@
       }
       document.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
+        if (savedTheme === 'dark' || savedTheme === 'light') {
           htmlElement.classList.add(savedTheme);
         } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
           htmlElement.classList.add('dark');

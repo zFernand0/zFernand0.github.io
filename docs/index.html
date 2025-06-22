@@ -39,6 +39,7 @@
       /* Default Theme (Dark Mode) - Applied when html has 'dark' class */
       html.dark {
         --background-color: #0d1117;
+        --overlay-color: 0,0,0,0.5;
         --text-color: #c9d1d9;
         --link-color: #4b94e7bc; /* Keep original alpha for hover effect consistency */
         --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
@@ -51,6 +52,7 @@
       /* Light Theme - Applied when html has 'light' class */
       html.light {
         --background-color: #f5f5f5;
+        --overlay-color: 255,255,255,0.5;
         --text-color: #0d1117;
         --link-color: #0066cc;
         --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
@@ -87,7 +89,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+        background-color: rgba(var(--overlay-color)); /* Semi-transparent black overlay */
         z-index: -1; /* Place behind the content */
       }
 
@@ -348,7 +350,7 @@
       // Initialize theme on page load based on local storage or system preference
       document.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
+        if (savedTheme === 'dark' || savedTheme === 'light') {
           htmlElement.classList.add(savedTheme);
         } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
           // If no saved theme, check system preference
