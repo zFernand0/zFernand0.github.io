@@ -44,6 +44,8 @@
         --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
         --footer-nav-bg: #161b22;
         --text-color-on-hero: #fff; /* White text for h1 on hero section in dark mode */
+        --card-bg: #161b22; /* Background for interest cards in dark mode */
+        --card-text: #c9d1d9; /* Text for interest cards in dark mode */
       }
 
       /* Light Theme - Applied when html has 'light' class */
@@ -54,6 +56,8 @@
         --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
         --footer-nav-bg: #eaeaea;
         --text-color-on-hero: #0d1117; /* Dark text for h1 on hero section in light mode, adjust as needed */
+        --card-bg: #ffffff; /* Background for interest cards in light mode */
+        --card-text: #0d1117; /* Text for interest cards in light mode */
       }
 
       /* Hero section styling with background image and gradient overlay */
@@ -62,7 +66,7 @@
         position: relative;
         height: 100vh; /* Make it take the full viewport height */
         display: flex;
-        background-image: url('./img/fernando.png'), var(--header-bg);
+        background-image: url('./_/img/fernando.png'), var(--header-bg);
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover; /* Cover the entire section */
@@ -119,6 +123,12 @@
       section:not(#home) h2 {
         color: var(--text-color);
       }
+
+      /* Styles for interest cards */
+      .interest-card {
+        background-color: var(--card-bg);
+        color: var(--card-text);
+      }
     </style>
   </head>
   <body class="transition-colors">
@@ -152,7 +162,7 @@
                  style="background-color: var(--footer-nav-bg);">
         <li><a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Home</a></li>
         <li><a href="./blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Blogs</a></li>
-        <li><a href="#projects" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Projects</a></li>
+        <li><a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">About</a></li>
         <li><a href="#interests" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Interests</a></li>
         <li><a href="#social" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu()">Social Media</a></li>
         <!-- Theme toggle link: Calls toggleTheme function -->
@@ -168,9 +178,9 @@
     -->
     <section id="home" class="pt-20">
       <!-- Main heading: Large, bold, responsive font size, distinct color -->
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Meet Fernando Rijo&nbsp;Cedeño!</h1>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Meet Fernando Rijo&nbsp;Cedeño!</h1>
       <!-- Introduction paragraph: Readable width, relaxed line height -->
-      <p class="text-lg md:text-xl max-w-2xl leading-relaxed mb-8">
+      <p class="text-lg md:text-xl max-w-2xl leading-relaxed mb-8 drop-shadow-md">
         Fernando Rijo Cedeno is a passionate Node.js developer with a wealth of experience in creating scalable
         applications. His journey is enriched by diverse travel experiences, bringing a unique perspective to his work.
       </p>
@@ -181,75 +191,124 @@
       -->
       <div class="flex flex-wrap justify-center gap-4">
         <a href="https://linkedin.com/in/fernandorijocedeno" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=LI';"/>
+          <img src="./_/img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/0A66C2/FFFFFF?text=LI';"/>
         </a>
         <a href="https://github.com/zFernand0" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=GH';"/>
+          <img src="./_/img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/333333/FFFFFF?text=GH';"/>
         </a>
         <a href="https://www.instagram.com/rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=IG';"/>
+          <img src="./_/img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/E1306C/FFFFFF?text=IG';"/>
         </a>
         <a href="https://twitter.com/Rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=X';"/>
+          <img src="./_/img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1DA1F2/FFFFFF?text=X';"/>
         </a>
         <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=PS';"/>
+          <img src="./_/img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4285F4/FFFFFF?text=PS';"/>
         </a>
         <a href="https://discord.gg/En7u6t8RYt" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/000000?text=DI';"/>
+          <img src="./_/img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/5865F2/FFFFFF?text=DI';"/>
         </a>
       </div>
     </section>
 
-    <!-- Projects section: Similar layout to home, with specific heading color -->
-    <section id="projects" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Projects</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li><a href="https://rijo.dev/fcstudio/" class="hover:underline">FC Studio (rijo.dev)</a></li>
-        <li>
-          <a href="https://github.com/zFernand0" class="hover:underline">Zowe Contributor on GitHub</a>
-        </li>
-        <li>
-          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Android Apps by FC Studio, LLC. on
-            Google Play</a>
-        </li>
-      </ul>
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 md:px-8 lg:px-16 max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">About Me</h2>
+      <p class="text-lg md:text-xl leading-relaxed mb-6">
+        Hello! I'm Fernando Rijo Cedeño, a passionate Node.js developer with a strong foundation in building scalable and robust applications. My journey in technology is driven by an insatiable curiosity and a love for problem-solving. Beyond the code, my experiences traveling the world have deeply influenced my perspective, bringing a unique blend of creativity and practicality to my work.
+      </p>
+      <p class="text-lg md:text-xl leading-relaxed mb-6">
+        I believe in continuous learning and enjoy exploring new technologies, frameworks, and methodologies that push the boundaries of what's possible. Whether it's architecting complex systems or optimizing existing ones, I'm always looking for innovative solutions that deliver impact.
+      </p>
+      <p class="text-lg md:text-xl leading-relaxed">
+        This website serves as my digital hub, where you can learn more about my professional journey, personal interests, and dive into my thoughts on various topics through my <a href="./blogs" class="hover:underline">blog</a>.
+      </p>
     </section>
 
-    <!-- Interests section: Simple list, similar layout -->
-    <section id="interests" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">My Interests</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li class="text-lg md:text-xl">Application Development</li>
-        <li class="text-lg md:text-xl">Problem Solving</li>
-        <li class="text-lg md:text-xl">Home Network</li>
-        <li class="text-lg md:text-xl">Machine Learning</li>
-        <li class="text-lg md:text-xl">Photography</li>
-        <li class="text-lg md:text-xl">Gaming</li>
-      </ul>
+    <!-- Interests section: Enhanced with cards -->
+    <section id="interests" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-12">My Interests</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Interest Card 1: Travel Experiences -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">✈️</span>
+          <h3 class="text-2xl font-bold mb-3">Travel Experiences</h3>
+          <p class="text-base leading-relaxed">
+            Exploring new cultures and landscapes fuels my creativity and broadens my perspective, directly influencing my problem-solving approach.
+          </p>
+          <a href="./blogs/travel" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Travel Blogs &rarr;</a>
+        </div>
+
+        <!-- Interest Card 2: Personal Growth -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">🌱</span>
+          <h3 class="text-2xl font-bold mb-3">Personal Growth</h3>
+          <p class="text-base leading-relaxed">
+            I'm committed to lifelong learning, constantly seeking ways to improve myself and cultivate a more fulfilling life.
+          </p>
+          <a href="./blogs/growth" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Personal Growth Blogs &rarr;</a>
+        </div>
+
+        <!-- Interest Card 3: Money and Finances -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">💰</span>
+          <h3 class="text-2xl font-bold mb-3">Money and Finances</h3>
+          <p class="text-base leading-relaxed">
+            Understanding financial literacy and smart investing is key to building a secure future, a topic I enjoy exploring.
+          </p>
+          <a href="./blogs/money" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Money Blogs &rarr;</a>
+        </div>
+
+        <!-- Interest Card 4: Learning & Books -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">📚</span>
+          <h3 class="text-2xl font-bold mb-3">Learning & Books</h3>
+          <p class="text-base leading-relaxed">
+            Devouring books and new concepts is a constant pursuit, helping me stay at the forefront of technology and beyond.
+          </p>
+          <a href="./blogs/books" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Learning Blogs &rarr;</a>
+        </div>
+
+        <!-- Interest Card 5: Artificial Intelligence -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">🤖</span>
+          <h3 class="text-2xl font-bold mb-3">Artificial Intelligence</h3>
+          <p class="text-base leading-relaxed">
+            The power and potential of AI fascinate me, from machine learning algorithms to practical applications that transform industries.
+          </p>
+          <a href="./blogs/ai" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read AI Blogs &rarr;</a>
+        </div>
+
+        <!-- Interest Card 6: Home lab & Gadgets -->
+        <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <span class="text-4xl mb-4 block">🏠</span>
+          <h3 class="text-2xl font-bold mb-3">Home lab & Gadgets</h3>
+          <p class="text-base leading-relaxed">
+            My personal lab is where I experiment with smart home tech, build custom networks, and test the latest gadgets.
+          </p>
+          <a href="./blogs/homelab" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Gadget Blogs &rarr;</a>
+        </div>
+      </div>
     </section>
 
-    <!-- Social Media section: List of links, similar layout -->
-    <section id="social" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
-      <h2 class="text-3xl md:text-5xl font-bold mb-8">Social Media</h2>
-      <ul class="list-disc list-inside text-lg md:text-xl space-y-2 text-left">
-        <li>
-          <a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a>
-        </li>
+    <section id="social" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">Get in Touch</h2>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
+        Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.
+      </p>
+      <ul class="list-none flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg">
+        <li><a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a></li>
         <li><a href="https://github.com/zFernand0" class="hover:underline">GitHub</a></li>
         <li><a href="https://www.instagram.com/rijo0206/" class="hover:underline">Instagram</a></li>
         <li><a href="https://twitter.com/Rijo0206" class="hover:underline">X / Twitter</a></li>
-        <li>
-          <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="hover:underline">Google Play Store</a>
-        </li>
         <li><a href="https://www.facebook.com/Fernando.Rijo" class="hover:underline">Facebook</a></li>
-        <li><a href="https://www.twitch.tv/rijo0206" class="hover:underline">Twitch</a></li>
+        <li><a href="mailto:fernando@rijo.dev" class="hover:underline">Email</a></li>
       </ul>
     </section>
 
     <!-- Footer: Background from CSS variable, centered text, rounded top corners -->
     <footer class="p-6 text-center mt-12 rounded-t-lg shadow-inner">
-      <p class="text-sm">&copy; 2024 Fernando Rijo Cedeno. All Rights Reserved.</p>
+      <p class="text-sm">&copy; 2025 Fernando Rijo Cedeno. All Rights Reserved.</p>
     </footer>
 
     <!-- JavaScript for menu and theme toggling -->
