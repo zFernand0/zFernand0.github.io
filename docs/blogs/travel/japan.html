@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Japan Trip Itinerary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page app with top navigation to switch between daily timeline views. This focuses the user on one day at a time, mimicking the actual trip flow, which is more user-friendly than a long scroll. An interactive checklist adds utility, and a collapsible tips section keeps secondary info accessible but out of the way. A doughnut chart provides a high-level summary of activity types. -->
+    <!-- Visualization & Content Choices: Main itinerary -> Goal: Organize/Inform -> Method: Interactive vertical timeline (HTML/CSS) with checkboxes -> Interaction: Day selection via nav buttons, task completion via checkboxes -> Justification: Visually engaging, provides clear chronological flow, and adds utility for tracking progress. Travel Tips -> Goal: Inform -> Method: Collapsible accordion section -> Interaction: Click to show/hide -> Justification: Hides non-critical info to reduce clutter. Activity Breakdown -> Goal: Summarize/Inform -> Method: Doughnut Chart (Chart.js/Canvas) -> Interaction: Hover for tooltips -> Justification: Provides a quick, visual overview of how trip time is allocated. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFDFB;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        .nav-button.active {
+            background-color: #D6C7AE;
+            color: #4A453D;
+        }
+        .timeline-item-content {
+            transition: all 0.3s ease;
+        }
+        .task-checkbox:checked + .timeline-item-content {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .day-content {
+            display: none;
+        }
+        .day-content.active {
+            display: block;
+        }
+        .tips-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">🇯🇵 Japan Adventure</h1>
+            <p class="text-lg text-gray-600 mt-2">August 30th - September 5th</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Trip Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <p class="mb-4 text-gray-700">This action-packed itinerary is designed for early risers ready to see the best of Japan in a week. The chart below visualizes the allocation of your activities, highlighting a trip rich in sightseeing and cultural experiences.</p>
+                    <button id="toggle-tips-btn" class="w-full bg-[#EAE3D8] hover:bg-[#D6C7AE] text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-300">
+                        Show Essential Travel Tips
+                    </button>
+                    <div id="tips-content" class="tips-content mt-4 text-sm text-gray-600 space-y-2">
+                         <p><strong>Luggage Forwarding:</strong> Use services like Yamato Transport (Takkyubin) to send large luggage between hotels (e.g., Tokyo ➡️ Kyoto).</p>
+                         <p><strong>Japan Rail Pass:</strong> A 7-Day Pass is likely cost-effective. Activate on Day 2.</p>
+                         <p><strong>Pre-Bookings:</strong> Reserve tickets for Shibuya Sky, Mt. Fuji buses, tea ceremonies, and especially Universal Studios Japan (USJ) well in advance.</p>
+                         <p><strong>Connectivity:</strong> A pocket WiFi or local SIM is essential for navigation.</p>
+                         <p><strong>Cash:</strong> Carry some Yen for smaller vendors, street food, and shrines.</p>
+                    </div>
+                </div>
+                <div class="chart-container w-full max-w-sm mx-auto h-64 md:h-72">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <nav id="day-nav" class="flex flex-wrap justify-center gap-2 mb-8">
+            <button data-day="1" class="nav-button active py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 1</button>
+            <button data-day="2" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 2</button>
+            <button data-day="3" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 3</button>
+            <button data-day="4" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 4</button>
+            <button data-day="5" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 5</button>
+            <button data-day="6" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 6</button>
+            <button data-day="7" class="nav-button py-2 px-4 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 transition">Day 7</button>
+        </nav>
+
+        <div id="itinerary-content">
+            <!-- Day 1 Content -->
+            <div data-day="1" class="day-content active">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 1: Arrival & Shibuya Night</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Shibuya or Shinjuku</p>
+                    <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <!-- Timeline Item -->
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full text-center font-bold text-white flex items-center justify-center">✈️</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-gray-300 text-[#D6C7AE] focus:ring-[#D6C7AE]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">3:00 PM - 5:00 PM: Arrival & Airport Procedures</p>
+                                    <p class="text-sm text-gray-600">Land at Narita (NRT), clear customs, get WiFi/SIM, buy N'EX ticket.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Timeline Item -->
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full text-center font-bold text-white flex items-center justify-center">🏨</div>
+                             <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-gray-300 text-[#D6C7AE] focus:ring-[#D6C7AE]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">5:00 PM - 6:15 PM: Travel to Hotel</p>
+                                    <p class="text-sm text-gray-600">Take Narita Express and check-in to your hotel.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Timeline Item -->
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full text-center font-bold text-white flex items-center justify-center">🚶</div>
+                             <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-gray-300 text-[#D6C7AE] focus:ring-[#D6C7AE]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">7:30 PM - 8:00 PM: Shibuya Immersion</p>
+                                    <p class="text-sm text-gray-600">Experience Shibuya Scramble Crossing & Hachiko statue.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Timeline Item -->
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full text-center font-bold text-white flex items-center justify-center">🛍️</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-gray-300 text-[#D6C7AE] focus:ring-[#D6C7AE]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">8:00 PM - 9:00 PM: Shopping & Snacks</p>
+                                    <p class="text-sm text-gray-600">Explore Don Quijote MEGA store.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Timeline Item -->
+                        <div class="relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full text-center font-bold text-white flex items-center justify-center">🌃</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-gray-300 text-[#D6C7AE] focus:ring-[#D6C7AE]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">9:00 PM onwards: Dinner & Optional Shibuya Sky</p>
+                                    <p class="text-sm text-gray-600">Dinner in Shibuya, then optional Shibuya Sky view (pre-book!).</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 Content -->
+            <div data-day="2" class="day-content">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 2: Tokyo Highlights</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Shibuya or Shinjuku</p>
+                    <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">☀️</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">7:30 AM - 10:30 AM: Asakusa & Senso-ji</p><p class="text-sm text-gray-600">Breakfast, then explore Senso-ji Temple & Nakamise-dori.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🗼</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">10:30 AM - 12:00 PM: Tokyo Skytree</p><p class="text-sm text-gray-600">View Skytree from its base and explore the mall.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🎮</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">1:30 PM - 3:30 PM: Akihabara Exploration</p><p class="text-sm text-gray-600">Dive into the world of anime and gaming.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🌳</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">3:30 PM - 6:00 PM: Harajuku & Meiji Shrine</p><p class="text-sm text-gray-600">Walk Takeshita Street, then find peace at Meiji Shrine.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🍣</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">6:00 PM onwards: Tokyo Tower View & Dinner</p><p class="text-sm text-gray-600">Visit Zojoji Temple for a great view of Tokyo Tower, then dinner. Activate JR Pass!</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 Content -->
+            <div data-day="3" class="day-content">
+                 <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 3: Mt. Fuji Day Trip</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Shinjuku</p>
+                    <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🚌</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">6:30 AM - 9:00 AM: Depart for Kawaguchiko</p><p class="text-sm text-gray-600">Breakfast, checkout, luggage forwarding, then bus to Fuji.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🗻</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">9:00 AM - 1:00 PM: Chureito Pagoda & Lake</p><p class="text-sm text-gray-600">Visit the iconic pagoda, then explore and have lunch by Lake Kawaguchi.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🌆</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">3:00 PM - 6:30 PM: Return to Tokyo</p><p class="text-sm text-gray-600">Bus back to Shinjuku, rest, and have a light dinner.</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 Content -->
+            <div data-day="4" class="day-content">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 4: Kyoto Cultural Highlights</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Gion or Kyoto Station area</p>
+                     <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🚄</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">7:00 AM - 10:30 AM: Shinkansen to Kyoto</p><p class="text-sm text-gray-600">Travel to Kyoto, drop luggage at hotel, grab Soba brunch.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🎋</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">10:30 AM - 2:00 PM: Arashiyama & Nijo Castle</p><p class="text-sm text-gray-600">Visit the Bamboo Grove, then explore Nijo Castle's nightingale floors.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🍵</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">2:00 PM - 5:00 PM: Kiyomizu-dera & Tea Ceremony</p><p class="text-sm text-gray-600">View the temple's famous wooden stage, then participate in a tea ceremony.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🏮</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">5:00 PM onwards: Gion & Pontocho</p><p class="text-sm text-gray-600">Stroll through Gion, browse Nishiki Market, and have dinner in Pontocho Alley.</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5 Content -->
+            <div data-day="5" class="day-content">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 5: Hiroshima & Osaka</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Namba, Osaka</p>
+                    <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">⛩️</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">6:30 AM - 8:30 AM: Fushimi Inari</p><p class="text-sm text-gray-600">Early visit to the thousand torii gates, then return to Kyoto Station.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🕊️</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">9:00 AM - 2:00 PM: Hiroshima Peace Park</p><p class="text-sm text-gray-600">Shinkansen to Hiroshima, visit Peace Museum & Park, have lunch.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🐙</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">2:30 PM onwards: To Osaka & Dotonbori</p><p class="text-sm text-gray-600">Optional Miyajima, then Shinkansen to Osaka, check-in, and explore Dotonbori.</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Day 6 Content -->
+            <div data-day="6" class="day-content">
+                 <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 6: USJ & Osaka Exploration</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Hotel: Namba or Shin-Osaka</p>
+                    <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🍄</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">7:00 AM - 12:30 PM: Universal Studios Japan</p><p class="text-sm text-gray-600">Arrive early to explore Super Nintendo World, then return to Osaka.</p></div></label></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🏯</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">1:30 PM - 4:30 PM: Lunch & Osaka Castle</p><p class="text-sm text-gray-600">Lunch at Toyo (if possible), then visit Osaka Castle grounds.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🌇</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">5:00 PM onwards: Temples & Sunset Views</p><p class="text-sm text-gray-600">Visit Shitennoji Temple, then watch the sunset from Umeda Sky Building.</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 7 Content -->
+            <div data-day="7" class="day-content">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 7: Departure from Osaka</h3>
+                    <p class="text-md text-gray-600 mb-6">✈️ Have a safe flight to Seoul!</p>
+                     <div class="relative pl-8">
+                        <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-gray-300"></div>
+                        <div class="mb-8 relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">🛫</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">7:30 AM - 9:00 AM: Travel to KIX Airport</p><p class="text-sm text-gray-600">Final breakfast, checkout, and travel to Kansai Airport.</p></div></label></div>
+                        <div class="relative"><div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#D6C7AE] rounded-full flex items-center justify-center">👋</div><label class="flex items-start space-x-3"><input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded"><div class="timeline-item-content"><p class="font-bold">9:00 AM - 12:00 PM: Check-in & Departure</p><p class="text-sm text-gray-600">Check in for your flight and depart at 12:00 PM.</p></div></label></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const itineraryData = {
+                sightseeing: 18,
+                food: 10,
+                travel: 7,
+                shopping: 4,
+                experience: 2 
+            };
+
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sightseeing', 'Food & Dining', 'Travel', 'Shopping', 'Experiences'],
+                    datasets: [{
+                        label: 'Activity Allocation',
+                        data: [
+                            itineraryData.sightseeing,
+                            itineraryData.food,
+                            itineraryData.travel,
+                            itineraryData.shopping,
+                            itineraryData.experience
+                        ],
+                        backgroundColor: [
+                            '#A89F91', // Muted brown
+                            '#D6C7AE', // Beige
+                            '#EAE3D8', // Light beige
+                            '#C3B8A8', // Greige
+                            '#8E8373'  // Darker brown
+                        ],
+                        borderColor: '#FDFDFB',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    family: 'Inter'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const dayNav = document.getElementById('day-nav');
+            const dayContents = document.querySelectorAll('.day-content');
+            const navButtons = document.querySelectorAll('.nav-button');
+
+            dayNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const day = e.target.dataset.day;
+
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    dayContents.forEach(content => {
+                        if (content.dataset.day === day) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            
+            const tipsBtn = document.getElementById('toggle-tips-btn');
+            const tipsContent = document.getElementById('tips-content');
+            tipsBtn.addEventListener('click', () => {
+                if (tipsContent.style.maxHeight) {
+                    tipsContent.style.maxHeight = null;
+                    tipsBtn.textContent = 'Show Essential Travel Tips';
+                } else {
+                    tipsContent.style.maxHeight = tipsContent.scrollHeight + "px";
+                    tipsBtn.textContent = 'Hide Essential Travel Tips';
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
