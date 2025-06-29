@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Korea Adventure: Seoul & Busan Itinerary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful -->
+    <!-- Application Structure Plan: The SPA is structured as a narrative journey. It starts with a high-level overview of the trip's key statistics to grab attention. It then flows into two comparative charts showing the allocation of time and types of activities, providing context for the trip's pace. The core of the application is a detailed, day-by-day vertical timeline that visually walks the user through the entire schedule. This top-down structure was chosen for its natural storytelling flow, making the dense, hour-by-hour information easy to digest in a single scroll. -->
+    <!-- Visualization & Content Choices: 
+        - Key Metrics (Big Numbers): Goal: Inform. Method: Large, bold HTML text for immediate impact. Justification: Quickly conveys the scale of the trip. Library: HTML/CSS. CONFIRM: NO SVG.
+        - Time Allocation (Donut Chart): Goal: Compare/Composition. Method: Chart.js Donut Chart. Justification: Best for showing parts of a whole (time split between cities/travel). Library: Chart.js (Canvas). CONFIRM: NO SVG.
+        - Activity Breakdown (Bar Chart): Goal: Compare. Method: Chart.js Bar Chart. Justification: Clearly compares the total hours dedicated to different categories of activities. Library: Chart.js (Canvas). CONFIRM: NO SVG.
+        - Day-by-Day Journey (Timeline): Goal: Organize/Change. Method: Structured HTML styled with Tailwind CSS. Justification: A clear, linear way to present a chronological sequence without using prohibited libraries like Mermaid JS. Library: HTML/CSS. CONFIRM: NO SVG/Mermaid JS.
+        - Icons: Goal: Inform/Organize. Method: Standard Unicode emoji characters. Justification: Simple, universally understood visual cues that require no image files or SVG. Library: Text. CONFIRM: NO SVG.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="text-[#073B4C]">
+
+    <div class="max-w-5xl mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black text-[#073B4C] mb-2">South Korea Adventure</h1>
+            <p class="text-xl md:text-2xl font-semibold text-[#118AB2]">A Whirlwind 4-Day Itinerary: Seoul & Busan</p>
+            <p class="text-md text-gray-500 mt-1">September 5th - 8th, 2025</p>
+        </header>
+
+        <section class="mb-16">
+             <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold">Trip at a Glance</h2>
+                <p class="text-gray-600 mt-2 max-w-2xl mx-auto">This high-intensity trip packs two major cities and over 800km of travel into just four days, balancing cultural sights with modern experiences.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center transform hover:scale-105 transition-transform duration-300">
+                    <span class="text-6xl font-black text-[#FF6B6B]">4</span>
+                    <span class="mt-2 text-lg font-bold">Packed Days</span>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center transform hover:scale-105 transition-transform duration-300">
+                    <span class="text-6xl font-black text-[#FFD166]">2</span>
+                    <span class="mt-2 text-lg font-bold">Major Cities</span>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-center items-center transform hover:scale-105 transition-transform duration-300">
+                    <span class="text-6xl font-black text-[#06D6A0]">800+</span>
+                    <span class="mt-2 text-lg font-bold">Kilometers Traveled</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center mb-4">Trip Time Allocation</h2>
+                <p class="text-center text-gray-600 mb-4 text-sm max-w-md mx-auto">This chart shows the approximate breakdown of awake hours spent on key segments of the trip. It highlights the significant time dedicated to travel between and within cities.</p>
+                <div class="chart-container">
+                    <canvas id="timeAllocationChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center mb-4">Activity Breakdown (Hours)</h2>
+                 <p class="text-center text-gray-600 mb-4 text-sm max-w-md mx-auto">A look at how the active hours of the itinerary are distributed across different types of experiences, from cultural deep dives to culinary exploration.</p>
+                <div class="chart-container">
+                    <canvas id="activityTypeChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-black text-center mb-8">Day-by-Day Journey</h2>
+            <div class="relative wrap overflow-hidden p-4 md:p-10 h-full">
+                <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-[#118AB2] shadow-xl w-16 h-16 rounded-full">
+                        <h3 class="mx-auto font-black text-white text-lg text-center">Day 1<br><span class="text-sm font-semibold">Sep 5</span></h3>
+                    </div>
+                    <div class="order-1 bg-white rounded-xl shadow-xl w-5/12 p-4">
+                        <p class="text-sm font-bold text-[#118AB2]">2:30 PM - 5:00 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🛬 Arrival & Check-in</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Land at ICN, clear customs, grab a SIM card, and travel via AREX to your Seoul hotel.</p>
+                        <hr class="my-3">
+                        <p class="text-sm font-bold text-[#118AB2]">5:00 PM - 9:00 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🛍️ Myeongdong & 🎭 Nanta</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Dive into Myeongdong for street food and shopping, followed by the 8 PM Nanta performance.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-[#06D6A0] shadow-xl w-16 h-16 rounded-full">
+                         <h3 class="mx-auto font-black text-white text-lg text-center">Day 2<br><span class="text-sm font-semibold">Sep 6</span></h3>
+                    </div>
+                    <div class="order-1 bg-white rounded-xl shadow-xl w-5/12 p-4">
+                        <p class="text-sm font-bold text-[#06D6A0]">5:30 AM - 9:30 AM</p>
+                        <h4 class="font-bold text-lg mb-1">🚄 KTX to Busan</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">An early start to catch the high-speed KTX train from Seoul for a whirlwind day trip to Busan.</p>
+                        <hr class="my-3">
+                         <p class="text-sm font-bold text-[#06D6A0]">9:30 AM - 4:30 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🎨 Gamcheon & 🐟 Jagalchi</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Explore the colorful Gamcheon Culture Village, then experience the vibrant Jagalchi Fish Market.</p>
+                         <hr class="my-3">
+                         <p class="text-sm font-bold text-[#06D6A0]">6:00 PM - 8:30 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🚄 Return to Seoul</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Board the evening KTX back to Seoul after a full day of coastal exploration.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-[#FFD166] shadow-xl w-16 h-16 rounded-full">
+                         <h3 class="mx-auto font-black text-white text-lg text-center">Day 3<br><span class="text-sm font-semibold">Sep 7</span></h3>
+                    </div>
+                    <div class="order-1 bg-white rounded-xl shadow-xl w-5/12 p-4">
+                        <p class="text-sm font-bold text-[#c8a249]">8:00 AM - 5:00 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🇰🇵 DMZ Full Day Tour</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">A sobering and educational day visiting the Korean Demilitarized Zone, including the 3rd Infiltration Tunnel and Dora Observatory.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-[#FF6B6B] shadow-xl w-16 h-16 rounded-full">
+                         <h3 class="mx-auto font-black text-white text-lg text-center">Day 4<br><span class="text-sm font-semibold">Sep 8</span></h3>
+                    </div>
+                    <div class="order-1 bg-white rounded-xl shadow-xl w-5/12 p-4">
+                        <p class="text-sm font-bold text-[#FF6B6B]">9:30 AM - 12:30 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🏰 Gyeongbokgung Palace</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Visit Seoul's grandest palace and witness the iconic Royal Guard-Changing Ceremony at 10 AM.</p>
+                        <hr class="my-3">
+                         <p class="text-sm font-bold text-[#FF6B6B]">1:30 PM - 4:30 PM</p>
+                        <h4 class="font-bold text-lg mb-1">🍵 Insadong & 🏯 Jogyesa</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Stroll through the traditional crafts market of Insadong and find peace at Jogyesa Temple.</p>
+                         <hr class="my-3">
+                         <p class="text-sm font-bold text-[#FF6B6B]">4:30 PM onwards</p>
+                        <h4 class="font-bold text-lg mb-1">✈️ Departure</h4>
+                        <p class="text-sm leading-snug tracking-wide text-gray-700">Travel to ICN airport for your 10 PM flight, concluding the whirlwind adventure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function wrapText(text) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine += (currentLine.length === 0 ? '' : ' ') + word;
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+        
+        const sharedChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: "'Inter', sans-serif",
+                            size: 12,
+                        },
+                        color: '#073B4C',
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: '#073B4C',
+                    titleFont: { size: 14, weight: 'bold', family: "'Inter', sans-serif" },
+                    bodyFont: { size: 12, family: "'Inter', sans-serif" },
+                    padding: 10,
+                    cornerRadius: 5,
+                    displayColors: false
+                }
+            }
+        };
+
+        const timeAllocationCtx = document.getElementById('timeAllocationChart').getContext('2d');
+        new Chart(timeAllocationCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Seoul Sightseeing', wrapText('Busan Day Trip Activities'), 'DMZ Tour', wrapText('Major Travel (KTX/Airport)')],
+                datasets: [{
+                    label: 'Time Allocation (Hours)',
+                    data: [14, 7, 9, 10],
+                    backgroundColor: ['#118AB2', '#06D6A0', '#FFD166', '#FF6B6B'],
+                    borderColor: '#f0f4f8',
+                    borderWidth: 4,
+                    hoverOffset: 4
+                }]
+            },
+            options: sharedChartOptions
+        });
+
+        const activityTypeCtx = document.getElementById('activityTypeChart').getContext('2d');
+        new Chart(activityTypeCtx, {
+            type: 'bar',
+            data: {
+                labels: [wrapText('Cultural & Historic'), wrapText('Markets & Food'), 'Entertainment', wrapText('Major Travel')],
+                datasets: [{
+                    label: 'Hours Spent',
+                    data: [16, 5, 2, 10],
+                    backgroundColor: ['#118AB2', '#06D6A0', '#FFD166', '#FF6B6B'],
+                    borderRadius: 5,
+                    barPercentage: 0.6,
+                }]
+            },
+            options: {
+                 ...sharedChartOptions,
+                 scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(7, 59, 76, 0.1)'
+                        },
+                         ticks: {
+                            color: '#073B4C',
+                            font: { family: "'Inter', sans-serif" }
+                        }
+                    },
+                    x: {
+                         grid: {
+                            display: false
+                        },
+                         ticks: {
+                            color: '#073B4C',
+                            font: { family: "'Inter', sans-serif", size: 11 }
+                        }
+                    }
+                },
+                plugins: {
+                     ...sharedChartOptions.plugins,
+                     legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
