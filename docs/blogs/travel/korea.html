@@ -65,7 +65,7 @@
 </head>
 <body class="text-[#4A453D]">
 
-    <nav class="fixed top-0 left-0 w-full bg-[#8E8373] p-4 shadow-lg z-50">
+    <nav id="day-nav" class="fixed top-0 left-0 w-full bg-[#8E8373] p-4 shadow-lg z-50">
         <div class="max-w-5xl mx-auto flex flex-wrap justify-center gap-2">
             <button data-day="1" class="nav-button active py-2 px-4 bg-[#C3B8A8] rounded-lg font-semibold hover:bg-[#D6C7AE] transition duration-200">Day 1</button>
             <button data-day="2" class="nav-button py-2 px-4 bg-[#C3B8A8] rounded-lg font-semibold hover:bg-[#D6C7AE] transition duration-200">Day 2</button>
@@ -281,118 +281,120 @@
     </div>
 
     <script>
-        function wrapText(text) {
-            const words = text.split(' ');
-            const lines = [];
-            let currentLine = '';
-            words.forEach(word => {
-                if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
-                    lines.push(currentLine);
-                    currentLine = word;
-                } else {
-                    currentLine += (currentLine.length === 0 ? '' : ' ') + word;
-                }
-            });
-            lines.push(currentLine);
-            return lines;
-        }
-
-        const tooltipTitleCallback = function(tooltipItems) {
-            const item = tooltipItems[0];
-            let label = item.chart.data.labels[item.dataIndex];
-            if (Array.isArray(label)) {
-              return label.join(' ');
-            } else {
-              return label;
-            }
-        };
-        
-        const sharedChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            family: "'Inter', sans-serif",
-                            size: 12,
-                        },
-                        color: '#4A453D',
-                        padding: 20
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        title: tooltipTitleCallback
-                    },
-                    backgroundColor: '#4A453D',
-                    titleFont: { size: 14, weight: 'bold', family: "'Inter', sans-serif" },
-                    bodyFont: { size: 12, family: "'Inter', sans-serif" },
-                    padding: 10,
-                    cornerRadius: 5,
-                    displayColors: false
-                }
-            }
-        };
-
-        const activityBreakdownCtx = document.getElementById('activityBreakdownChart').getContext('2d');
-        new Chart(activityBreakdownCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Cultural & Historic', 'Markets & Food', 'Entertainment', 'Major Travel'],
-                datasets: [{
-                    label: 'Activity Allocation',
-                    data: [16, 5, 2, 10], 
-                    backgroundColor: [
-                        '#A89F91', /* Muted brown */
-                        '#D6C7AE', /* Beige */
-                        '#EAE3D8', /* Light beige */
-                        '#C3B8A8'  /* Greige */
-                    ],
-                    borderColor: '#FDFDFB',
-                    borderWidth: 4,
-                    hoverOffset: 4
-                }]
-            },
-            options: sharedChartOptions
-        });
-
-        const dayNav = document.getElementById('day-nav');
-        const dayContents = document.querySelectorAll('.day-content');
-        const navButtons = document.querySelectorAll('.nav-button');
-
-        dayNav.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                const day = e.target.dataset.day;
-
-                navButtons.forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                
-                dayContents.forEach(content => {
-                    if (content.dataset.day === day) {
-                        content.classList.add('active');
+        document.addEventListener('DOMContentLoaded', () => {
+            function wrapText(text) {
+                const words = text.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
+                        lines.push(currentLine);
+                        currentLine = word;
                     } else {
-                        content.classList.remove('active');
+                        currentLine += (currentLine.length === 0 ? '' : ' ') + word;
                     }
                 });
+                lines.push(currentLine);
+                return lines;
             }
-        });
-        
-        const tipsBtn = document.getElementById('toggle-tips-btn');
-        const tipsContent = document.getElementById('tips-content');
-        tipsBtn.addEventListener('click', () => {
-            if (tipsContent.style.maxHeight) {
-                tipsContent.style.maxHeight = null;
-                tipsBtn.textContent = 'Show Essential Travel Tips';
-            } else {
-                tipsContent.style.maxHeight = tipsContent.scrollHeight + "px";
-                tipsBtn.textContent = 'Hide Essential Travel Tips';
-            }
-        });
 
-        // Initialize to show Day 1 content
-        document.querySelector('.day-content[data-day="1"]').classList.add('active');
+            const tooltipTitleCallback = function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                } else {
+                  return label;
+                }
+            };
+            
+            const sharedChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                family: "'Inter', sans-serif",
+                                size: 12,
+                            },
+                            color: '#4A453D',
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: '#4A453D',
+                        titleFont: { size: 14, weight: 'bold', family: "'Inter', sans-serif" },
+                        bodyFont: { size: 12, family: "'Inter', sans-serif" },
+                        padding: 10,
+                        cornerRadius: 5,
+                        displayColors: false
+                    }
+                }
+            };
+
+            const activityBreakdownCtx = document.getElementById('activityBreakdownChart').getContext('2d');
+            new Chart(activityBreakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cultural & Historic', 'Markets & Food', 'Entertainment', 'Major Travel'],
+                    datasets: [{
+                        label: 'Activity Allocation',
+                        data: [16, 5, 2, 10], 
+                        backgroundColor: [
+                            '#A89F91', /* Muted brown */
+                            '#D6C7AE', /* Beige */
+                            '#EAE3D8', /* Light beige */
+                            '#C3B8A8'  /* Greige */
+                        ],
+                        borderColor: '#FDFDFB',
+                        borderWidth: 4,
+                        hoverOffset: 4
+                    }]
+                },
+                options: sharedChartOptions
+            });
+
+            const dayNav = document.getElementById('day-nav');
+            const dayContents = document.querySelectorAll('.day-content');
+            const navButtons = document.querySelectorAll('.nav-button');
+
+            dayNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const day = e.target.dataset.day;
+
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    dayContents.forEach(content => {
+                        if (content.dataset.day === day) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                }
+            });
+            
+            const tipsBtn = document.getElementById('toggle-tips-btn');
+            const tipsContent = document.getElementById('tips-content');
+            tipsBtn.addEventListener('click', () => {
+                if (tipsContent.style.maxHeight) {
+                    tipsContent.style.maxHeight = null;
+                    tipsBtn.textContent = 'Show Essential Travel Tips';
+                } else {
+                    tipsContent.style.maxHeight = tipsContent.scrollHeight + "px";
+                    tipsBtn.textContent = 'Hide Essential Travel Tips';
+                }
+            });
+
+            // Initialize to show Day 1 content
+            document.querySelector('.day-content[data-day="1"]').classList.add('active');
+        });
     </script>
 </body>
 </html>
