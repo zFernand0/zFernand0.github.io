@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
@@ -8,24 +8,28 @@
     <!-- Tailwind CSS CDN for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for 'Raleway' font -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
-      <link rel="stylesheet" href="../css/common.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/common.css" />
+  </head>
   <body class="transition-colors">
     <nav class="p-1 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
       <a href="./" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="CommonUtils.hideMenu()">FRC Blog</a>
-      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">
-        ☰
-      </div>
-      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
-                 absolute top-16 left-0 w-full shadow-lg p-1
-                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
-                 style="background-color: var(--footer-nav-bg);">
-        <li><a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">Home</a></li>
-        <li><a href="#latest-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">Latest</a></li>
-        <li><a href="#more-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="hideMenu(); return false;">More</a></li>
-        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">☰</div>
+      <ul
+        class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block absolute top-16 left-0 w-full shadow-lg p-1 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+        style="background-color: var(--footer-nav-bg)">
+        <li>
+          <a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Home</a>
+        </li>
+        <li>
+          <a href="#latest-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Latest</a>
+        </li>
+        <li>
+          <a href="#more-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">More</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.toggleTheme(); return false;">Theme</a>
+        </li>
       </ul>
     </nav>
 
@@ -45,9 +49,7 @@
         <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-2">Atomic Habits: A Summary and Key Takeaways</h3>
           <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: June 12, 2024</p>
-          <p class="text-base leading-relaxed mb-4">
-            Unpacking James Clear's bestseller and how tiny changes can lead to remarkable results.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Unpacking James Clear's bestseller and how tiny changes can lead to remarkable results.</p>
           <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
         </div>
 
@@ -55,9 +57,7 @@
         <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-2">Effective Spaced Repetition Techniques for Learning</h3>
           <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: May 30, 2024</p>
-          <p class="text-base leading-relaxed mb-4">
-            Improve your memory retention with these scientifically-backed learning methods.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Improve your memory retention with these scientifically-backed learning methods.</p>
           <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
         </div>
 
@@ -65,9 +65,7 @@
         <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-2">My Top 5 Books for Tech Enthusiasts</h3>
           <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: May 10, 2024</p>
-          <p class="text-base leading-relaxed mb-4">
-            A curated list of must-read books for anyone passionate about technology and innovation.
-          </p>
+          <p class="text-base leading-relaxed mb-4">A curated list of must-read books for anyone passionate about technology and innovation.</p>
           <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
         </div>
 
@@ -91,12 +89,12 @@
           <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(April 25, 2025)</span>
         </li>
         <li>
-            <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Effective Note-Taking Strategies for Students and Professionals</a>
-            <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(March 12, 2025)</span>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Effective Note-Taking Strategies for Students and Professionals</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(March 12, 2025)</span>
         </li>
         <li>
-            <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Beyond the Syllabus: Lifelong Learning in the Digital Age</a>
-            <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(February 18, 2025)</span>
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Beyond the Syllabus: Lifelong Learning in the Digital Age</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(February 18, 2025)</span>
         </li>
       </ul>
     </section>
@@ -105,7 +103,6 @@
       <p class="text-sm">&copy; 2025 Fernando Rijo Cedeño. All Rights Reserved.</p>
     </footer>
 
-    
-      <script src="../js/common.js"></script>
-</body>
+    <script src="../js/common.js"></script>
+  </body>
 </html>

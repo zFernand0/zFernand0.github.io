@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     <!-- Tailwind CSS CDN for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Shared CSS for common styles and theme variables -->
-    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/common.css" />
   </head>
   <body class="transition-colors">
     <!--
@@ -26,26 +26,35 @@
            - Visible only on small screens (hidden on md and larger)
            - Toggles the navigation menu visibility
       -->
-      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">
-        ☰
-      </div>
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">☰</div>
 
       <!-- Navigation links:
            - Hidden by default on small screens, shown as block on medium screens and up
            - Flex column on mobile when open, flex row on desktop
            - Space between items
       -->
-      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
-                 absolute top-16 left-0 w-full shadow-lg p-1
-                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
-                 style="background-color: var(--footer-nav-bg);">
-        <li><a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Home</a></li>
-        <li><a href="blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Blogs</a></li>
-        <li><a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">About</a></li>
-        <li><a href="#interests" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Interests</a></li>
-        <li><a href="#social" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Social Media</a></li>
+      <ul
+        class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block absolute top-16 left-0 w-full shadow-lg p-1 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+        style="background-color: var(--footer-nav-bg)">
+        <li>
+          <a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Home</a>
+        </li>
+        <li>
+          <a href="blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Blogs</a>
+        </li>
+        <li>
+          <a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">About</a>
+        </li>
+        <li>
+          <a href="#interests" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Interests</a>
+        </li>
+        <li>
+          <a href="#social" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Social Media</a>
+        </li>
         <!-- Theme toggle link: Calls toggleTheme function -->
-        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.toggleTheme(); return false;">Theme</a></li>
+        <li>
+          <a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.toggleTheme(); return false;">Theme</a>
+        </li>
       </ul>
     </nav>
 
@@ -60,8 +69,8 @@
       <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Meet Fernando Rijo&nbsp;Cedeño!</h1>
       <!-- Introduction paragraph: Readable width, relaxed line height -->
       <p class="text-lg md:text-xl max-w-2xl leading-relaxed mb-8 drop-shadow-md">
-        Fernando Rijo Cedeno is a passionate Node.js developer with a wealth of experience in creating scalable
-        applications. His journey is enriched by diverse travel experiences, bringing a unique perspective to his work.
+        Fernando Rijo Cedeno is a passionate Node.js developer with a wealth of experience in creating scalable applications. His journey is enriched by diverse travel experiences, bringing a unique
+        perspective to his work.
       </p>
       <!-- Social links:
            - Flex container for horizontal alignment
@@ -70,22 +79,24 @@
       -->
       <div class="flex flex-wrap justify-center gap-4">
         <a href="https://linkedin.com/in/fernandorijocedeno" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/0A66C2/FFFFFF?text=LI';"/>
+          <img src="./img/li.png" alt="LinkedIn" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/0A66C2/FFFFFF?text=LI';" />
         </a>
         <a href="https://github.com/zFernand0" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/333333/FFFFFF?text=GH';"/>
+          <img src="./img/gh.png" alt="GitHub" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/333333/FFFFFF?text=GH';" />
         </a>
         <a href="https://www.instagram.com/rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/E1306C/FFFFFF?text=IG';"/>
+          <img src="./img/ig.png" alt="Instagram" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/E1306C/FFFFFF?text=IG';" />
         </a>
         <a href="https://twitter.com/Rijo0206" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1DA1F2/FFFFFF?text=X';"/>
+          <img src="./img/tw.png" alt="X / Twitter" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1DA1F2/FFFFFF?text=X';" />
         </a>
-        <a href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC." class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4285F4/FFFFFF?text=PS';"/>
+        <a
+          href="https://play.google.com/store/apps/developer?id=FC+Studio,+LLC."
+          class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
+          <img src="./img/ps.png" alt="Google Play Store" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4285F4/FFFFFF?text=PS';" />
         </a>
         <a href="https://discord.gg/En7u6t8RYt" class="w-10 h-10 rounded-full shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 flex items-center justify-center">
-          <img src="./img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/5865F2/FFFFFF?text=DI';"/>
+          <img src="./img/discord.png" alt="Discord" class="rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/40x40/5865F2/FFFFFF?text=DI';" />
         </a>
       </div>
     </section>
@@ -94,13 +105,18 @@
     <section id="about" class="py-16 px-4 md:px-8 lg:px-16 max-w-4xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-bold mb-8">About Me</h2>
       <p class="text-lg md:text-xl leading-relaxed mb-6">
-        Hello! I'm Fernando Rijo Cedeño, a passionate Node.js developer with a strong foundation in building scalable and robust applications. My journey in technology is driven by an insatiable curiosity and a love for problem-solving. Beyond the code, my experiences traveling the world have deeply influenced my perspective, bringing a unique blend of creativity and practicality to my work.
+        Hello! I'm Fernando Rijo Cedeño, a passionate Node.js developer with a strong foundation in building scalable and robust applications. My journey in technology is driven by an insatiable
+        curiosity and a love for problem-solving. Beyond the code, my experiences traveling the world have deeply influenced my perspective, bringing a unique blend of creativity and practicality to
+        my work.
       </p>
       <p class="text-lg md:text-xl leading-relaxed mb-6">
-        I believe in continuous learning and enjoy exploring new technologies, frameworks, and methodologies that push the boundaries of what's possible. Whether it's architecting complex systems or optimizing existing ones, I'm always looking for innovative solutions that deliver impact.
+        I believe in continuous learning and enjoy exploring new technologies, frameworks, and methodologies that push the boundaries of what's possible. Whether it's architecting complex systems or
+        optimizing existing ones, I'm always looking for innovative solutions that deliver impact.
       </p>
       <p class="text-lg md:text-xl leading-relaxed">
-        This website serves as my digital hub, where you can learn more about my professional journey, personal interests, and dive into my thoughts on various topics through my <a href="blogs" class="hover:underline">blog</a>.
+        This website serves as my digital hub, where you can learn more about my professional journey, personal interests, and dive into my thoughts on various topics through my
+        <a href="blogs" class="hover:underline">blog</a>
+        .
       </p>
     </section>
 
@@ -112,9 +128,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">✈️</span>
           <h3 class="text-2xl font-bold mb-3">Travel Experiences</h3>
-          <p class="text-base leading-relaxed">
-            Exploring new cultures and landscapes fuels my creativity and broadens my perspective, directly influencing my problem-solving approach.
-          </p>
+          <p class="text-base leading-relaxed">Exploring new cultures and landscapes fuels my creativity and broadens my perspective, directly influencing my problem-solving approach.</p>
           <a href="blogs/travel" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Travel Blogs &rarr;</a>
         </div>
 
@@ -122,9 +136,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">🌱</span>
           <h3 class="text-2xl font-bold mb-3">Personal Growth</h3>
-          <p class="text-base leading-relaxed">
-            I'm committed to lifelong learning, constantly seeking ways to improve myself and cultivate a more fulfilling life.
-          </p>
+          <p class="text-base leading-relaxed">I'm committed to lifelong learning, constantly seeking ways to improve myself and cultivate a more fulfilling life.</p>
           <a href="blogs/growth" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Personal Growth Blogs &rarr;</a>
         </div>
 
@@ -132,9 +144,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">💰</span>
           <h3 class="text-2xl font-bold mb-3">Money and Finances</h3>
-          <p class="text-base leading-relaxed">
-            Understanding financial literacy and smart investing is key to building a secure future, a topic I enjoy exploring.
-          </p>
+          <p class="text-base leading-relaxed">Understanding financial literacy and smart investing is key to building a secure future, a topic I enjoy exploring.</p>
           <a href="blogs/money" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Money Blogs &rarr;</a>
         </div>
 
@@ -142,9 +152,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">📚</span>
           <h3 class="text-2xl font-bold mb-3">Learning & Books</h3>
-          <p class="text-base leading-relaxed">
-            Devouring books and new concepts is a constant pursuit, helping me stay at the forefront of technology and beyond.
-          </p>
+          <p class="text-base leading-relaxed">Devouring books and new concepts is a constant pursuit, helping me stay at the forefront of technology and beyond.</p>
           <a href="blogs/books" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Learning Blogs &rarr;</a>
         </div>
 
@@ -152,9 +160,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">🤖</span>
           <h3 class="text-2xl font-bold mb-3">Artificial Intelligence</h3>
-          <p class="text-base leading-relaxed">
-            The power and potential of AI fascinate me, from machine learning algorithms to practical applications that transform industries.
-          </p>
+          <p class="text-base leading-relaxed">The power and potential of AI fascinate me, from machine learning algorithms to practical applications that transform industries.</p>
           <a href="blogs/ai" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read AI Blogs &rarr;</a>
         </div>
 
@@ -162,9 +168,7 @@
         <div class="interest-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <span class="text-4xl mb-4 block">🏠</span>
           <h3 class="text-2xl font-bold mb-3">Home lab & Gadgets</h3>
-          <p class="text-base leading-relaxed">
-            My personal lab is where I experiment with smart home tech, build custom networks, and test the latest gadgets.
-          </p>
+          <p class="text-base leading-relaxed">My personal lab is where I experiment with smart home tech, build custom networks, and test the latest gadgets.</p>
           <a href="blogs/homelab" class="text-blue-600 hover:underline dark:text-blue-400 mt-4 block">Read Gadget Blogs &rarr;</a>
         </div>
       </div>
@@ -172,9 +176,7 @@
 
     <section id="social" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-bold mb-8">Get in Touch</h2>
-      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
-        Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.
-      </p>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.</p>
       <ul class="list-none flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg">
         <li><a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a></li>
         <li><a href="https://github.com/zFernand0" class="hover:underline">GitHub</a></li>

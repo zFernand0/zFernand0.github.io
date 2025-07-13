@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
@@ -8,63 +8,68 @@
     <!-- Tailwind CSS CDN for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for 'Raleway' font -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   </head>
   <body class="transition-colors">
     <nav class="p-1 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
       <a href="./" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="CommonUtils.hideMenu()">FRC Blog</a>
-      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">
-        ☰
-      </div>
-      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
-                 absolute top-16 left-0 w-full shadow-lg p-1
-                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
-                 style="background-color: var(--footer-nav-bg);">
-        <li><a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Home</a></li>
-        <li><a href="#latest-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Latest</a></li>
-        <li><a href="#more-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">More</a></li>
-        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.toggleTheme()">Theme</a></li>
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">☰</div>
+      <ul
+        class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block absolute top-16 left-0 w-full shadow-lg p-1 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+        style="background-color: var(--footer-nav-bg)">
+        <li>
+          <a href="#home" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Home</a>
+        </li>
+        <li>
+          <a href="#latest-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Latest</a>
+        </li>
+        <li>
+          <a href="#more-blogs" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">More</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.toggleTheme()">Theme</a>
+        </li>
       </ul>
     </nav>
 
     <!-- Hero Section for Travel Experiences -->
     <section id="home" class="pt-24 pb-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
       <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Travel Experiences</h1>
-      <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-        Discover new destinations, explore diverse cultures, and find practical tips for your next adventure.
-      </p>
+      <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">Discover new destinations, explore diverse cultures, and find practical tips for your next adventure.</p>
     </section>
 
     <!-- Blog Posts List Section -->
     <section id="latest-blogs" class="py-12 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Latest Travel Blogs</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Placeholder Blog Post Card 1 -->
+        <!-- Blog Post Card 1 - Peru Adventure -->
+        <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
+          <h3 class="text-xl font-bold mb-2">My Peru Adventure: Exploring Ancient Wonders</h3>
+          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: January 15, 2025</p>
+          <p class="text-base leading-relaxed mb-4">
+            A personal journey through the heart of the Andes, from the bustling streets of Lima to the mystical heights of Machu Picchu. Join me as I share stories, photos, and unforgettable
+            experiences exploring Peru's ancient ruins, vibrant culture, and world-renowned cuisine.
+          </p>
+          <a href="./002-peru-adventure" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
+        </div>
+
+        <!-- Blog Post Card 2 - Japan Adventure -->
         <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-2">Your Ultimate Interactive Japan Adventure: Plan Your Whirlwind Trip!</h3>
           <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: June 29, 2025</p>
           <p class="text-base leading-relaxed mb-4">
-            This dynamic tool transforms a packed 7-day itinerary into an easy-to-explore guide. Dive into major highlights across Tokyo, Mount Fuji, Kyoto, and Osaka. Filter activities by city or theme, visualize your journey, and get essential travel tips, all designed to help you craft your perfect, fast-paced Japanese adventure.
+            This dynamic tool transforms a packed 7-day itinerary into an easy-to-explore guide. Dive into major highlights across Tokyo, Mount Fuji, Kyoto, and Osaka. Filter activities by city or
+            theme, visualize your journey, and get essential travel tips, all designed to help you craft your perfect, fast-paced Japanese adventure.
           </p>
-          <a href="./001-japan-prep.html" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
+          <a href="./001-japan-prep" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
         </div>
 
-        <!-- Placeholder Blog Post Card 2 -->
+        <!-- Placeholder Blog Post Card 3 -->
         <!-- <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-xl font-bold mb-2">Budget Travel: Maximizing Your Adventure on a Shoestring</h3>
           <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: June 01, 2024</p>
           <p class="text-base leading-relaxed mb-4">
             Tips and tricks for traveling the world without breaking the bank. From accommodation to transportation.
-          </p>
-          <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
-        </div> -->
-
-        <!-- Placeholder Blog Post Card 3 -->
-        <!-- <div class="blog-post-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
-          <h3 class="text-xl font-bold mb-2">Solo Travel vs. Group Tours: Which is Right for You?</h3>
-          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">Published: May 20, 2024</p>
-          <p class="text-base leading-relaxed mb-4">
-            An in-depth comparison of two popular travel styles to help you decide your next adventure's approach.
           </p>
           <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Read More &rarr;</a>
         </div> -->
@@ -77,7 +82,11 @@
       <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">All Travel Experiences Blogs</h2>
       <ul class="list-disc list-inside text-lg md:text-xl space-y-3 mx-auto max-w-2xl text-left">
         <li>
-          <a href="./001-japan-prep.html" class="text-blue-600 hover:underline dark:text-blue-400">Your Ultimate Interactive Japan Adventure: Plan Your Whirlwind Trip!</a>
+          <a href="./002-peru-adventure" class="text-blue-600 hover:underline dark:text-blue-400">My Peru Adventure: Exploring Ancient Wonders</a>
+          <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(January 15, 2025)</span>
+        </li>
+        <li>
+          <a href="./001-japan-prep" class="text-blue-600 hover:underline dark:text-blue-400">Your Ultimate Interactive Japan Adventure: Plan Your Whirlwind Trip!</a>
           <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">(June 29, 2025)</span>
         </li>
         <!-- <li>
@@ -103,7 +112,6 @@
       <p class="text-sm">&copy; 2025 Fernando Rijo Cedeño. All Rights Reserved.</p>
     </footer>
 
-    
-      <script src="../js/common.js"></script>
-</body>
+    <script src="../js/common.js"></script>
+  </body>
 </html>

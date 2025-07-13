@@ -1,134 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="travel-page travel-japan">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Japan Adventure Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/travel.css">
-</head>
-<body class="antialiased">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/travel.css" />
+  </head>
 
+  <body class="antialiased">
     <header class="text-center py-8 md:py-12 bg-white shadow-sm">
-        <h1 class="text-4xl md:text-5xl font-bold text-[#C84630]">Your Epic Japan Adventure</h1>
-        <p class="mt-2 md:mt-4 text-lg text-gray-600 max-w-3xl mx-auto px-4">An interactive guide to a whirlwind 7-day tour of Japan's greatest hits.</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-[#C84630]">Your Epic Japan Adventure</h1>
+      <p class="mt-2 md:mt-4 text-lg text-gray-600 max-w-3xl mx-auto px-4">An interactive guide to a whirlwind 7-day tour of Japan's greatest hits.</p>
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        
-        <section id="overview" class="mb-12">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Trip at a Glance</h2>
-                <p class="mt-2 text-gray-600">This fast-paced itinerary balances ancient tradition with futuristic cityscapes. Here's a high-level look at the journey, designed to help you explore what interests you most.</p>
-            </div>
+      <section id="overview" class="mb-12">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Trip at a Glance</h2>
+          <p class="mt-2 text-gray-600">
+            This fast-paced itinerary balances ancient tradition with futuristic cityscapes. Here's a high-level look at the journey, designed to help you explore what interests you most.
+          </p>
+        </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold text-center mb-4 text-gray-700">Journey Path</h3>
-                    <div id="map-container" class="relative h-64 md:h-80 w-full flex justify-between items-center px-4 md:px-8">
-                        <!-- Map lines will be injected here by JS -->
-                        <div id="map-tokyo" data-city="tokyo" class="map-city text-center z-10">
-                            <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Tokyo</div>
-                            <span class="font-semibold mt-2 block">Days 1-3</span>
-                        </div>
-                        <div id="map-kyoto" data-city="kyoto" class="map-city text-center z-10">
-                             <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Kyoto</div>
-                            <span class="font-semibold mt-2 block">Day 4</span>
-                        </div>
-                         <div id="map-hiroshima" data-city="hiroshima" class="map-city text-center z-10">
-                             <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Hiroshima</div>
-                            <span class="font-semibold mt-2 block">Day 5</span>
-                        </div>
-                        <div id="map-osaka" data-city="osaka" class="map-city text-center z-10">
-                             <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Osaka</div>
-                            <span class="font-semibold mt-2 block">Days 5-6</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold text-center mb-4 text-gray-700">Activity Focus</h3>
-                    <div class="chart-container">
-                        <canvas id="tripFocusChart"></canvas>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-xl font-bold text-center mb-4 text-gray-700">Journey Path</h3>
+            <div id="map-container" class="relative h-64 md:h-80 w-full flex justify-between items-center px-4 md:px-8">
+              <!-- Map lines will be injected here by JS -->
+              <div id="map-tokyo" data-city="tokyo" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Tokyo</div>
+                <span class="font-semibold mt-2 block">Days 1-3</span>
+              </div>
+              <div id="map-kyoto" data-city="kyoto" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Kyoto</div>
+                <span class="font-semibold mt-2 block">Day 4</span>
+              </div>
+              <div id="map-hiroshima" data-city="hiroshima" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Hiroshima</div>
+                <span class="font-semibold mt-2 block">Day 5</span>
+              </div>
+              <div id="map-osaka" data-city="osaka" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Osaka</div>
+                <span class="font-semibold mt-2 block">Days 5-6</span>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <section id="explorer" class="bg-white p-6 rounded-xl shadow-lg mb-12">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Interactive Itinerary</h2>
-                <p class="mt-2 text-gray-600">Filter the activities by city or theme to create your own view of the adventure. Click a filter to begin.</p>
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-xl font-bold text-center mb-4 text-gray-700">Activity Focus</h3>
+            <div class="chart-container">
+              <canvas id="tripFocusChart"></canvas>
             </div>
-            
-            <div id="filters" class="flex flex-col md:flex-row justify-center gap-4 mb-8">
-                <div class="flex justify-center flex-wrap gap-2">
-                    <button data-filter-type="city" data-filter-value="all" class="filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Cities</button>
-                    <button data-filter-type="city" data-filter-value="tokyo" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Tokyo</button>
-                    <button data-filter-type="city" data-filter-value="fuji" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Mt. Fuji</button>
-                    <button data-filter-type="city" data-filter-value="kyoto" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Kyoto</button>
-                    <button data-filter-type="city" data-filter-value="hiroshima" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Hiroshima</button>
-                    <button data-filter-type="city" data-filter-value="osaka" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Osaka</button>
-                </div>
-                <div class="flex justify-center flex-wrap gap-2 border-t-2 md:border-t-0 md:border-l-2 border-gray-200 pt-4 md:pt-0 md:pl-4">
-                    <button data-filter-type="theme" data-filter-value="all" class="filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Themes</button>
-                    <button data-filter-type="theme" data-filter-value="culture" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">⛩️ Culture</button>
-                    <button data-filter-type="theme" data-filter-value="modern" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🏙️ Modern</button>
-                    <button data-filter-type="theme" data-filter-value="nature" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🗻 Nature</button>
-                    <button data-filter-type="theme" data-filter-value="food" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🍜 Food</button>
-                    <button data-filter-type="theme" data-filter-value="fun" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🎢 Fun</button>
-                </div>
-            </div>
+          </div>
+        </div>
+      </section>
 
-            <div id="activities-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Activity cards will be injected by JS -->
-            </div>
-        </section>
+      <section id="explorer" class="bg-white p-6 rounded-xl shadow-lg mb-12">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Interactive Itinerary</h2>
+          <p class="mt-2 text-gray-600">Filter the activities by city or theme to create your own view of the adventure. Click a filter to begin.</p>
+        </div>
 
-        <section id="tips">
-             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Essential Travel Tips</h2>
-                <p class="mt-2 text-gray-600">Key advice for a smooth and enjoyable fast-paced trip. Click each category to learn more.</p>
-            </div>
-            <div id="accordion-container" class="space-y-4 max-w-4xl mx-auto">
-                <!-- Accordion items will be injected by JS -->
-            </div>
-        </section>
+        <div id="filters" class="flex flex-col md:flex-row justify-center gap-4 mb-8">
+          <div class="flex justify-center flex-wrap gap-2">
+            <button data-filter-type="city" data-filter-value="all" class="filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Cities</button>
+            <button data-filter-type="city" data-filter-value="tokyo" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Tokyo</button>
+            <button data-filter-type="city" data-filter-value="fuji" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Mt. Fuji</button>
+            <button data-filter-type="city" data-filter-value="kyoto" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Kyoto</button>
+            <button data-filter-type="city" data-filter-value="hiroshima" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Hiroshima</button>
+            <button data-filter-type="city" data-filter-value="osaka" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Osaka</button>
+          </div>
+          <div class="flex justify-center flex-wrap gap-2 border-t-2 md:border-t-0 md:border-l-2 border-gray-200 pt-4 md:pt-0 md:pl-4">
+            <button data-filter-type="theme" data-filter-value="all" class="filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Themes</button>
+            <button data-filter-type="theme" data-filter-value="culture" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">⛩️ Culture</button>
+            <button data-filter-type="theme" data-filter-value="modern" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🏙️ Modern</button>
+            <button data-filter-type="theme" data-filter-value="nature" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🗻 Nature</button>
+            <button data-filter-type="theme" data-filter-value="food" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🍜 Food</button>
+            <button data-filter-type="theme" data-filter-value="fun" class="filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🎢 Fun</button>
+          </div>
+        </div>
 
+        <div id="activities-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Activity cards will be injected by JS -->
+        </div>
+      </section>
+
+      <section id="tips">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Essential Travel Tips</h2>
+          <p class="mt-2 text-gray-600">Key advice for a smooth and enjoyable fast-paced trip. Click each category to learn more.</p>
+        </div>
+        <div id="accordion-container" class="space-y-4 max-w-4xl mx-auto">
+          <!-- Accordion items will be injected by JS -->
+        </div>
+      </section>
     </main>
 
     <footer class="text-center py-6 mt-8 bg-white border-t">
-        <p class="text-gray-500">An interactive experience inspired by a whirlwind Japan adventure.</p>
+      <p class="text-gray-500">An interactive experience inspired by a whirlwind Japan adventure.</p>
     </footer>
 
     <!-- Load common utilities -->
     <script src="../../js/common.js"></script>
     <script src="../../js/travel-utils.js"></script>
     <script src="../../js/travel-data.js"></script>
-    
+
     <!-- Page-specific script -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize travel utilities
-            const travelUtils = new TravelUtils();
-            
-            // Get Japan trip data
-            const tripData = TravelData.japan;
-            
-            // Populate activities and tips
-            travelUtils.populateActivities(tripData.activities, 'activities-grid');
-            travelUtils.populateTips(tripData.detailedTips, 'accordion-container');
-            
-            // Create activity chart
-            travelUtils.createActivityChart(tripData.activities, 'tripFocusChart');
-            
-            // Initialize all functionality
-            travelUtils.init();
-        });
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize travel utilities
+        const travelUtils = new TravelUtils();
+
+        // Get Japan trip data
+        const tripData = TravelData.japan;
+
+        // Populate activities and tips
+        travelUtils.populateActivities(tripData.activities, "activities-grid");
+        travelUtils.populateTips(tripData.detailedTips, "accordion-container");
+
+        // Create activity chart
+        travelUtils.createActivityChart(tripData.activities, "tripFocusChart");
+
+        // Initialize all functionality
+        travelUtils.init();
+      });
     </script>
-</body>
+  </body>
 </html>

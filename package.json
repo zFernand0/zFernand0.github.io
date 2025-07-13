@@ -5,9 +5,9 @@
   "main": "index.html",
   "private": true,
   "scripts": {
-    "build": "node build.js",
-    "dev": "python -m http.server 8000",
-    "serve": "npx http-server docs -p 8000"
+    "dev": "http-server docs -p 8000",
+    "dev:watch": "nodemon --watch docs --ext html,js,css --exec \"http-server docs -p 8000\"",
+    "format": "prettier --write \"docs/**/*.{html,css,js}\""
   },
   "keywords": [
     "portfolio",
@@ -19,6 +19,8 @@
   "author": "Fernando Rijo Cedeño",
   "license": "Apache-2.0",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
   }
 }

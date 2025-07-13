@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
@@ -6,31 +6,38 @@
     <meta name="description" content="Fernando R.C.'s Blog - Exploring various topics in tech, lifestyle, and more." />
     <title>Fernando R.C.'s Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
-      <link rel="stylesheet" href="../css/common.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/common.css" />
+  </head>
+
   <body class="transition-colors">
     <nav class="p-1 flex justify-between items-center fixed w-full top-0 z-50 rounded-b-lg shadow-md">
       <a href="https://rijo.dev" class="text-xl font-bold rounded-md px-3 py-2 hover:bg-gray-700 transition-colors" onclick="CommonUtils.hideMenu()">FRC</a>
-      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">
-        ☰
-      </div>
-      <ul class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block
-                 absolute top-16 left-0 w-full shadow-lg p-1
-                 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
-                 style="background-color: var(--footer-nav-bg);">
-        <li><a href="#topics" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Topics</a></li>
-        <li><a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">About</a></li>
-        <li><a href="#contact" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Contact</a></li>
-        <li><a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a></li>
+      <div class="md:hidden text-2xl cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onclick="CommonUtils.toggleMenu()">☰</div>
+      <ul
+        class="navbar md:flex md:space-x-4 space-y-2 md:space-y-0 hidden md:block absolute top-16 left-0 w-full shadow-lg p-1 flex-col items-center rounded-b-lg md:relative md:top-auto md:left-auto md:w-auto md:shadow-none md:flex-row"
+        style="background-color: var(--footer-nav-bg)">
+        <li>
+          <a href="#topics" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Topics</a>
+        </li>
+        <li>
+          <a href="#about" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">About</a>
+        </li>
+        <li>
+          <a href="#contact" class="block py-2 px-4 rounded-md transition-colors" onclick="CommonUtils.hideMenu()">Contact</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 rounded-md transition-colors" onclick="toggleTheme(); return false;">Theme</a>
+        </li>
       </ul>
     </nav>
 
     <section id="home" class="pt-20">
       <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Welcome to My Blog!</h1>
       <p class="text-lg md:text-xl max-w-3xl leading-relaxed mb-8 drop-shadow-md">
-        Join me as I explore a wide array of topics, from the intricacies of artificial intelligence and machine learning to practical productivity tips and exciting travel experiences. Get ready for insightful discussions and engaging content!
+        Join me as I explore a wide array of topics, from the intricacies of artificial intelligence and machine learning to practical productivity tips and exciting travel experiences. Get ready for
+        insightful discussions and engaging content!
       </p>
       <a href="#topics" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
         Explore Topics
@@ -42,49 +49,37 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Travel Experiences</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Embark on a journey through diverse cultures and breathtaking landscapes with my travel stories, tips, and destination guides.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Embark on a journey through diverse cultures and breathtaking landscapes with my travel stories, tips, and destination guides.</p>
           <a href="./travel" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
 
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Personal Growth</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Explore insights on self-improvement, mindset shifts, continuous learning, and building a more fulfilling life.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Explore insights on self-improvement, mindset shifts, continuous learning, and building a more fulfilling life.</p>
           <a href="./growth" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
 
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Money and Finances</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Learn about personal finance, investing, budgeting, and strategies for building wealth and financial independence.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Learn about personal finance, investing, budgeting, and strategies for building wealth and financial independence.</p>
           <a href="./money" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
 
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Learning & Books</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Discover new knowledge, explore learning methodologies, and dive into reviews and insights from various books.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Discover new knowledge, explore learning methodologies, and dive into reviews and insights from various books.</p>
           <a href="./books" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
 
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Artificial Intelligence</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Delve into the cutting edge of AI, machine learning, deep learning, and their impact on technology and society.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Delve into the cutting edge of AI, machine learning, deep learning, and their impact on technology and society.</p>
           <a href="./ai" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
 
         <div class="blog-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1">
           <h3 class="text-2xl font-bold mb-3">Home lab & Gadgets</h3>
-          <p class="text-base leading-relaxed mb-4">
-            Explore personal tech projects, home automation, reviews of the latest gadgets, and tips for setting up your own lab.
-          </p>
+          <p class="text-base leading-relaxed mb-4">Explore personal tech projects, home automation, reviews of the latest gadgets, and tips for setting up your own lab.</p>
           <a href="./homelab" class="text-blue-600 hover:underline dark:text-blue-400">View Blogs &rarr;</a>
         </div>
       </div>
@@ -93,15 +88,14 @@
     <section id="about" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-bold mb-8">About Me</h2>
       <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-        I'm Fernando Rijo Cedeño, a passionate Node.js developer with a diverse background and a love for continuous learning. This blog is where I share my thoughts, experiences, and expertise across various domains.
+        I'm Fernando Rijo Cedeño, a passionate Node.js developer with a diverse background and a love for continuous learning. This blog is where I share my thoughts, experiences, and expertise across
+        various domains.
       </p>
     </section>
 
     <section id="contact" class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-bold mb-8">Get in Touch</h2>
-      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
-        Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.
-      </p>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">Have a question or want to collaborate? Feel free to reach out through my social media channels or send an email.</p>
       <ul class="list-none flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg">
         <li><a href="https://linkedin.com/in/fernandorijocedeno" class="hover:underline">LinkedIn</a></li>
         <li><a href="https://github.com/zFernand0" class="hover:underline">GitHub</a></li>
@@ -116,7 +110,6 @@
       <p class="text-sm">&copy; 2025 Fernando Rijo Cedeño. All Rights Reserved.</p>
     </footer>
 
-    
-      <script src="../js/common.js"></script>
-</body>
+    <script src="../js/common.js"></script>
+  </body>
 </html>

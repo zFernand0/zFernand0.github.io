@@ -4,257 +4,267 @@
  */
 
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
 /* Base Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Raleway', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
+  font-family: "Raleway", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 /* Smooth transitions for theme changes */
 .transition-colors {
-    transition-property: background-color, color;
-    transition-duration: 300ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Smooth scroll behavior */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Theme Variables */
 html.dark {
-    --background-color: #0d1117;
-    --overlay-color: 0,0,0,0.5;
-    --text-color: #c9d1d9;
-    --link-color: #4b94e7bc;
-    --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
-    --footer-nav-bg: #161b22;
-    --text-color-on-hero: #fff;
-    --card-bg: #161b22;
-    --card-text: #c9d1d9;
+  --background-color: #0d1117;
+  --overlay-color: 0, 0, 0, 0.5;
+  --text-color: #c9d1d9;
+  --link-color: #4b94e7bc;
+  --header-bg: linear-gradient(270deg, rgb(15, 15, 218), rgb(184, 120, 0));
+  --footer-nav-bg: #161b22;
+  --text-color-on-hero: #fff;
+  --card-bg: #161b22;
+  --card-text: #c9d1d9;
 }
 
 html.light {
-    --background-color: #f5f5f5;
-    --overlay-color: 255,255,255,0.3;
-    --text-color: #0d1117;
-    --link-color: #0066cc;
-    --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
-    --footer-nav-bg: #eaeaea;
-    --text-color-on-hero: #0d1117;
-    --card-bg: #ffffff;
-    --card-text: #0d1117;
+  --background-color: #f5f5f5;
+  --overlay-color: 255, 255, 255, 0.3;
+  --text-color: #0d1117;
+  --link-color: #0066cc;
+  --header-bg: linear-gradient(270deg, rgb(255, 203, 105), lightblue);
+  --footer-nav-bg: #eaeaea;
+  --text-color-on-hero: #0d1117;
+  --card-bg: #ffffff;
+  --card-text: #0d1117;
 }
 
 /* Navigation Styles */
 nav {
-    background-color: var(--footer-nav-bg);
+  background-color: var(--footer-nav-bg);
 }
 
 .navbar.open {
-    display: flex;
+  display: flex;
 }
 
 /* Link Styles */
 a {
-    color: var(--link-color);
-    text-decoration: none;
+  color: var(--link-color);
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Navbar link colors and hover effects */
-nav .first-link, nav .menu-icon, .navbar li a {
-    color: var(--text-color);
+nav .first-link,
+nav .menu-icon,
+.navbar li a {
+  color: var(--text-color);
 }
 
 .navbar li a:hover {
-    background-color: var(--link-color);
-    color: var(--background-color);
-    border-radius: 4px;
-    text-decoration: none;
+  background-color: var(--link-color);
+  color: var(--background-color);
+  border-radius: 4px;
+  text-decoration: none;
 }
 
 /* Hero Section Styles */
 #home {
-    min-width: 40vh;
-    position: relative;
-    min-height: 70vh;
-    display: flex;
-    background-image: url("../img/fernando.png"), var(--header-bg);
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: contain;
-    flex-direction: column;
-    align-items: center;
-    justify-content: end;
-    text-align: center;
-    z-index: 1;
-    padding-bottom: 5rem;
-    color: var(--text-color-on-hero);
+  min-width: 40vh;
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  background-image: url("../img/fernando.png"), var(--header-bg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  text-align: center;
+  z-index: 1;
+  padding-bottom: 5rem;
+  color: var(--text-color-on-hero);
 }
 
 #home::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(var(--overlay-color));
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--overlay-color));
+  z-index: -1;
 }
 
 /* Override Tailwind's default H1 color for hero section */
 #home h1 {
-    color: var(--text-color-on-hero);
+  color: var(--text-color-on-hero);
 }
 
 #home p {
-    color: var(--text-color-on-hero);
+  color: var(--text-color-on-hero);
 }
 
 /* Ensure other section headings use the general text color */
 section:not(#home) h2 {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 /* Card Styles */
-.interest-card, .blog-card {
-    background-color: var(--card-bg);
-    color: var(--card-text);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.interest-card,
+.blog-card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.interest-card:hover, .blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.interest-card:hover,
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer Styles */
 footer {
-    background-color: var(--footer-nav-bg);
-    color: var(--text-color);
+  background-color: var(--footer-nav-bg);
+  color: var(--text-color);
 }
 
 /* Travel Planner Specific Styles */
 .filter-btn {
-    transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .filter-btn.active {
-    background-color: #C84630;
-    color: #FFFFFF;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: #c84630;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .filter-btn:not(.active):hover {
-    background-color: #E8A798;
+  background-color: #e8a798;
 }
 
 .map-city {
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .map-city:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .map-line {
-    position: absolute;
-    background-color: #3E606F;
-    opacity: 0.5;
+  position: absolute;
+  background-color: #3e606f;
+  opacity: 0.5;
 }
 
 .accordion-header {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .accordion-header:hover {
-    background-color: #F8F3F0;
+  background-color: #f8f3f0;
 }
 
 .accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .accordion-content.open {
-    max-height: 1000px;
+  max-height: 1000px;
 }
 
 .activity-card {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    will-change: transform, opacity;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .activity-card.hidden {
-    transform: scale(0.95);
-    opacity: 0;
-    display: none;
+  transform: scale(0.95);
+  opacity: 0;
+  display: none;
 }
 
 /* Chart Container Styles */
 .chart-container {
-    position: relative;
-    margin: auto;
-    height: 300px;
-    width: 100%;
-    max-width: 300px;
+  position: relative;
+  margin: auto;
+  height: 300px;
+  width: 100%;
+  max-width: 300px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .navbar {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--footer-nav-bg);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 0 0 8px 8px;
-        z-index: 40;
-    }
-    
-    .navbar.hidden {
-        display: none;
-    }
-    
-    .navbar.open {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-    }
+  .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--footer-nav-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 8px 8px;
+    z-index: 40;
+  }
+
+  .navbar.hidden {
+    display: none;
+  }
+
+  .navbar.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
 }
 
 /* Utility Classes */
 .text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .drop-shadow-lg {
-    filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
 }
 
 .drop-shadow-md {
-    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
-} 
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}

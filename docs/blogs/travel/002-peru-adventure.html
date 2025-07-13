@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" class="travel-page travel-peru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Peru Adventure: Exploring Ancient Wonders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/travel.css" />
+  </head>
+
+  <body class="antialiased">
+    <header class="text-center py-8 md:py-12 bg-white shadow-sm">
+      <h1 class="text-4xl md:text-5xl font-bold text-[#C84630]">My Peru Adventure</h1>
+      <p class="mt-2 md:mt-4 text-lg text-gray-600 max-w-3xl mx-auto px-4">A personal journey through ancient ruins, vibrant cities, and unforgettable experiences in the heart of the Andes.</p>
+      <p class="mt-2 text-sm text-gray-500">January 2025 • 5 Days • 4 Cities</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+      <section id="overview" class="mb-12">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Trip Overview</h2>
+          <p class="mt-2 text-gray-600">
+            From the bustling streets of Lima to the mystical heights of Machu Picchu, this was a journey that exceeded all expectations. Here's how my adventure unfolded across Peru's most iconic
+            destinations.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-xl font-bold text-center mb-4 text-gray-700">My Journey Path</h3>
+            <div id="map-container" class="relative h-64 md:h-80 w-full flex justify-between items-center px-4 md:px-8">
+              <!-- Map lines will be injected here by JS -->
+              <div id="map-lima" data-city="lima" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Lima</div>
+                <span class="font-semibold mt-2 block">Days 1-2</span>
+              </div>
+              <div id="map-cusco" data-city="cusco" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Cusco</div>
+                <span class="font-semibold mt-2 block">Days 3-5</span>
+              </div>
+              <div id="map-machupicchu" data-city="machupicchu" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#3E606F] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Machu Picchu</div>
+                <span class="font-semibold mt-2 block">Day 4</span>
+              </div>
+              <div id="map-sacredvalley" data-city="sacredvalley" class="map-city text-center z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#C84630] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">Sacred Valley</div>
+                <span class="font-semibold mt-2 block">Day 5</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-xl font-bold text-center mb-4 text-gray-700">Trip Highlights</h3>
+            <div class="space-y-4">
+              <div class="text-center p-3 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">🏛️</div>
+                <div class="font-semibold">Ancient Ruins</div>
+                <div class="text-sm text-gray-600">Machu Picchu & Sacred Valley</div>
+              </div>
+              <div class="text-center p-3 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">🍽️</div>
+                <div class="font-semibold">Culinary Delights</div>
+                <div class="text-sm text-gray-600">Lima's World-Class Cuisine</div>
+              </div>
+              <div class="text-center p-3 bg-gray-50 rounded-lg">
+                <div class="text-2xl mb-2">🏔️</div>
+                <div class="font-semibold">Andean Culture</div>
+                <div class="text-sm text-gray-600">Cusco's Rich Heritage</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="day-by-day" class="bg-white p-6 rounded-xl shadow-lg mb-12">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">My Journey Day by Day</h2>
+          <p class="mt-2 text-gray-600">Follow along as I share the highlights, challenges, and unforgettable moments from each day of my Peru adventure.</p>
+        </div>
+
+        <div id="day-filters" class="flex justify-center flex-wrap gap-2 mb-8">
+          <button data-day="all" class="day-filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Days</button>
+          <button data-day="1" class="day-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Day 1</button>
+          <button data-day="2" class="day-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Day 2</button>
+          <button data-day="3" class="day-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Day 3</button>
+          <button data-day="4" class="day-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Day 4</button>
+          <button data-day="5" class="day-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">Day 5</button>
+        </div>
+
+        <div id="day-content" class="space-y-8">
+          <!-- Day content will be injected by JS -->
+        </div>
+      </section>
+
+      <section id="photos" class="bg-white p-6 rounded-xl shadow-lg mb-12">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Photo Gallery</h2>
+          <p class="mt-2 text-gray-600">Capturing the beauty, culture, and unforgettable moments from my Peru adventure.</p>
+        </div>
+
+        <div id="photo-filters" class="flex justify-center flex-wrap gap-2 mb-8">
+          <button data-category="all" class="photo-filter-btn active font-semibold py-2 px-4 rounded-full bg-gray-200">All Photos</button>
+          <button data-category="landscapes" class="photo-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🏔️ Landscapes</button>
+          <button data-category="culture" class="photo-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🏛️ Culture</button>
+          <button data-category="food" class="photo-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">🍽️ Food</button>
+          <button data-category="people" class="photo-filter-btn font-semibold py-2 px-4 rounded-full bg-gray-200">👥 People</button>
+        </div>
+
+        <div id="photo-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Photo gallery will be injected by JS -->
+        </div>
+      </section>
+
+      <section id="reflections">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">Personal Reflections</h2>
+          <p class="mt-2 text-gray-600">Thoughts, lessons learned, and recommendations from my time in Peru.</p>
+        </div>
+        <div id="reflections-container" class="space-y-4 max-w-4xl mx-auto">
+          <!-- Reflections will be injected by JS -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-center py-6 mt-8 bg-white border-t">
+      <p class="text-gray-500">A personal journey through the wonders of Peru - January 2025</p>
+    </footer>
+
+    <!-- Load common utilities -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/travel-utils.js"></script>
+    <script src="../../js/travel-data.js"></script>
+
+    <!-- Page-specific script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize travel utilities
+        const travelUtils = new TravelUtils();
+
+        // Get Peru trip data
+        const tripData = TravelData.peru;
+
+        // Populate day-by-day content
+        travelUtils.populateDayContent(tripData.activities, "day-content");
+
+        // Populate photo gallery (placeholder)
+        travelUtils.populatePhotoGallery("photo-gallery");
+
+        // Populate reflections
+        travelUtils.populateReflections(tripData.detailedTips, "reflections-container");
+
+        // Initialize day and photo filters
+        travelUtils.initDayFilters();
+        travelUtils.initPhotoFilters();
+      });
+    </script>
+  </body>
+</html>

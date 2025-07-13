@@ -5,167 +5,169 @@
 
 /* Travel Page Base Styles */
 .travel-page {
-    font-family: 'Inter', sans-serif;
-    background-color: #FDFDFB;
-    color: #4A453D;
+  font-family: "Inter", sans-serif;
+  background-color: #fdfdfb;
+  color: #4a453d;
 }
 
 .travel-page.light {
-    background-color: #FDFBF8;
-    color: #4B4B4B;
+  background-color: #fdfbf8;
+  color: #4b4b4b;
 }
 
 /* Navigation Styles */
 .nav-button {
-    transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .nav-button.active {
-    background-color: #D6C7AE;
-    color: #4A453D;
+  background-color: #d6c7ae;
+  color: #4a453d;
 }
 
 .nav-button:hover {
-    background-color: #C3B8A8;
+  background-color: #c3b8a8;
 }
 
 /* Timeline Styles */
 .timeline-item-content {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .task-checkbox:checked + .timeline-item-content {
-    text-decoration: line-through;
-    opacity: 0.6;
+  text-decoration: line-through;
+  opacity: 0.6;
 }
 
 .day-content {
-    display: none;
+  display: none;
 }
 
 .day-content.active {
-    display: block;
+  display: block;
 }
 
 /* Accordion Styles */
 .tips-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 
 .tips-content.open {
-    max-height: 1000px;
+  max-height: 1000px;
 }
 
 .accordion-header {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .accordion-header:hover {
-    background-color: #F8F3F0;
+  background-color: #f8f3f0;
 }
 
 .accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .accordion-content.open {
-    max-height: 1000px;
+  max-height: 1000px;
 }
 
 /* Filter Styles */
 .filter-btn {
-    transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .filter-btn.active {
-    background-color: #C84630;
-    color: #FFFFFF;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: #c84630;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .filter-btn:not(.active):hover {
-    background-color: #E8A798;
+  background-color: #e8a798;
 }
 
 /* Map Styles */
 .map-city {
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .map-city:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .map-line {
-    position: absolute;
-    background-color: #3E606F;
-    opacity: 0.5;
+  position: absolute;
+  background-color: #3e606f;
+  opacity: 0.5;
 }
 
 /* Activity Card Styles */
 .activity-card {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    will-change: transform, opacity;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .activity-card.hidden {
-    transform: scale(0.95);
-    opacity: 0;
-    display: none;
+  transform: scale(0.95);
+  opacity: 0;
+  display: none;
 }
 
 /* Chart Container Styles */
 .chart-container {
-    position: relative;
-    height: 256px;
-    width: 100%;
-    max-width: 384px;
-    margin-left: auto;
-    margin-right: auto;
+  position: relative;
+  height: 256px;
+  width: 100%;
+  max-width: 384px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (min-width: 768px) {
-    .chart-container {
-        height: 288px;
-    }
+  .chart-container {
+    height: 288px;
+  }
 }
 
 /* Travel-specific color schemes */
 .travel-japan {
-    --primary-color: #C84630;
-    --secondary-color: #3E606F;
-    --accent-color: #E8A798;
-    --background-color: #FDFBF8;
-    --text-color: #4B4B4B;
+  --primary-color: #c84630;
+  --secondary-color: #3e606f;
+  --accent-color: #e8a798;
+  --background-color: #fdfbf8;
+  --text-color: #4b4b4b;
 }
 
 .travel-korea {
-    --primary-color: #A89F91;
-    --secondary-color: #8E8373;
-    --accent-color: #D6C7AE;
-    --background-color: #FDFDFB;
-    --text-color: #4A453D;
+  --primary-color: #a89f91;
+  --secondary-color: #8e8373;
+  --accent-color: #d6c7ae;
+  --background-color: #fdfdfb;
+  --text-color: #4a453d;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .travel-page {
-        padding-top: 64px;
-    }
-    
-    .travel-korea {
-        padding-top: 0;
-    }
-    
-    .nav-button {
-        font-size: 0.875rem;
-        padding: 0.5rem 0.75rem;
-    }
-} 
+  .travel-page {
+    padding-top: 64px;
+  }
+
+  .travel-korea {
+    padding-top: 0;
+  }
+
+  .nav-button {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
