@@ -384,6 +384,139 @@ const TravelData = {
     ],
   },
 
+  camping: {
+    title: "🏕️ July 4th Camping Adventure",
+    subtitle: "July 4-6, 2025",
+    description:
+      "A personal journey into the wilderness, celebrating independence under the stars with friends, campfires, and unforgettable memories. This camping trip combines outdoor adventure with patriotic celebration.",
+    tips: [
+      "Weather Check: Always check the forecast before heading out and pack accordingly.",
+      "Fire Safety: Follow all campfire regulations and never leave fires unattended.",
+      "Leave No Trace: Pack out everything you bring in and respect the wilderness.",
+      "First Aid: Bring a well-stocked first aid kit for any minor injuries.",
+      "Water: Bring plenty of water and have a backup purification method.",
+    ],
+    activities: [
+      // Day 1 - Arrival & Setup
+      {
+        day: 1,
+        city: "arrival",
+        theme: "setup",
+        title: "Arrival at Campsite",
+        desc: "Arrive at the campground and begin setting up our tents and camp area.",
+      },
+      {
+        day: 1,
+        city: "arrival",
+        theme: "setup",
+        title: "Camp Setup",
+        desc: "Pitch tents, organize gear, and create our home away from home in the wilderness.",
+      },
+      {
+        day: 1,
+        city: "arrival",
+        theme: "food",
+        title: "First Campfire Dinner",
+        desc: "Cook dinner over the campfire and enjoy our first meal under the stars.",
+      },
+      {
+        day: 1,
+        city: "arrival",
+        theme: "relaxation",
+        title: "Stargazing",
+        desc: "End the day with stargazing and planning for tomorrow's adventures.",
+      },
+
+      // Day 2 - Exploration & July 4th
+      {
+        day: 2,
+        city: "exploration",
+        theme: "nature",
+        title: "Morning Hike",
+        desc: "Start the day with a refreshing hike through the surrounding wilderness.",
+      },
+      {
+        day: 2,
+        city: "exploration",
+        theme: "food",
+        title: "Campfire Breakfast",
+        desc: "Enjoy a hearty breakfast cooked over the campfire.",
+      },
+      {
+        day: 2,
+        city: "exploration",
+        theme: "nature",
+        title: "Wildlife Watching",
+        desc: "Explore the area and observe local wildlife in their natural habitat.",
+      },
+      {
+        day: 2,
+        city: "celebration",
+        theme: "celebration",
+        title: "July 4th Preparations",
+        desc: "Prepare for the evening's Independence Day celebration with decorations and food.",
+      },
+      {
+        day: 2,
+        city: "celebration",
+        theme: "food",
+        title: "Patriotic BBQ",
+        desc: "Grill up a traditional American BBQ feast to celebrate the 4th of July.",
+      },
+      {
+        day: 2,
+        city: "celebration",
+        theme: "celebration",
+        title: "Fireworks Show",
+        desc: "Watch fireworks light up the night sky, celebrating freedom in the wilderness.",
+      },
+      {
+        day: 2,
+        city: "celebration",
+        theme: "social",
+        title: "Campfire Stories",
+        desc: "Share stories, play games, and enjoy s'mores around the campfire.",
+      },
+
+      // Day 3 - Departure
+      {
+        day: 3,
+        city: "departure",
+        theme: "food",
+        title: "Final Campfire Breakfast",
+        desc: "Enjoy one last breakfast together before packing up.",
+      },
+      {
+        day: 3,
+        city: "departure",
+        theme: "cleanup",
+        title: "Pack Up Camp",
+        desc: "Carefully pack up all gear and ensure we leave no trace behind.",
+      },
+      {
+        day: 3,
+        city: "departure",
+        theme: "reflection",
+        title: "Farewell to the Wilderness",
+        desc: "Take final photos and say goodbye to our temporary home in nature.",
+      },
+    ],
+    detailedTips: [
+      {
+        title: "🏕️ Camping Essentials",
+        content: `<strong>Tent Setup:</strong> Practice setting up your tent at home before the trip. Choose a flat, dry spot away from water runoff.<br><br><strong>Sleeping Gear:</strong> Invest in a good sleeping bag rated for the expected temperatures and a comfortable sleeping pad.<br><br><strong>Weather Protection:</strong> Bring rain gear and extra layers, as weather can change quickly in the wilderness.`,
+      },
+      {
+        title: "🔥 Fire Safety & Cooking",
+        content: `<strong>Campfire Safety:</strong> Only build fires in designated fire rings or pits. Keep fires small and never leave them unattended.<br><br><strong>Cooking Equipment:</strong> Bring a portable stove as backup and pack all necessary cooking utensils and fuel.<br><br><strong>Food Storage:</strong> Store food properly to avoid attracting wildlife. Use bear-proof containers if required.`,
+      },
+      {
+        title: "🎆 July 4th Celebrations",
+        content: `<strong>Fireworks Safety:</strong> Check local regulations about fireworks. Many wilderness areas prohibit them due to fire risk.<br><br><strong>Patriotic Decorations:</strong> Bring flags and decorations that can be safely displayed and easily packed out.<br><br><strong>Group Activities:</strong> Plan games and activities that everyone can enjoy, from card games to outdoor sports.`,
+      },
+    ],
+  },
+
   peru: {
     title: "🇵🇪 Peru Adventure",
     subtitle: "Your Trip Dates Here",
