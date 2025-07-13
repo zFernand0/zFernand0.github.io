@@ -1,44 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="travel-page travel-japan">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Japan Trip Itinerary</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A single-page app with top navigation to switch between daily timeline views. This focuses the user on one day at a time, mimicking the actual trip flow, which is more user-friendly than a long scroll. An interactive checklist adds utility, and a collapsible tips section keeps secondary info accessible but out of the way. A doughnut chart provides a high-level summary of activity types. -->
-    <!-- Visualization & Content Choices: Main itinerary -> Goal: Organize/Inform -> Method: Interactive vertical timeline (HTML/CSS) with checkboxes -> Interaction: Day selection via nav buttons, task completion via checkboxes -> Justification: Visually engaging, provides clear chronological flow, and adds utility for tracking progress. Travel Tips -> Goal: Inform -> Method: Collapsible accordion section -> Interaction: Click to show/hide -> Justification: Hides non-critical info to reduce clutter. Activity Breakdown -> Goal: Summarize/Inform -> Method: Doughnut Chart (Chart.js/Canvas) -> Interaction: Hover for tooltips -> Justification: Provides a quick, visual overview of how trip time is allocated. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFDFB;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-        .nav-button.active {
-            background-color: #D6C7AE;
-            color: #4A453D;
-        }
-        .timeline-item-content {
-            transition: all 0.3s ease;
-        }
-        .task-checkbox:checked + .timeline-item-content {
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-        .day-content {
-            display: none;
-        }
-        .day-content.active {
-            display: block;
-        }
-        .tips-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/travel.css">
 </head>
 <body class="text-gray-800">
 
@@ -236,6 +207,12 @@
         </div>
     </div>
 
+    <!-- Load common utilities -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/travel-utils.js"></script>
+    <script src="../../js/travel-data.js"></script>
+    
+    <!-- Page-specific script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const itineraryData = {
@@ -288,39 +265,10 @@
                 }
             });
 
-            const dayNav = document.getElementById('day-nav');
-            const dayContents = document.querySelectorAll('.day-content');
-            const navButtons = document.querySelectorAll('.nav-button');
-
-            dayNav.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    const day = e.target.dataset.day;
-
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                    
-                    dayContents.forEach(content => {
-                        if (content.dataset.day === day) {
-                            content.classList.add('active');
-                        } else {
-                            content.classList.remove('active');
-                        }
-                    });
-                }
-            });
-            
-            const tipsBtn = document.getElementById('toggle-tips-btn');
-            const tipsContent = document.getElementById('tips-content');
-            tipsBtn.addEventListener('click', () => {
-                if (tipsContent.style.maxHeight) {
-                    tipsContent.style.maxHeight = null;
-                    tipsBtn.textContent = 'Show Essential Travel Tips';
-                } else {
-                    tipsContent.style.maxHeight = tipsContent.scrollHeight + "px";
-                    tipsBtn.textContent = 'Hide Essential Travel Tips';
-                }
-            });
-
+            // Initialize travel utilities for day navigation and tips toggle
+            const travelUtils = new TravelUtils();
+            travelUtils.initDayNavigation();
+            travelUtils.initTipsToggle();
         });
     </script>
 </body>
