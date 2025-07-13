@@ -35,13 +35,19 @@ class TravelUtils {
         document.querySelectorAll('.nav-button').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-day="${day}"]`).classList.add('active');
+        const activeButton = document.querySelector(`.nav-button[data-day="${day}"]`);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
 
         // Update content visibility
         document.querySelectorAll('.day-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.querySelector(`[data-day="${day}"]`).classList.add('active');
+        const activeContent = document.querySelector(`.day-content[data-day="${day}"]`);
+        if (activeContent) {
+            activeContent.classList.add('active');
+        }
 
         this.currentDay = parseInt(day);
     }
