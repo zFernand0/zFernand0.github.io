@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="travel-page travel-japan">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,80 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 
-    Chosen Palette: Warm Neutrals with Japanese Accents (Background: #FDFBF8, Text: #4B4B4B, Primary Accent: #C84630 - persimmon, Secondary Accent: #3E606F - muted teal)
-    Application Structure Plan: The application abandons the linear day-by-day structure of the source report in favor of a user-centric interactive dashboard. The structure is designed for non-linear exploration, allowing users to slice the information by City or by Theme (Culture, Modern, Food, etc.). Key components include: 1) A main navigation hub with filters. 2) An 'Overview' section with key stats, a stylized travel path map, and a chart showing time distribution. 3) A dynamic grid of 'Activity Cards' that updates based on user selections. 4) A collapsible 'Travel Tips' accordion. This design empowers users to explore the trip based on their own interests (e.g., 'What cultural things can I do in Kyoto?') rather than being forced down a chronological path, leading to better usability and information synthesis.
-    Visualization & Content Choices: 
-    - Itinerary Data -> Filterable Card Grid (HTML/CSS/JS): Goal: Organize & Explore. The linear itinerary is broken into modular cards. Interaction: Filtering by city/theme. Justification: Superior to a list for non-linear exploration.
-    - Travel Path -> Stylized Map Diagram (HTML/CSS): Goal: Inform & Orient. Visually represents the journey's flow. Interaction: Clickable cities act as filters. Justification: More engaging and intuitive than a simple list of cities.
-    - Trip Composition -> Doughnut Chart (Chart.js/Canvas): Goal: Inform/Summarize. Shows days spent per region at a glance. Interaction: Hover tooltips. Justification: Provides a quick quantitative overview of the trip's focus.
-    - Travel Tips -> Interactive Accordion (HTML/CSS/JS): Goal: Organize & Inform. Breaks down a large block of text into digestible, user-initiated sections. Interaction: Click to expand/collapse. Justification: Improves readability and reduces initial information overload.
-    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
-    -->
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #4B4B4B;
-        }
-        .filter-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .filter-btn.active {
-            background-color: #C84630;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .filter-btn:not(.active):hover {
-            background-color: #E8A798;
-        }
-        .map-city {
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-        }
-        .map-city:hover {
-            transform: scale(1.05);
-        }
-        .map-line {
-            position: absolute;
-            background-color: #3E606F;
-            opacity: 0.5;
-        }
-        .accordion-header {
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .accordion-header:hover {
-            background-color: #F8F3F0;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-        .accordion-content.open {
-            max-height: 1000px;
-        }
-        .chart-container {
-            position: relative;
-            margin: auto;
-            height: 300px;
-            width: 100%;
-            max-width: 300px;
-        }
-        .activity-card {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            will-change: transform, opacity;
-        }
-        .activity-card.hidden {
-            transform: scale(0.95);
-            opacity: 0;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="../../css/travel.css">
 </head>
 <body class="antialiased">
 
@@ -178,260 +105,29 @@
         <p class="text-gray-500">An interactive experience inspired by a whirlwind Japan adventure.</p>
     </footer>
 
+    <!-- Load common utilities -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/travel-utils.js"></script>
+    <script src="../../js/travel-data.js"></script>
+    
+    <!-- Page-specific script -->
     <script>
-        const activities = [
-            { day: 1, city: 'tokyo', theme: 'modern', title: 'Shibuya Scramble Crossing', desc: 'Immerse yourself in the iconic, bustling intersection, a symbol of modern Tokyo.' },
-            { day: 1, city: 'tokyo', theme: 'modern', title: 'Hachiko Statue', desc: 'Visit the famous statue honoring the loyal dog, a beloved meeting point.' },
-            { day: 1, city: 'tokyo', theme: 'fun', title: 'Don Quijote MEGA Shibuya', desc: 'Explore a massive discount store filled with unique snacks, souvenirs, and goods.' },
-            { day: 1, city: 'tokyo', theme: 'food', title: 'Dinner in Shibuya', desc: 'Enjoy the vibrant nightlife with dinner options like sushi, izakaya, or ramen.' },
-            { day: 1, city: 'tokyo', theme: 'modern', title: 'Shibuya Sky (Optional)', desc: 'Experience breathtaking 360° night views of the city from this rooftop observatory.' },
-            { day: 2, city: 'tokyo', theme: 'culture', title: 'Senso-ji Temple', desc: 'Explore Tokyo\'s oldest temple in the historic Asakusa district.' },
-            { day: 2, city: 'tokyo', theme: 'modern', title: 'Nakamise-dori Street', desc: 'Wander the vibrant shopping street leading to Senso-ji, full of traditional snacks.' },
-            { day: 2, city: 'tokyo', theme: 'modern', title: 'Tokyo Skytree View', desc: 'View the towering communications and observation tower from its base.' },
-            { day: 2, city: 'tokyo', theme: 'modern', title: 'Akihabara Exploration', desc: 'Dive into the electric town famous for anime, manga, and electronics stores.' },
-            { day: 2, city: 'tokyo', theme: 'modern', title: 'Harajuku & Takeshita Street', desc: 'Discover quirky fashion, crepe stalls, and the vibrant youth culture.' },
-            { day: 2, city: 'tokyo', theme: 'culture', title: 'Meiji Jingu Shrine', desc: 'Find peace at this major Shinto shrine dedicated to Emperor Meiji.' },
-            { day: 2, city: 'tokyo', theme: 'culture', title: 'Zojoji Temple', desc: 'Visit this historic Buddhist temple which offers a classic view of Tokyo Tower.' },
-            { day: 2, city: 'tokyo', theme: 'food', title: 'Uobei Sushi', desc: 'Enjoy a fun and affordable meal at this popular conveyor belt sushi restaurant.' },
-            { day: 3, city: 'fuji', theme: 'nature', title: 'Highway Bus to Kawaguchiko', desc: 'Travel from Shinjuku to the Fuji Five Lakes region with scenic views en route.' },
-            { day: 3, city: 'fuji', theme: 'nature', title: 'Chureito Pagoda', desc: 'Capture the iconic photo of the five-storied pagoda with Mt. Fuji in the background.' },
-            { day: 3, city: 'fuji', theme: 'nature', title: 'Lake Kawaguchi', desc: 'Soak in the stunning views of Mt. Fuji from the shores of this beautiful lake.' },
-            { day: 3, city: 'fuji', theme: 'fun', title: 'Panoramic Ropeway', desc: 'Optional: Ride the Kachi-Kachi Yama ropeway for elevated views of the lake and mountain.' },
-            { day: 4, city: 'kyoto', theme: 'nature', title: 'Arashiyama Bamboo Grove', desc: 'Walk through the magical, towering bamboo stalks for an ethereal experience.' },
-            { day: 4, city: 'kyoto', theme: 'culture', title: 'Nijo Castle', desc: 'Explore the former residence of the Tokugawa shoguns with its "nightingale floors".' },
-            { day: 4, city: 'kyoto', theme: 'culture', title: 'Kiyomizu-dera Temple', desc: 'Visit the famous "Pure Water Temple" and its impressive wooden stage.' },
-            { day: 4, city: 'kyoto', theme: 'culture', title: 'Traditional Tea Ceremony', desc: 'Participate in a serene and meditative ceremony to experience Japanese culture.' },
-            { day: 4, city: 'kyoto', theme: 'culture', title: 'Gion District Stroll', desc: 'Wander the charming, historic geisha district with its traditional wooden houses.' },
-            { day: 4, city: 'kyoto', theme: 'food', title: 'Nishiki Market', desc: 'Explore "Kyoto\'s Kitchen," a narrow market street with fresh food and snacks.' },
-            { day: 4, city: 'kyoto', theme: 'food', title: 'Dinner at Pontocho Alley', desc: 'Enjoy dinner in a narrow, atmospheric alley packed with restaurants.' },
-            { day: 5, city: 'kyoto', theme: 'culture', title: 'Fushimi Inari Taisha', desc: 'Hike through thousands of vibrant red torii gates at this iconic shrine.' },
-            { day: 5, city: 'hiroshima', theme: 'culture', title: 'Hiroshima Peace Park', desc: 'Visit the Peace Memorial Museum, A-Bomb Dome, and reflect on history.' },
-            { day: 5, city: 'hiroshima', theme: 'food', title: 'Hiroshima Okonomiyaki', desc: 'Try the local savory pancake, layered with noodles, cabbage, and other fillings.' },
-            { day: 5, city: 'osaka', theme: 'modern', title: 'Dotonbori Exploration', desc: 'Experience Osaka\'s vibrant entertainment district with its neon lights and signs.' },
-            { day: 5, city: 'osaka', theme: 'fun', title: 'Don Quijote Ferris Wheel', desc: 'Get a unique view of the Dotonbori canal from this oblong-shaped ferris wheel.' },
-            { day: 6, city: 'osaka', theme: 'fun', title: 'Universal Studios Japan', desc: 'Spend a half-day exploring attractions, with a focus on Super Nintendo World.' },
-            { day: 6, city: 'osaka', theme: 'food', title: 'Lunch at Toyo', desc: 'If you can get a spot, experience the famous flame-cooking chef\'s delicious food.' },
-            { day: 6, city: 'osaka', theme: 'culture', title: 'Osaka Castle', desc: 'Visit the grand castle, a symbol of Osaka\'s history and power.' },
-            { day: 6, city: 'osaka', theme: 'culture', title: 'Shitennoji Temple', desc: 'Stop by one of Japan\'s oldest Buddhist temples.' },
-            { day: 6, city: 'osaka', theme: 'modern', title: 'Umeda Sky Building', desc: 'View the sunset from the Floating Garden Observatory for stunning city views.' },
-        ];
-
-        const tips = [
-            {
-                title: '🚄 Passes & Transportation',
-                content: `<strong>Luggage Forwarding (Takkyubin):</strong> This is a game-changer! Send large luggage between hotels (e.g., Tokyo to Kyoto) and travel with just an overnight bag. It makes navigating train stations much easier.<br><br><strong>Japan Rail Pass (7-Day):</strong> Likely cost-effective for this itinerary. Activate it on Day 2 to cover your Shinkansen journeys to Kyoto and Hiroshima.<br><br><strong>Hakone Free Pass (2-Day):</strong> Your key to seamless travel within the Hakone region, covering buses, trains, boats, and ropeways.`
-            },
-            {
-                title: '🎟️ Booking & Logistics',
-                content: `<strong>Pre-Booking is Crucial:</strong> Tickets for Shibuya Sky, the Mt. Fuji highway bus, and popular experiences like the tea ceremony sell out quickly. Book these online in advance!<br><br><strong>Universal Studios Japan (USJ):</strong> Buy park tickets AND strongly consider an Express Pass. This is vital for Super Nintendo World entry and reducing wait times, especially on a tight schedule.<br><br><strong>Stay Connected:</strong> Google Maps is essential. A Pocket WiFi or local SIM card is a must for navigating public transport and looking up information on the go.`
-            },
-            {
-                title: '👟 General Advice & Etiquette',
-                content: `<strong>Cash is Still Useful:</strong> While cards are widely accepted, have Japanese Yen for smaller vendors, street food stalls, and temple entrance fees.<br><br><strong>Comfy Footwear:</strong> You will be walking a lot! Prioritize comfort over style to keep your feet happy.<br><br><strong>Flexibility is Key:</strong> This is a tightly scheduled itinerary. While you should aim to stick to the plan, be prepared for minor adjustments and don't stress if you have to skip something.`
-            }
-        ];
-
-        let currentFilters = {
-            city: 'all',
-            theme: 'all'
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
-            const activitiesGrid = document.getElementById('activities-grid');
-            const accordionContainer = document.getElementById('accordion-container');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const mapCities = document.querySelectorAll('.map-city');
-
-            function populateActivities() {
-                activitiesGrid.innerHTML = '';
-                activities.forEach(activity => {
-                    const card = document.createElement('div');
-                    card.className = 'activity-card bg-gray-50 rounded-lg shadow-md p-4 flex flex-col';
-                    card.dataset.city = activity.city;
-                    card.dataset.theme = activity.theme;
-                    
-                    let icon = '';
-                    switch (activity.theme) {
-                        case 'culture': icon = '⛩️'; break;
-                        case 'modern': icon = '🏙️'; break;
-                        case 'nature': icon = '🗻'; break;
-                        case 'food': icon = '🍜'; break;
-                        case 'fun': icon = '🎢'; break;
-                    }
-
-                    card.innerHTML = `
-                        <div class="flex-grow">
-                            <h4 class="font-bold text-lg text-gray-800">${icon} ${activity.title}</h4>
-                            <p class="text-gray-600 mt-2 text-sm">${activity.desc}</p>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-gray-200">
-                           <span class="text-xs font-semibold text-white px-2 py-1 rounded-full ${activity.city === 'tokyo' || activity.city === 'osaka' ? 'bg-[#C84630]' : 'bg-[#3E606F]'}">${activity.city.charAt(0).toUpperCase() + activity.city.slice(1)}</span>
-                           <span class="text-xs font-semibold text-gray-500 float-right mt-1">Day ${activity.day}</span>
-                        </div>
-                    `;
-                    activitiesGrid.appendChild(card);
-                });
-            }
-
-            function populateTips() {
-                tips.forEach((tip, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'bg-white rounded-lg shadow-md overflow-hidden';
-                    item.innerHTML = `
-                        <div id="accordion-header-${index}" class="accordion-header p-4 flex justify-between items-center">
-                            <h4 class="font-bold text-lg text-gray-700">${tip.title}</h4>
-                            <span class="transform transition-transform duration-300">▼</span>
-                        </div>
-                        <div id="accordion-content-${index}" class="accordion-content">
-                            <div class="p-4 border-t border-gray-200 text-gray-600">
-                                <p>${tip.content}</p>
-                            </div>
-                        </div>
-                    `;
-                    accordionContainer.appendChild(item);
-                });
-
-                document.querySelectorAll('.accordion-header').forEach((header, index) => {
-                    header.addEventListener('click', () => {
-                        const content = document.getElementById(`accordion-content-${index}`);
-                        const icon = header.querySelector('span');
-                        content.classList.toggle('open');
-                        icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
-                    });
-                });
-            }
-
-            function updateView() {
-                const cards = document.querySelectorAll('.activity-card');
-                cards.forEach(card => {
-                    const showCity = currentFilters.city === 'all' || card.dataset.city === currentFilters.city;
-                    const showTheme = currentFilters.theme === 'all' || card.dataset.theme === currentFilters.theme;
-
-                    if (showCity && showTheme) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            }
+            // Initialize travel utilities
+            const travelUtils = new TravelUtils();
             
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const type = button.dataset.filterType;
-                    const value = button.dataset.filterValue;
-
-                    currentFilters[type] = value;
-
-                    document.querySelectorAll(`.filter-btn[data-filter-type="${type}"]`).forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    updateView();
-                });
-            });
-
-            mapCities.forEach(city => {
-                city.addEventListener('click', () => {
-                    const cityValue = city.dataset.city;
-                    document.querySelector(`.filter-btn[data-filter-type="city"][data-filter-value="${cityValue}"]`).click();
-                });
-            });
-
-            function createTripFocusChart() {
-                const ctx = document.getElementById('tripFocusChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['⛩️ Culture', '🏙️ Modern', '🗻 Nature', '🍜 Food', '🎢 Fun'],
-                        datasets: [{
-                            label: 'Activity Focus',
-                            data: [
-                                activities.filter(a => a.theme === 'culture').length,
-                                activities.filter(a => a.theme === 'modern').length,
-                                activities.filter(a => a.theme === 'nature').length,
-                                activities.filter(a => a.theme === 'food').length,
-                                activities.filter(a => a.theme === 'fun').length,
-                            ],
-                            backgroundColor: [
-                                '#C84630', 
-                                '#3E606F',
-                                '#6A8A82',
-                                '#E8A798',
-                                '#F3D4C4'
-                            ],
-                            borderColor: '#FDFBF8',
-                            borderWidth: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    font: {
-                                        size: 12,
-                                        family: 'Inter'
-                                    },
-                                    boxWidth: 20,
-                                    padding: 15
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            function drawMapLines() {
-                const mapContainer = document.getElementById('map-container');
-                const tokyo = document.getElementById('map-tokyo');
-                const kyoto = document.getElementById('map-kyoto');
-                const hiroshima = document.getElementById('map-hiroshima');
-                const osaka = document.getElementById('map-osaka');
-                
-                const positions = {
-                    tokyo: tokyo.offsetLeft + tokyo.offsetWidth / 2,
-                    kyoto: kyoto.offsetLeft + kyoto.offsetWidth / 2,
-                    hiroshima: hiroshima.offsetLeft + hiroshima.offsetWidth / 2,
-                    osaka: osaka.offsetLeft + osaka.offsetWidth / 2,
-                    y: tokyo.offsetTop + tokyo.offsetHeight / 2,
-                };
-
-                const line1 = document.createElement('div');
-                line1.className = 'map-line';
-                line1.style.left = `${positions.tokyo}px`;
-                line1.style.top = `${positions.y - 1}px`;
-                line1.style.width = `${positions.kyoto - positions.tokyo}px`;
-                line1.style.height = '2px';
-                mapContainer.prepend(line1);
-                
-                const line2 = document.createElement('div');
-                line2.className = 'map-line';
-                line2.style.left = `${positions.kyoto}px`;
-                line2.style.top = `${positions.y - 1}px`;
-                line2.style.width = `${positions.hiroshima - positions.kyoto}px`;
-                line2.style.height = '2px';
-                mapContainer.prepend(line2);
-
-                const line3 = document.createElement('div');
-                line3.className = 'map-line';
-                line3.style.left = `${positions.hiroshima}px`;
-                line3.style.top = `${positions.y - 1}px`;
-                line3.style.width = `${positions.osaka - positions.hiroshima}px`;
-                line3.style.height = '2px';
-                mapContainer.prepend(line3);
-            }
-
-            populateActivities();
-            populateTips();
-            createTripFocusChart();
+            // Get Japan trip data
+            const tripData = TravelData.japan;
             
-            // Draw lines after a short delay to ensure correct positioning
-            setTimeout(drawMapLines, 100);
-            window.addEventListener('resize', () => {
-                 document.querySelectorAll('.map-line').forEach(l => l.remove());
-                 drawMapLines();
-            });
+            // Populate activities and tips
+            travelUtils.populateActivities(tripData.activities, 'activities-grid');
+            travelUtils.populateTips(tripData.detailedTips, 'accordion-container');
+            
+            // Create activity chart
+            travelUtils.createActivityChart(tripData.activities, 'tripFocusChart');
+            
+            // Initialize all functionality
+            travelUtils.init();
         });
     </script>
 </body>

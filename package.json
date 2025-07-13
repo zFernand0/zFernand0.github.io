@@ -1,0 +1,24 @@
+{
+  "name": "zfernand0-github-io",
+  "version": "1.0.0",
+  "description": "Fernando Rijo Cedeño's personal website and blog",
+  "main": "index.html",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "dev": "python -m http.server 8000",
+    "serve": "npx http-server docs -p 8000"
+  },
+  "keywords": [
+    "portfolio",
+    "blog",
+    "personal-website",
+    "travel",
+    "technology"
+  ],
+  "author": "Fernando Rijo Cedeño",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

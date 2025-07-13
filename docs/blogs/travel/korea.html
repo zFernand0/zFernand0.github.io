@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="travel-page travel-korea">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,59 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: This SPA presents a day-by-day interactive itinerary. A top navigation bar allows users to switch between daily views, focusing the content on one day at a time for ease of consumption. Each daily schedule includes interactive checkboxes, enabling travelers to track completed tasks. A collapsible section for essential travel tips ensures important information is accessible without cluttering the main view. A doughnut chart provides a high-level visual summary of activity types, offering quick context about the trip's overall allocation. This structure prioritizes immediate utility and clear organization for a traveler on the go. -->
-    <!-- Visualization & Content Choices: 
-        - Key Metrics (Big Numbers): Goal: Inform. Method: Large, bold HTML text. Justification: Provides immediate, high-impact overview of trip scale. Library: HTML/CSS. CONFIRM: NO SVG.
-        - Activity Breakdown (Doughnut Chart): Goal: Summarize/Inform. Method: Chart.js Doughnut Chart. Justification: Visually represents the proportional allocation of time across different activity categories. Library: Chart.js (Canvas). CONFIRM: NO SVG.
-        - Day-by-Day Journey (Timeline with Checkboxes): Goal: Organize/Inform/Track. Method: Structured HTML timeline with `label` wrapped `input type="checkbox"`. JavaScript dynamically controls visibility for one day at a time, and checkbox state applies strikethrough. Justification: Provides a linear itinerary, adds practical task tracking, and the single-day view reduces cognitive load for a traveler. Library: HTML/CSS/JS. CONFIRM: NO SVG/Mermaid JS.
-        - Essential Travel Tips (Collapsible Section): Goal: Inform. Method: HTML `div` with JavaScript toggling `max-height`. Justification: Keeps important but not always needed information readily available but hidden by default to maintain a clean UI. Library: HTML/CSS/JS. CONFIRM: NO SVG.
-        - Icons: Goal: Inform/Organize. Method: Standard Unicode emoji characters. Justification: Provides clear, universally understood visual cues without relying on external image files or SVG. Library: Text. CONFIRM: NO SVG.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFDFB; /* Warm neutral background */
-            color: #4A453D; /* Dark neutral text */
-            padding-top: 64px; /* Space for fixed navigation */
-        }
-        .nav-button.active {
-            background-color: #D6C7AE; /* Active button background */
-            color: #4A453D; /* Active button text */
-        }
-        .timeline-item-content {
-            transition: all 0.3s ease;
-        }
-        .task-checkbox:checked + .timeline-item-content {
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-        .day-content {
-            display: none;
-        }
-        .day-content.active {
-            display: block;
-        }
-        .tips-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-        .chart-container {
-            position: relative;
-            height: 256px; /* h-64 equivalent */
-            width: 100%;
-            max-width: 384px; /* max-w-sm equivalent */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 288px; /* md:h-72 equivalent */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../../css/travel.css">
 </head>
 <body class="text-[#4A453D]">
 
@@ -198,38 +146,68 @@
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
                                     <p class="font-bold">6:00 PM - 8:30 PM: Return to Seoul</p>
-                                    <p class="text-sm text-gray-600">Board the KTX back to Seoul, reflecting on your whirlwind day in Busan. Grab dinner on the train or upon arrival in Seoul.</p>
+                                    <p class="text-sm text-gray-600">Take the KTX back to Seoul, arriving in the evening. Have a light dinner and rest for the next day's adventures.</p>
                                 </div>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Day 3 Content -->
             <div data-day="3" class="day-content">
-                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-2xl font-bold mb-1">Day 3: DMZ Full Day Tour</h3>
-                    <p class="text-md text-gray-600 mb-6">📍 North of Seoul</p>
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-1">Day 3: Seoul Cultural Immersion</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Seoul Hotel</p>
                     <div class="relative pl-8">
                         <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-[#C3B8A8]"></div>
                         <div class="mb-8 relative">
-                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🚌</div>
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🏛️</div>
                             <label class="flex items-start space-x-3">
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
-                                    <p class="font-bold">8:00 AM - 5:00 PM: DMZ Full Day Tour</p>
-                                    <p class="text-sm text-gray-600">Dedicate your day to a sobering yet insightful full-day guided tour of the Korean Demilitarized Zone. Sites typically include Imjingak Park, the 3rd Infiltration Tunnel, and Dora Observatory (with views into North Korea). Lunch is usually included or available.</p>
+                                    <p class="font-bold">9:00 AM - 12:00 PM: Gyeongbokgung Palace & Hanbok</p>
+                                    <p class="text-sm text-gray-600">Start your day with a visit to Gyeongbokgung Palace. Consider renting a hanbok for free entry and beautiful photos.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🏘️</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">12:00 PM - 2:00 PM: Bukchon Hanok Village</p>
+                                    <p class="text-sm text-gray-600">Explore the traditional Korean village with its well-preserved hanok houses and narrow alleyways.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🍜</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">2:00 PM - 4:00 PM: Insadong Traditional Lunch</p>
+                                    <p class="text-sm text-gray-600">Enjoy traditional Korean cuisine in Insadong, known for its cultural atmosphere and authentic restaurants.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🛍️</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">4:00 PM - 6:00 PM: Dongdaemun Design Plaza</p>
+                                    <p class="text-sm text-gray-600">Visit this futuristic building and explore the surrounding shopping district, especially if you're interested in fashion.</p>
                                 </div>
                             </label>
                         </div>
                         <div class="relative">
-                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">😴</div>
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🥩</div>
                             <label class="flex items-start space-x-3">
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
-                                    <p class="font-bold">5:00 PM onwards: Relaxed Evening</p>
-                                    <p class="text-sm text-gray-600">After returning to Seoul, enjoy a relaxed dinner in your hotel's neighborhood. You will likely be tired after this emotionally and physically demanding day.</p>
+                                    <p class="font-bold">6:00 PM onwards: Korean BBQ Dinner</p>
+                                    <p class="text-sm text-gray-600">End your day with a classic Korean BBQ experience, trying different cuts of meat and side dishes.</p>
                                 </div>
                             </label>
                         </div>
@@ -240,37 +218,47 @@
             <!-- Day 4 Content -->
             <div data-day="4" class="day-content">
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-2xl font-bold mb-1">Day 4: Seoul Highlights & Departure</h3>
-                    <p class="text-md text-gray-600 mb-6">📍 Seoul, then ICN Airport</p>
-                     <div class="relative pl-8">
+                    <h3 class="text-2xl font-bold mb-1">Day 4: DMZ & Final Seoul Adventures</h3>
+                    <p class="text-md text-gray-600 mb-6">📍 Seoul Hotel</p>
+                    <div class="relative pl-8">
                         <div class="absolute left-4 top-0 h-full border-l-2 border-dashed border-[#C3B8A8]"></div>
                         <div class="mb-8 relative">
-                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🏰</div>
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🛡️</div>
                             <label class="flex items-start space-x-3">
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
-                                    <p class="font-bold">9:30 AM - 12:30 PM: Gyeongbokgung Palace</p>
-                                    <p class="text-sm text-gray-600">Explore Seoul's grandest palace. Be sure to witness the iconic Royal Guard-Changing Ceremony at 10:00 AM at Gwanghwamun Gate.</p>
+                                    <p class="font-bold">8:00 AM - 12:00 PM: DMZ Tour</p>
+                                    <p class="text-sm text-gray-600">Take a guided tour to the Demilitarized Zone, learning about Korean history and the division of the peninsula.</p>
                                 </div>
                             </label>
                         </div>
                         <div class="mb-8 relative">
-                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🍵</div>
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🎭</div>
                             <label class="flex items-start space-x-3">
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
-                                    <p class="font-bold">1:30 PM - 4:30 PM: Insadong & Jogyesa Temple</p>
-                                    <p class="text-sm text-gray-600">After lunch, stroll through the charming traditional crafts market of Insadong. Find a moment of peace at the vibrant Jogyesa Buddhist Temple nearby.</p>
+                                    <p class="font-bold">2:00 PM - 4:00 PM: Hongdae Street Performance</p>
+                                    <p class="text-sm text-gray-600">Visit Hongdae area to see street performances and explore the youthful, artistic atmosphere.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="mb-8 relative">
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">🍗</div>
+                            <label class="flex items-start space-x-3">
+                                <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
+                                <div class="timeline-item-content">
+                                    <p class="font-bold">4:00 PM - 6:00 PM: Final Korean Feast</p>
+                                    <p class="text-sm text-gray-600">Enjoy your last meal in Korea, perhaps trying something you haven't had yet like Korean fried chicken or street food.</p>
                                 </div>
                             </label>
                         </div>
                         <div class="relative">
-                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">✈️</div>
+                            <div class="absolute left-[-2rem] top-1 w-8 h-8 bg-[#A89F91] rounded-full flex items-center justify-center">📦</div>
                             <label class="flex items-start space-x-3">
                                 <input type="checkbox" class="task-checkbox mt-2 h-5 w-5 rounded border-[#C3B8A8] text-[#A89F91] focus:ring-[#A89F91]">
                                 <div class="timeline-item-content">
-                                    <p class="font-bold">4:30 PM onwards: Travel to ICN Airport & Departure</p>
-                                    <p class="text-sm text-gray-600">Head to ICN airport, allowing ample time for check-in and security for your 10:00 PM flight. Conclude your unforgettable South Korean adventure.</p>
+                                    <p class="font-bold">6:00 PM onwards: Departure Preparation</p>
+                                    <p class="text-sm text-gray-600">Pack up, return any rented items, and prepare for your departure the next day.</p>
                                 </div>
                             </label>
                         </div>
@@ -280,120 +268,26 @@
         </div>
     </div>
 
+    <!-- Load common utilities -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/travel-utils.js"></script>
+    <script src="../../js/travel-data.js"></script>
+    
+    <!-- Page-specific script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            function wrapText(text) {
-                const words = text.split(' ');
-                const lines = [];
-                let currentLine = '';
-                words.forEach(word => {
-                    if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
-                        lines.push(currentLine);
-                        currentLine = word;
-                    } else {
-                        currentLine += (currentLine.length === 0 ? '' : ' ') + word;
-                    }
-                });
-                lines.push(currentLine);
-                return lines;
-            }
-
-            const tooltipTitleCallback = function(tooltipItems) {
-                const item = tooltipItems[0];
-                let label = item.chart.data.labels[item.dataIndex];
-                if (Array.isArray(label)) {
-                  return label.join(' ');
-                } else {
-                  return label;
-                }
-            };
+            // Initialize travel utilities
+            const travelUtils = new TravelUtils();
             
-            const sharedChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: {
-                                family: "'Inter', sans-serif",
-                                size: 12,
-                            },
-                            color: '#4A453D',
-                            padding: 20
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            title: tooltipTitleCallback
-                        },
-                        backgroundColor: '#4A453D',
-                        titleFont: { size: 14, weight: 'bold', family: "'Inter', sans-serif" },
-                        bodyFont: { size: 12, family: "'Inter', sans-serif" },
-                        padding: 10,
-                        cornerRadius: 5,
-                        displayColors: false
-                    }
-                }
-            };
-
-            const activityBreakdownCtx = document.getElementById('activityBreakdownChart').getContext('2d');
-            new Chart(activityBreakdownCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Cultural & Historic', 'Markets & Food', 'Entertainment', 'Major Travel'],
-                    datasets: [{
-                        label: 'Activity Allocation',
-                        data: [16, 5, 2, 10], 
-                        backgroundColor: [
-                            '#A89F91', /* Muted brown */
-                            '#D6C7AE', /* Beige */
-                            '#EAE3D8', /* Light beige */
-                            '#C3B8A8'  /* Greige */
-                        ],
-                        borderColor: '#FDFDFB',
-                        borderWidth: 4,
-                        hoverOffset: 4
-                    }]
-                },
-                options: sharedChartOptions
-            });
-
-            const dayNav = document.getElementById('day-nav');
-            const dayContents = document.querySelectorAll('.day-content');
-            const navButtons = document.querySelectorAll('.nav-button');
-
-            dayNav.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    const day = e.target.dataset.day;
-
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                    
-                    dayContents.forEach(content => {
-                        if (content.dataset.day === day) {
-                            content.classList.add('active');
-                        } else {
-                            content.classList.remove('active');
-                        }
-                    });
-                }
-            });
+            // Get Korea trip data
+            const tripData = TravelData.korea;
             
-            const tipsBtn = document.getElementById('toggle-tips-btn');
-            const tipsContent = document.getElementById('tips-content');
-            tipsBtn.addEventListener('click', () => {
-                if (tipsContent.style.maxHeight) {
-                    tipsContent.style.maxHeight = null;
-                    tipsBtn.textContent = 'Show Essential Travel Tips';
-                } else {
-                    tipsContent.style.maxHeight = tipsContent.scrollHeight + "px";
-                    tipsBtn.textContent = 'Hide Essential Travel Tips';
-                }
-            });
-
-            // Initialize to show Day 1 content
-            document.querySelector('.day-content[data-day="1"]').classList.add('active');
+            // Create activity chart
+            travelUtils.createActivityChart(tripData.activities, 'activityBreakdownChart');
+            
+            // Initialize day navigation and tips toggle
+            travelUtils.initDayNavigation();
+            travelUtils.initTipsToggle();
         });
     </script>
 </body>
