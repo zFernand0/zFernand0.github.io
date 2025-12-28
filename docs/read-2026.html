@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Personal Growth Reading List</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --accent-winter: #0ea5e9;
+            --accent-spring: #10b981;
+            --accent-summer: #f59e0b;
+            --accent-autumn: #f43f5e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            padding: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .month-col {
+            font-weight: 700;
+            width: 100px;
+        }
+
+        /* Seasonal Indicator Styling */
+        .winter { border-left: 4px solid var(--accent-winter); }
+        .spring { border-left: 4px solid var(--accent-spring); }
+        .summer { border-left: 4px solid var(--accent-summer); }
+        .autumn { border-left: 4px solid var(--accent-autumn); }
+
+        .tag-new {
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .copy-btn {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>2026 Reading Journey</h1>
+            <p class="subtitle">A curated path for personal growth and high-energy seasons.</p>
+        </header>
+
+        <div class="legend">
+            <div class="legend-item"><span class="dot" style="background: var(--accent-winter)"></span> Winter Reset</div>
+            <div class="legend-item"><span class="dot" style="background: var(--accent-spring)"></span> Spring Bloom</div>
+            <div class="legend-item"><span class="dot" style="background: var(--accent-summer)"></span> Summer Peak</div>
+            <div class="legend-item"><span class="dot" style="background: var(--accent-autumn)"></span> Autumn Harvest</div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="readingTable">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Focus Area</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="winter">
+                        <td class="month-col">Jan</td>
+                        <td>Think Like a Stoic <span class="tag-new">2026</span></td>
+                        <td>Ken Mogi</td>
+                        <td>Resilience & Logic</td>
+                    </tr>
+                    <tr class="winter">
+                        <td class="month-col">Feb</td>
+                        <td>Think Again</td>
+                        <td>Adam Grant</td>
+                        <td>Cognitive Flexibility</td>
+                    </tr>
+                    <tr class="winter">
+                        <td class="month-col">Mar</td>
+                        <td>The Stimulated Mind <span class="tag-new">2026</span></td>
+                        <td>Tommy Wood</td>
+                        <td>Brain Health</td>
+                    </tr>
+                    <tr class="spring">
+                        <td class="month-col">Apr</td>
+                        <td>Stolen Focus</td>
+                        <td>Johann Hari</td>
+                        <td>Attention</td>
+                    </tr>
+                    <tr class="spring">
+                        <td class="month-col">May</td>
+                        <td>The Psychology of Money</td>
+                        <td>Morgan Housel</td>
+                        <td>Behavioral Finance</td>
+                    </tr>
+                    <tr class="spring">
+                        <td class="month-col">Jun</td>
+                        <td>The Courage to Commit <span class="tag-new">2026</span></td>
+                        <td>S. Johnson & A. East</td>
+                        <td>Grit</td>
+                    </tr>
+                    <tr class="summer">
+                        <td class="month-col">Jul</td>
+                        <td>When the Forest Breathes <span class="tag-new">2026</span></td>
+                        <td>(Collaborative)</td>
+                        <td>Nature & Resilience</td>
+                    </tr>
+                    <tr class="summer">
+                        <td class="month-col">Aug</td>
+                        <td>Secure <span class="tag-new">2026</span></td>
+                        <td>Amir Levine</td>
+                        <td>Relationships</td>
+                    </tr>
+                    <tr class="summer">
+                        <td class="month-col">Sep</td>
+                        <td>Four Thousand Weeks</td>
+                        <td>Oliver Burkeman</td>
+                        <td>Time Management</td>
+                    </tr>
+                    <tr class="autumn">
+                        <td class="month-col">Oct</td>
+                        <td>Essentialism</td>
+                        <td>Greg McKeown</td>
+                        <td>Prioritization</td>
+                    </tr>
+                    <tr class="autumn">
+                        <td class="month-col">Nov</td>
+                        <td>The Meaning of Your Life <span class="tag-new">2026</span></td>
+                        <td>Arthur C. Brooks</td>
+                        <td>Purpose</td>
+                    </tr>
+                    <tr class="autumn">
+                        <td class="month-col">Dec</td>
+                        <td>The Comfort Book</td>
+                        <td>Matt Haig</td>
+                        <td>Self-Compassion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="copy-btn" onclick="copyTable()">Copy List to Clipboard</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Personal Growth Plan. Built for high-activity summers.</p>
+    </footer>
+
+    <script>
+        function copyTable() {
+            const table = document.getElementById('readingTable');
+            let text = "2026 Reading List\n\n";
+            
+            for (let i = 0, row; row = table.rows[i]; i++) {
+                for (let j = 0, col; col = row.cells[j]; j++) {
+                    text += col.innerText + (j === row.cells.length - 1 ? "" : "\t");
+                }
+                text += "\n";
+            }
+
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerText;
+                btn.innerText = "✓ Copied!";
+                setTimeout(() => { btn.innerText = originalText; }, 2000);
+            } catch (err) {
+                console.error('Unable to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
+
