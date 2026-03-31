@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegan Transition Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .crunch-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .checked { text-decoration: line-through; opacity: 0.5; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white border-2 border-black p-6 md:p-10 crunch-shadow">
+        <header class="mb-10 border-b-2 border-black pb-6">
+            <h1 class="text-4xl font-black uppercase tracking-tight">The No-Cook Vegan Plan</h1>
+            <p class="mt-2 text-lg font-medium text-gray-600">Calibrated for 165 lbs | High Protein | Zero "Blob" Textures</p>
+        </header>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">🕒 Daily Schedule</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-black">
+                            <th class="py-3 px-2">Time</th>
+                            <th class="py-3 px-2">Meal</th>
+                            <th class="py-3 px-2">Texture</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr><td class="py-4 px-2 font-bold">08:00</td><td class="py-4 px-2">Protein + Creatine "Proffee" (12oz)</td><td class="py-4 px-2 text-sm text-blue-600 italic">Liquid</td></tr>
+                        <tr><td class="py-4 px-2 font-bold">10:00</td><td class="py-4 px-2">Roasted Edamame (1/3 cup)</td><td class="py-4 px-2 text-sm text-orange-600 italic">Crunchy</td></tr>
+                        <tr><td class="py-4 px-2 font-bold">13:00</td><td class="py-4 px-2">Smoked Tofu + Rice Cakes + Snap Peas</td><td class="py-4 px-2 text-sm text-green-600 italic">Firm/Fibrous</td></tr>
+                        <tr><td class="py-4 px-2 font-bold">17:00</td><td class="py-4 px-2">Crisp Apple + Raw Walnuts</td><td class="py-4 px-2 text-sm text-red-600 italic">Snappy/Crisp</td></tr>
+                        <tr><td class="py-4 px-2 font-bold">19:30</td><td class="py-4 px-2">Lentil Pasta w/ Broccoli & Nooch</td><td class="py-4 px-2 text-sm text-purple-600 italic">Al Dente</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-10">
+            <section>
+                <h2 class="text-2xl font-bold mb-4">🛒 Assembly Shopping List</h2>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Pre-Baked/Smoked Tofu</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Unsweetened Soy Milk</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Red Lentil Pasta (Banza/Barilla)</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Roasted Edamame / Chickpeas</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Sugar Snap Peas & Baby Carrots</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Nutritional Yeast ("Nooch")</span></li>
+                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Marinara (No dairy added)</span></li>
+                </ul>
+            </section>
+
+            <section class="bg-gray-100 p-6 border-l-4 border-black">
+                <h2 class="text-2xl font-bold mb-4">💊 Essential Stack</h2>
+                <p class="text-sm text-gray-600 mb-4 italic">Take immediately after lunch for best results.</p>
+                <ul class="space-y-3 font-medium">
+                    <li>🔹 Vitamin B12 (1,000 mcg)</li>
+                    <li>🔹 Vitamin D3 (2,000 IU)</li>
+                    <li>🔹 Algae-based Omega-3 (DHA/EPA)</li>
+                    <li>🔹 Creatine Monohydrate (5g)</li>
+                    <li>🔹 Pea/Soy Protein Powder</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>
