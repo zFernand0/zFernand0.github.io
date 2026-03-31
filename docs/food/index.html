@@ -3,70 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegan Transition Dashboard</title>
+    <title>Vegan OS Pro - Multi-User Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .crunch-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
-        .checked { text-decoration: line-through; opacity: 0.5; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .card-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .crunch-shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        
+        .meal-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .meal-expanded .meal-content {
+            max-height: 500px;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans p-4 md:p-8">
+<body class="bg-slate-50 text-slate-900 pb-20">
 
-    <div class="max-w-4xl mx-auto bg-white border-2 border-black p-6 md:p-10 crunch-shadow">
-        <header class="mb-10 border-b-2 border-black pb-6">
-            <h1 class="text-4xl font-black uppercase tracking-tight">The No-Cook Vegan Plan</h1>
-            <p class="mt-2 text-lg font-medium text-gray-600">Calibrated for 165 lbs | High Protein | Zero "Blob" Textures</p>
+    <div class="max-w-4xl mx-auto p-4 md:p-8">
+        <!-- Header & Profile Toggle -->
+        <header class="flex flex-col md:flex-row justify-between gap-6 mb-8 items-start md:items-end">
+            <div class="space-y-4">
+                <h1 class="text-4xl font-black uppercase italic tracking-tighter">Vegan OS <span class="text-indigo-600">Pro</span></h1>
+                <div class="flex bg-white p-1 rounded-full border border-slate-200 shadow-sm w-fit">
+                    <button id="btn-male" onclick="setProfile('male')" class="px-4 py-2 rounded-full text-xs font-black uppercase transition-all bg-indigo-600 text-white shadow-lg">You (165lb)</button>
+                    <button id="btn-female" onclick="setProfile('female')" class="px-4 py-2 rounded-full text-xs font-black uppercase transition-all text-slate-400">Wife (140lb)</button>
+                </div>
+            </div>
+            
+            <button onclick="toggleView()" id="view-toggle" class="flex items-center gap-2 px-6 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-black transition-colors">
+                <span id="view-toggle-text">Joint Shopping List</span>
+            </button>
         </header>
 
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 flex items-center">🕒 Daily Schedule</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b-2 border-black">
-                            <th class="py-3 px-2">Time</th>
-                            <th class="py-3 px-2">Meal</th>
-                            <th class="py-3 px-2">Texture</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <tr><td class="py-4 px-2 font-bold">08:00</td><td class="py-4 px-2">Protein + Creatine "Proffee" (12oz)</td><td class="py-4 px-2 text-sm text-blue-600 italic">Liquid</td></tr>
-                        <tr><td class="py-4 px-2 font-bold">10:00</td><td class="py-4 px-2">Roasted Edamame (1/3 cup)</td><td class="py-4 px-2 text-sm text-orange-600 italic">Crunchy</td></tr>
-                        <tr><td class="py-4 px-2 font-bold">13:00</td><td class="py-4 px-2">Smoked Tofu + Rice Cakes + Snap Peas</td><td class="py-4 px-2 text-sm text-green-600 italic">Firm/Fibrous</td></tr>
-                        <tr><td class="py-4 px-2 font-bold">17:00</td><td class="py-4 px-2">Crisp Apple + Raw Walnuts</td><td class="py-4 px-2 text-sm text-red-600 italic">Snappy/Crisp</td></tr>
-                        <tr><td class="py-4 px-2 font-bold">19:30</td><td class="py-4 px-2">Lentil Pasta w/ Broccoli & Nooch</td><td class="py-4 px-2 text-sm text-purple-600 italic">Al Dente</td></tr>
-                    </tbody>
-                </table>
+        <!-- Main Dashboard View -->
+        <div id="dashboard-view">
+            <!-- Day Navigation -->
+            <div class="flex gap-2 mb-8 overflow-x-auto no-scrollbar" id="day-nav">
+                <!-- Days 1-5 injected here -->
             </div>
-        </section>
 
-        <div class="grid md:grid-cols-2 gap-10">
-            <section>
-                <h2 class="text-2xl font-bold mb-4">🛒 Assembly Shopping List</h2>
-                <ul class="space-y-2">
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Pre-Baked/Smoked Tofu</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Unsweetened Soy Milk</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Red Lentil Pasta (Banza/Barilla)</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Roasted Edamame / Chickpeas</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Sugar Snap Peas & Baby Carrots</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Nutritional Yeast ("Nooch")</span></li>
-                    <li class="flex items-center gap-3"><input type="checkbox" class="w-5 h-5 accent-black"> <span>Marinara (No dairy added)</span></li>
-                </ul>
-            </section>
+            <!-- Progress Bar -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-8">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <p class="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em] mb-1">Today's Intake</p>
+                        <p class="text-3xl font-black"><span id="current-protein">0</span><span class="text-lg text-slate-300"> / <span id="target-protein">140</span>g</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-black uppercase text-slate-400">Completion</p>
+                        <p id="progress-percent" class="text-lg font-black text-indigo-600">0%</p>
+                    </div>
+                </div>
+                <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-indigo-600 transition-all duration-1000 ease-out" style="width: 0%"></div>
+                </div>
+            </div>
 
-            <section class="bg-gray-100 p-6 border-l-4 border-black">
-                <h2 class="text-2xl font-bold mb-4">💊 Essential Stack</h2>
-                <p class="text-sm text-gray-600 mb-4 italic">Take immediately after lunch for best results.</p>
-                <ul class="space-y-3 font-medium">
-                    <li>🔹 Vitamin B12 (1,000 mcg)</li>
-                    <li>🔹 Vitamin D3 (2,000 IU)</li>
-                    <li>🔹 Algae-based Omega-3 (DHA/EPA)</li>
-                    <li>🔹 Creatine Monohydrate (5g)</li>
-                    <li>🔹 Pea/Soy Protein Powder</li>
-                </ul>
-            </section>
+            <!-- Meals List -->
+            <div id="meal-list" class="space-y-4">
+                <!-- Meals injected here -->
+            </div>
         </div>
+
+        <!-- Shopping View (Hidden by default) -->
+        <div id="shopping-view" class="hidden">
+            <div class="bg-white rounded-[2rem] border border-slate-200 shadow-sm p-8">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-14 w-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black uppercase tracking-tight">Joint Prep List</h2>
+                        <p class="text-sm text-slate-500 font-medium">Combined for 2 People • 5 Day Cycle</p>
+                    </div>
+                </div>
+                <div id="shopping-items" class="grid sm:grid-cols-2 gap-x-12 gap-y-2">
+                    <!-- Ingredients injected here -->
+                </div>
+                <div class="mt-12 p-6 bg-indigo-50 rounded-3xl border border-indigo-100 flex gap-4">
+                    <div class="text-indigo-600 shrink-0">⚡</div>
+                    <p class="text-xs text-indigo-900 leading-relaxed font-medium">
+                        <strong>Prep Hack:</strong> Quantities are estimated for a 1.8x combined portion. Buy bulk Seitan, Tempeh, and Lentil pasta and portion out using a scale for precision.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center">
+            <button onclick="resetData()" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-red-500 transition-colors">
+                Reset All Progress Data
+            </button>
+        </footer>
     </div>
 
+    <script>
+        // --- DATA ---
+        const profiles = {
+            male: { target: 140, scale: 1.0, color: 'indigo-600' },
+            female: { target: 112, scale: 0.8, color: 'rose-500' }
+        };
+
+        const mealData = {
+            1: [
+                { id: 'd1m1', name: 'Power Proffee', protein: 35, time: '08:00', type: 'Liquid', steps: ['Whisk protein into 12oz soy milk', 'Add 4oz cold brew', 'Ice to brim.'], ingredients: ['Soy Milk', 'Pea Protein', 'Cold Brew'] },
+                { id: 'd1m2', name: 'Air-Fried Tempeh', protein: 42, time: '12:30', type: 'Crispy', steps: ['Cube tempeh small', 'Toss in soy sauce', 'Air fry at 400F for 12m.'], ingredients: ['Tempeh', 'Spinach', 'Soy Sauce'] },
+                { id: 'd1m3', name: 'Roasted Chickpeas', protein: 15, time: '16:00', type: 'Crunchy', steps: ['Store in airtight container', 'Pair with a crisp apple.'], ingredients: ['Roasted Chickpeas', 'Apple'] },
+                { id: 'd1m4', name: 'Seitan Lentil Pasta', protein: 48, time: '19:30', type: 'Al Dente', steps: ['Boil pasta for 7 mins', 'Sear seitan in dry pan', 'Top with Nooch.'], ingredients: ['Lentil Pasta', 'Seitan', 'Nutritional Yeast'] }
+            ],
+            2: [
+                { id: 'd2m1', name: 'Soy-Greek Bowl', protein: 30, time: '08:00', type: 'Creamy', steps: ['High-pro yogurt', 'Add 3tbsp Hemp hearts', 'Frozen berries.'], ingredients: ['Soy Yogurt', 'Hemp Hearts', 'Berries'] },
+                { id: 'd2m2', name: '"Tuna" Mash', protein: 28, time: '12:30', type: 'Fibrous', steps: ['Mash chickpeas w/ vegan mayo', 'Stir in Nori', 'Serve on crackers.'], ingredients: ['Chickpeas', 'Nori', 'Protein Crackers'] },
+                { id: 'd2m3', name: 'Edamame Snack', protein: 20, time: '16:00', type: 'Snappy', steps: ['Dry edamame for crunch.'], ingredients: ['Dry Edamame'] },
+                { id: 'd2m4', name: 'Tofu Steaks', protein: 45, time: '19:30', type: 'Firm', steps: ['Press tofu 20m', 'Pan sear till golden', 'Serve with quinoa.'], ingredients: ['Extra Firm Tofu', 'Quinoa'] }
+            ],
+            3: [
+                { id: 'd3m1', name: 'PB2 Power Shake', protein: 38, time: '08:00', type: 'Thick', steps: ['Blend banana/oats', 'Pulse in protein/PB2.'], ingredients: ['PB2 Powder', 'Banana', 'Oats', 'Protein Powder'] },
+                { id: 'd3m2', name: 'Lupini Salad', protein: 32, time: '12:30', type: 'Chewy', steps: ['Lemon juice on beans', 'Add bell peppers', 'Sunflower seeds.'], ingredients: ['Lupini Beans', 'Bell Peppers', 'Sunflower Seeds'] },
+                { id: 'd3m3', name: 'Smoked Almonds', protein: 12, time: '16:00', type: 'Hard', steps: ['Portion 1oz.'], ingredients: ['Smoked Almonds'] },
+                { id: 'd3m4', name: 'Edamame Stir-fry', protein: 50, time: '19:30', type: 'Wiry', icon: '🍜', steps: ['Boil noodles 4m', 'Toss with slaw.'], ingredients: ['Edamame Noodles', 'Cabbage Slaw'] }
+            ],
+            4: [
+                { id: 'd4m1', name: 'Overnight Oats', protein: 34, time: '08:00', type: 'Soft', steps: ['Soak oats overnight', 'Stir in protein AM', 'Top with pepitas.'], ingredients: ['Oats', 'Soy Milk', 'Pepitas'] },
+                { id: 'd4m2', name: 'Seitan Wrap', protein: 40, time: '12:30', type: 'Dense', steps: ['Warm tortilla', 'Add seitan/hummus', 'Raw spinach.'], ingredients: ['Seitan', 'Protein Tortilla', 'Hummus'] },
+                { id: 'd4m3', name: 'Jerky & Apple', protein: 14, time: '16:00', type: 'Tough', steps: ['Soy-based jerky.'], ingredients: ['Vegan Jerky', 'Apple'] },
+                { id: 'd4m4', name: 'Lentil Bolognese', protein: 42, time: '19:30', type: 'Al Dente', steps: ['Lentil pasta', 'Red lentils + mushrooms.'], ingredients: ['Lentil Pasta', 'Canned Lentils', 'Mushrooms'] }
+            ],
+            5: [
+                { id: 'd5m1', name: 'Scrambled Tofu', protein: 32, time: '08:00', type: 'Crumbles', steps: ['Crumble by hand', 'Sear till golden', 'Black salt/Nooch.'], ingredients: ['Extra Firm Tofu', 'Black Salt', 'Nutritional Yeast'] },
+                { id: 'd5m2', name: 'Tempeh Taco Bowl', protein: 38, time: '12:30', type: 'Granular', steps: ['Pulse tempeh', 'Sauté with taco spice', 'Over greens.'], ingredients: ['Tempeh', 'Taco Seasoning', 'Greens'] },
+                { id: 'd5m3', name: 'Walnut Halves', protein: 8, time: '16:00', type: 'Crisp', steps: ['1/4 cup raw.'], ingredients: ['Walnuts'] },
+                { id: 'd5m4', name: 'Seitan Steak', protein: 55, time: '19:30', type: 'Meaty', steps: ['Dry cast iron sear', 'Steamed broccoli.'], ingredients: ['Seitan Steak', 'Frozen Broccoli'] }
+            ]
+        };
+
+        // --- STATE ---
+        let state = {
+            profile: 'male',
+            day: 1,
+            completed: {}, // { 'male-d1m1': true }
+            showShopping: false,
+            expandedId: null
+        };
+
+        // --- INITIALIZE ---
+        function init() {
+            const saved = localStorage.getItem('vegan_os_state');
+            if (saved) state = JSON.parse(saved);
+            render();
+        }
+
+        // --- ACTIONS ---
+        function setProfile(p) {
+            state.profile = p;
+            saveAndRender();
+        }
+
+        function setDay(d) {
+            state.day = d;
+            state.expandedId = null;
+            saveAndRender();
+        }
+
+        function toggleMeal(id, e) {
+            e.stopPropagation();
+            const key = `${state.profile}-${id}`;
+            state.completed[key] = !state.completed[key];
+            saveAndRender();
+        }
+
+        function toggleExpand(id) {
+            state.expandedId = (state.expandedId === id) ? null : id;
+            render();
+        }
+
+        function toggleView() {
+            state.showShopping = !state.showShopping;
+            saveAndRender();
+        }
+
+        function resetData() {
+            if(confirm("Clear all your progress?")) {
+                state.completed = {};
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('vegan_os_state', JSON.stringify(state));
+            render();
+        }
+
+        // --- RENDER ---
+        function render() {
+            const currentProfile = profiles[state.profile];
+            
+            // UI Toggles
+            document.getElementById('btn-male').className = `px-4 py-2 rounded-full text-xs font-black uppercase transition-all ${state.profile === 'male' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400'}`;
+            document.getElementById('btn-female').className = `px-4 py-2 rounded-full text-xs font-black uppercase transition-all ${state.profile === 'female' ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-400'}`;
+            
+            document.getElementById('view-toggle-text').innerText = state.showShopping ? "Show Plan" : "Joint Shopping List";
+            document.getElementById('dashboard-view').className = state.showShopping ? 'hidden' : '';
+            document.getElementById('shopping-view').className = state.showShopping ? '' : 'hidden';
+
+            if (state.showShopping) {
+                renderShopping();
+            } else {
+                renderDashboard(currentProfile);
+            }
+        }
+
+        function renderDashboard(cp) {
+            // Render Day Nav
+            const nav = document.getElementById('day-nav');
+            nav.innerHTML = [1,2,3,4,5].map(d => `
+                <button onclick="setDay(${d})" class="flex-1 min-w-[80px] py-4 rounded-2xl border-2 font-black transition-all ${state.day === d ? (state.profile === 'male' ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-rose-500 border-rose-500 text-white') : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'}">DAY 0${d}</button>
+            `).join('');
+
+            // Calculate Progress
+            const currentDayMeals = mealData[state.day];
+            let currentPro = 0;
+            currentDayMeals.forEach(m => {
+                if (state.completed[`${state.profile}-${m.id}`]) {
+                    currentPro += (m.protein * cp.scale);
+                }
+            });
+            const percent = Math.min(100, Math.round((currentPro / cp.target) * 100));
+
+            document.getElementById('current-protein').innerText = Math.round(currentPro);
+            document.getElementById('target-protein').innerText = cp.target;
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            document.getElementById('progress-percent').className = `text-lg font-black ${state.profile === 'male' ? 'text-indigo-600' : 'text-rose-500'}`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-bar').className = `h-full transition-all duration-1000 ease-out ${state.profile === 'male' ? 'bg-indigo-600' : 'bg-rose-500'}`;
+
+            // Render Meals
+            const list = document.getElementById('meal-list');
+            list.innerHTML = currentDayMeals.map(m => {
+                const isComp = state.completed[`${state.profile}-${m.id}`];
+                const isExp = state.expandedId === m.id;
+                const scaled = Math.round(m.protein * cp.scale);
+                
+                return `
+                    <div class="bg-white rounded-3xl border-2 transition-all overflow-hidden ${isComp ? 'border-slate-100 bg-slate-50' : 'border-white shadow-sm'} ${isExp ? 'meal-expanded' : ''}">
+                        <div class="p-5 flex items-center justify-between cursor-pointer" onclick="toggleExpand('${m.id}')">
+                            <div class="flex items-center gap-4">
+                                <div class="h-12 w-12 rounded-2xl flex items-center justify-center font-bold ${isComp ? 'bg-slate-200 text-slate-400' : (state.profile === 'male' ? 'bg-indigo-50 text-indigo-600' : 'bg-rose-50 text-rose-500')}">
+                                    ${m.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[10px] font-black text-slate-400">${m.time}</span>
+                                        <h3 class="font-bold ${isComp ? 'line-through text-slate-400' : 'text-slate-800'}">${m.name}</h3>
+                                    </div>
+                                    <p class="text-xs text-slate-500">${m.type} • ${scaled}g Protein</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button onclick="toggleMeal('${m.id}', event)" class="h-10 w-10 rounded-full flex items-center justify-center transition-all ${isComp ? 'bg-green-500 text-white' : 'bg-slate-50 text-slate-300'}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="meal-content px-5 pb-5">
+                            <div class="pt-4 border-t border-slate-100 grid md:grid-cols-2 gap-4">
+                                <div class="bg-slate-50 rounded-2xl p-4">
+                                    <p class="text-[10px] font-black uppercase text-slate-400 mb-2">Instructions</p>
+                                    <ul class="space-y-1">
+                                        ${m.steps.map((s, i) => `<li class="text-xs text-slate-700 font-medium">${i+1}. ${s}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="bg-slate-900 rounded-2xl p-4 text-white">
+                                    <p class="text-[10px] font-black uppercase text-indigo-400 mb-2">Ingredients</p>
+                                    <div class="flex flex-wrap gap-1">
+                                        ${m.ingredients.map(ing => `<span class="text-[9px] px-2 py-0.5 bg-slate-800 rounded font-bold">${ing}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderShopping() {
+            const counts = {};
+            Object.values(mealData).flat().forEach(m => {
+                m.ingredients.forEach(i => counts[i] = (counts[i] || 0) + 1.8);
+            });
+            
+            const list = document.getElementById('shopping-items');
+            list.innerHTML = Object.entries(counts).sort().map(([item, qty]) => `
+                <div class="flex justify-between items-center py-3 border-b border-slate-50 px-2">
+                    <span class="text-sm font-bold text-slate-700">${item}</span>
+                    <span class="text-[10px] font-black bg-slate-100 px-2 py-1 rounded text-slate-500">x${Math.ceil(qty)}</span>
+                </div>
+            `).join('');
+        }
+
+        init();
+    </script>
 </body>
 </html>
+
