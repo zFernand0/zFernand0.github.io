@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 20 World Marathons Bucket List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(150,150,150,0.3);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 min-h-screen transition-colors duration-200 antialiased pb-16">
+
+  <header class="border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold text-lg border border-emerald-500/20">
+            🏃
+          </div>
+          <h1 class="text-xl font-bold tracking-tight">Marathon 20<span class="text-emerald-500">.</span></h1>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline"></i>
+        </button>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative w-full sm:w-80">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search race, country, profile..." 
+          oninput="handleSearch()" 
+          class="w-full pl-9 pr-4 py-2 text-sm rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition placeholder-zinc-400"
+        >
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 space-y-8">
+    
+    <!-- Hero / Progress Section -->
+    <section class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">World Marathon Bucket List</h2>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Track your completed marathons and plan your dream 26.2-mile journey around the globe.</p>
+        </div>
+        <div class="flex items-center space-x-2 self-start sm:self-auto">
+          <button onclick="resetData()" class="px-3 py-1.5 text-xs font-medium text-zinc-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-400 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:border-red-200 dark:hover:border-red-900/50 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate-right"></i>
+            Reset Progress
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Stats -->
+      <div class="space-y-3">
+        <div class="flex justify-between items-end text-sm">
+          <span class="font-medium text-zinc-700 dark:text-zinc-300">Overall Progress</span>
+          <span id="progressStatsText" class="font-mono font-bold text-emerald-600 dark:text-emerald-400">0 of 20 (0%)</span>
+        </div>
+        <div class="w-full bg-zinc-100 dark:bg-zinc-800 h-3 rounded-full overflow-hidden p-0.5 border border-zinc-200/50 dark:border-zinc-700/30">
+          <div id="progressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        <div class="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-800/80">
+          <span class="text-xs text-zinc-500 dark:text-zinc-400 block font-medium">World Majors</span>
+          <span id="majorsCount" class="text-lg font-bold text-zinc-800 dark:text-zinc-100 mt-0.5 block">0 / 7</span>
+        </div>
+        <div class="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-800/80">
+          <span class="text-xs text-zinc-500 dark:text-zinc-400 block font-medium">European Classics</span>
+          <span id="euroCount" class="text-lg font-bold text-zinc-800 dark:text-zinc-100 mt-0.5 block">0 / 6</span>
+        </div>
+        <div class="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-800/80">
+          <span class="text-xs text-zinc-500 dark:text-zinc-400 block font-medium">Unique & Destination</span>
+          <span id="destCount" class="text-lg font-bold text-zinc-800 dark:text-zinc-100 mt-0.5 block">0 / 7</span>
+        </div>
+        <div class="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-800/80">
+          <span class="text-xs text-zinc-500 dark:text-zinc-400 block font-medium">Saved to Wishlist</span>
+          <span id="wishlistCount" class="text-lg font-bold text-amber-500 mt-0.5 block">0</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3 overflow-x-auto gap-2 no-scrollbar">
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <button onclick="setCategory('all')" id="tab-all" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
+          All (20)
+        </button>
+        <button onclick="setCategory('majors')" id="tab-majors" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">
+          World Majors (7)
+        </button>
+        <button onclick="setCategory('europe')" id="tab-europe" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">
+          European Classics (6)
+        </button>
+        <button onclick="setCategory('destination')" id="tab-destination" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">
+          Unique & Destination (7)
+        </button>
+      </div>
+
+      <div class="flex items-center space-x-1.5">
+        <button onclick="toggleWishlistOnly()" id="wishlistFilterBtn" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-amber-400 hover:text-amber-500 transition flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-star text-amber-400"></i> Wishlist Only
+        </button>
+      </div>
+    </div>
+
+    <div id="marathonsList" class="space-y-3">
+      <!-- Items populated by JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-12 space-y-3">
+      <div class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center mx-auto text-xl">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+      <p class="text-zinc-500 dark:text-zinc-400 font-medium text-sm">No marathons found matching your criteria.</p>
+      <button onclick="resetFilters()" class="text-xs text-emerald-500 hover:underline">Clear search & filters</button>
+    </div>
+
+  </main>
+
+  <script>
+    const marathons = [
+      {
+        id: "nyc",
+        name: "New York City Marathon",
+        country: "USA",
+        flag: "🇺🇸",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Undulating, iconic 5 boroughs",
+        fieldSize: "50,000+",
+        month: "November",
+        famousFeature: "Crossing the Verrazzano-Narrows Bridge and running through all 5 NYC boroughs into Central Park.",
+        iconicHighlight: "World's largest marathon field with legendary crowd support along First Avenue.",
+        link: "https://www.nyrr.org/tcsnycmarathon"
+      },
+      {
+        id: "boston",
+        name: "Boston Marathon",
+        country: "USA",
+        flag: "🇺🇸",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Rolling downhill point-to-point, Heartbreak Hill",
+        fieldSize: "30,000",
+        month: "April (Patriots' Day)",
+        famousFeature: "Oldest annual marathon in the world (est. 1897) with strict qualifying time standards (BQ).",
+        iconicHighlight: "Scream Tunnel at Wellesley College and finishing on Boylston Street.",
+        link: "https://www.baa.org/races/boston-marathon"
+      },
+      {
+        id: "london",
+        name: "London Marathon",
+        country: "UK",
+        flag: "🇬🇧",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Flat and fast landmark course",
+        fieldSize: "48,000+",
+        month: "April",
+        famousFeature: "Crossing Tower Bridge and finishing along The Mall past Buckingham Palace.",
+        iconicHighlight: "Largest annual single-day charity fundraising event on Earth.",
+        link: "https://www.tcslondonmarathon.com/"
+      },
+      {
+        id: "berlin",
+        name: "Berlin Marathon",
+        country: "Germany",
+        flag: "🇩🇪",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Extremely flat, smooth asphalt",
+        fieldSize: "45,000",
+        month: "September",
+        famousFeature: "The fastest course in the world where multiple Men's & Women's World Records have been shattered.",
+        iconicHighlight: "Running through the historic Brandenburg Gate in the final 400 meters.",
+        link: "https://www.bmw-berlin-marathon.com/"
+      },
+      {
+        id: "chicago",
+        name: "Chicago Marathon",
+        country: "USA",
+        flag: "🇺🇸",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Ultra-flat loop course",
+        fieldSize: "45,000+",
+        month: "October",
+        famousFeature: "Flat, fast neighborhood loop taking runners through 29 diverse Chicago neighborhoods.",
+        iconicHighlight: "Cheering crowds winding through Chinatown, Boystown, and Grant Park.",
+        link: "https://www.chicagomarathon.com/"
+      },
+      {
+        id: "tokyo",
+        name: "Tokyo Marathon",
+        country: "Japan",
+        flag: "🇯🇵",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Flat & fast city course",
+        fieldSize: "38,000",
+        month: "March",
+        famousFeature: "Crown jewel of Asian running, famous for world-class Japanese organization and deep culture.",
+        iconicHighlight: "Passing the Imperial Palace, Tokyo Tower, and Asakusa Sensoji Temple.",
+        link: "https://www.marathon.tokyo/en/"
+      },
+      {
+        id: "sydney",
+        name: "Sydney Marathon",
+        country: "Australia",
+        flag: "🇦🇺",
+        category: "majors",
+        categoryLabel: "World Major",
+        courseProfile: "Rolling scenic harbor profile",
+        fieldSize: "25,000+",
+        month: "September",
+        famousFeature: "Newly crowned as the 7th Abbott World Marathon Major.",
+        iconicHighlight: "Running across the iconic Sydney Harbour Bridge to a grand finish at the Sydney Opera House.",
+        link: "https://sydneymarathon.com/"
+      },
+      {
+        id: "paris",
+        name: "Paris Marathon",
+        country: "France",
+        flag: "🇫🇷",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Mostly flat scenic avenue loop",
+        fieldSize: "50,000+",
+        month: "April",
+        famousFeature: "Massive field starting on the grand Champs-Élysées heading towards the Arc de Triomphe.",
+        iconicHighlight: "Running along the River Seine past Notre-Dame, the Eiffel Tower, and Bois de Boulogne.",
+        link: "https://www.schneiderelectricparismarathon.com/en/"
+      },
+      {
+        id: "valencia",
+        name: "Valencia Marathon",
+        country: "Spain",
+        flag: "🇪🇸",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Hyper-flat at sea level",
+        fieldSize: "33,000",
+        month: "December",
+        famousFeature: "Known as 'La Ciudad del Running' with ideal winter race temperatures and rapid PR times.",
+        iconicHighlight: "A blue carpet walkway finish suspended over the water at the futuristic City of Arts and Sciences.",
+        link: "https://www.valenciaciudaddelrunning.com/en/marathon/"
+      },
+      {
+        id: "athens",
+        name: "Athens Authentic Marathon",
+        country: "Greece",
+        flag: "🇬🇷",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Challenging climb for middle 10 miles",
+        fieldSize: "20,000",
+        month: "November",
+        famousFeature: "The original historical marathon route from the town of Marathon to Athens.",
+        iconicHighlight: "Finishing inside the ancient all-marble Panathenaic Stadium, birthplace of the modern Olympic Games.",
+        link: "https://www.athensauthenticmarathon.gr/"
+      },
+      {
+        id: "rome",
+        name: "Rome Marathon",
+        country: "Italy",
+        flag: "🇮🇹",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Flat with historic cobblestones (San Pietrini)",
+        fieldSize: "25,000",
+        month: "March",
+        famousFeature: "Running through 2,500+ years of history and past dozens of UNESCO World Heritage sights.",
+        iconicHighlight: "Start and finish right in front of the ancient Colosseum and St. Peter's Square.",
+        link: "https://www.runromethemarathon.com/en/"
+      },
+      {
+        id: "amsterdam",
+        name: "Amsterdam Marathon",
+        country: "Netherlands",
+        flag: "🇳🇱",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Very flat & fast waterfront profile",
+        fieldSize: "20,000",
+        month: "October",
+        famousFeature: "Starts and finishes inside the historic 1928 Olympic Stadium.",
+        iconicHighlight: "Scenic kilometers along the Amstel River, classic windmills, and the Rijksmuseum passage.",
+        link: "https://www.tcsamsterdammarathon.eu/"
+      },
+      {
+        id: "rotterdam",
+        name: "Rotterdam Marathon",
+        country: "Netherlands",
+        flag: "🇳🇱",
+        category: "europe",
+        categoryLabel: "European Classic",
+        courseProfile: "Flat coastal wind course",
+        fieldSize: "20,000",
+        month: "April",
+        famousFeature: "Renowned across Europe for its electric festival vibe and deep Dutch runner field.",
+        iconicHighlight: "Crossing the majestic Erasmus Bridge ('The Swan') with deafening spectator support.",
+        link: "https://www.nnmarathonrotterdam.org/"
+      },
+      {
+        id: "mcm",
+        name: "Marine Corps Marathon",
+        country: "USA",
+        flag: "🇺🇸",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Rolling terrain around DC monuments",
+        fieldSize: "30,000",
+        month: "October",
+        famousFeature: "Known as 'The People's Marathon'—the largest marathon with no elite prize money.",
+        iconicHighlight: "Organized by the USMC with Marines handing out medals at the Iwo Jima Memorial finish.",
+        link: "https://www.marinemarathon.com/"
+      },
+      {
+        id: "honolulu",
+        name: "Honolulu Marathon",
+        country: "Hawaii, USA",
+        flag: "🇺🇸",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Coastal tropical profile around Diamond Head",
+        fieldSize: "25,000",
+        month: "December",
+        famousFeature: "No cut-off finish time and no runner field limit, welcoming every finisher.",
+        iconicHighlight: "Massive 5:00 AM fireworks display at the start line in Ala Moana Beach Park.",
+        link: "https://www.honolulumarathon.org/"
+      },
+      {
+        id: "medoc",
+        name: "Marathon du Médoc",
+        country: "France",
+        flag: "🇫🇷",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Rolling vineyard dirt & road paths",
+        fieldSize: "8,500",
+        month: "September",
+        famousFeature: "World-famous 'fun' race with fancy dress themes, wine tastings, oysters, and steak at aid stations.",
+        iconicHighlight: "Running through prestigious French wine châteaux in full theatrical costume.",
+        link: "https://www.marathondumedoc.com/en/"
+      },
+      {
+        id: "greatwall",
+        name: "Great Wall Marathon",
+        country: "China",
+        flag: "🇨🇳",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Extreme trail with 5,164 stone steps",
+        fieldSize: "2,500",
+        month: "May",
+        famousFeature: "One of the toughest physical marathon challenges in the world.",
+        iconicHighlight: "Running along the historic ramparts and ancient watchtowers of Huangyaguan.",
+        link: "https://great-wall-marathon.com/"
+      },
+      {
+        id: "bigsur",
+        name: "Big Sur International Marathon",
+        country: "USA",
+        flag: "🇺🇸",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Challenging coastal hills & head winds",
+        fieldSize: "4,500",
+        month: "April",
+        famousFeature: "Point-to-point run along scenic California State Route 1 overlooking the Pacific Ocean.",
+        iconicHighlight: "Grand piano player entertaining runners on Bixby Creek Bridge at Mile 13.",
+        link: "https://www.bigsurmarathon.org/"
+      },
+      {
+        id: "comrades",
+        name: "Comrades Marathon",
+        country: "South Africa",
+        flag: "🇿🇦",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Mountainous 'Up' or 'Down' 89km run",
+        fieldSize: "20,000",
+        month: "June",
+        famousFeature: "The oldest and most famous ultra-marathon in the world (89km / 55 miles).",
+        iconicHighlight: "Strict 12-hour cut-off gun where the entire nation tunes in to watch final runners cross.",
+        link: "https://www.comrades.com/"
+      },
+ 
+      {
+        id: "midnightsun",
+        name: "Midnight Sun Marathon",
+        country: "Norway",
+        flag: "🇳🇴",
+        category: "destination",
+        categoryLabel: "Destination / Iconic",
+        courseProfile: "Coastal island bridges in the Arctic",
+        fieldSize: "6,000",
+        month: "June",
+        famousFeature: "Northernmost AIMS-certified marathon in the world, starting at 8:30 PM.",
+        iconicHighlight: "Running under full daylight at midnight thanks to the Arctic summer polar sun.",
+        link: "https://www.msm.no/en/"
+      }
+    ];
+
+    let completedState = {};
+    let wishlistState = {};
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let showWishlistOnly = false;
+
+    // Load from LocalStorage
+    function loadState() {
+      try {
+        const savedCompleted = localStorage.getItem('marathon_completed_v1');
+        const savedWishlist = localStorage.getItem('marathon_wishlist_v1');
+        if (savedCompleted) completedState = JSON.parse(savedCompleted);
+        if (savedWishlist) wishlistState = JSON.parse(savedWishlist);
+      } catch (e) {
+        console.error('Failed to load state from localStorage', e);
+      }
+    }
+
+    // Save to LocalStorage
+    function saveState() {
+      try {
+        localStorage.setItem('marathon_completed_v1', JSON.stringify(completedState));
+        localStorage.setItem('marathon_wishlist_v1', JSON.stringify(wishlistState));
+      } catch (e) {
+        console.error('Failed to save state to localStorage', e);
+      }
+      updateStats();
+    }
+
+    function initTheme() {
+      if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    }
+
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+    }
+
+    function toggleCompleted(id) {
+      completedState[id] = !completedState[id];
+      saveState();
+      renderList();
+    }
+
+    function toggleWishlist(id, event) {
+      event.stopPropagation();
+      wishlistState[id] = !wishlistState[id];
+      saveState();
+      renderList();
+    }
+
+    function toggleDetails(id) {
+      const el = document.getElementById(`details-${id}`);
+      const icon = document.getElementById(`chevron-${id}`);
+      if (el) {
+        el.classList.toggle('hidden');
+        if (icon) {
+          icon.classList.toggle('rotate-180');
+        }
+      }
+    }
+
+    function updateStats() {
+      const total = marathons.length;
+      const completedCount = Object.keys(completedState).filter(k => completedState[k]).length;
+      const percent = Math.round((completedCount / total) * 100);
+
+      document.getElementById('progressStatsText').innerText = `${completedCount} of ${total} (${percent}%)`;
+      document.getElementById('progressBar').style.width = `${percent}%`;
+
+      // Category breakdown
+      const majorsDone = marathons.filter(m => m.category === 'majors' && completedState[m.id]).length;
+      const euroDone = marathons.filter(m => m.category === 'europe' && completedState[m.id]).length;
+      const destDone = marathons.filter(m => m.category === 'destination' && completedState[m.id]).length;
+      const wishlistDone = Object.keys(wishlistState).filter(k => wishlistState[k]).length;
+
+      document.getElementById('majorsCount').innerText = `${majorsDone} / 7`;
+      document.getElementById('euroCount').innerText = `${euroDone} / 6`;
+      document.getElementById('destCount').innerText = `${destDone} / 7`;
+      document.getElementById('wishlistCount').innerText = `${wishlistDone}`;
+    }
+
+    function resetData() {
+      if (confirm("Are you sure you want to reset your saved marathon checklist and wishlist?")) {
+        completedState = {};
+        wishlistState = {};
+        saveState();
+        renderList();
+      }
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-zinc-900', 'text-white', 'dark:bg-zinc-100', 'dark:text-zinc-900');
+        btn.classList.add('text-zinc-600', 'hover:bg-zinc-100', 'dark:text-zinc-400', 'dark:hover:bg-zinc-800');
+      });
+      const activeBtn = document.getElementById(`tab-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-zinc-600', 'hover:bg-zinc-100', 'dark:text-zinc-400', 'dark:hover:bg-zinc-800');
+        activeBtn.classList.add('bg-zinc-900', 'text-white', 'dark:bg-zinc-100', 'dark:text-zinc-900');
+      }
+      renderList();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+      renderList();
+    }
+
+    function toggleWishlistOnly() {
+      showWishlistOnly = !showWishlistOnly;
+      const btn = document.getElementById('wishlistFilterBtn');
+      if (showWishlistOnly) {
+        btn.classList.add('bg-amber-500/10', 'border-amber-400', 'text-amber-500');
+      } else {
+        btn.classList.remove('bg-amber-500/10', 'border-amber-400', 'text-amber-500');
+      }
+      renderList();
+    }
+
+    function resetFilters() {
+      searchQuery = '';
+      currentCategory = 'all';
+      showWishlistOnly = false;
+      document.getElementById('searchInput').value = '';
+      document.getElementById('wishlistFilterBtn').classList.remove('bg-amber-500/10', 'border-amber-400', 'text-amber-500');
+      setCategory('all');
+    }
+
+    function renderList() {
+      const listContainer = document.getElementById('marathonsList');
+      const emptyState = document.getElementById('emptyState');
+
+      const filtered = marathons.filter(m => {
+        // Category filter
+        if (currentCategory !== 'all' && m.category !== currentCategory) return false;
+        
+        // Wishlist filter
+        if (showWishlistOnly && !wishlistState[m.id]) return false;
+
+        // Search query
+        if (searchQuery) {
+          const matchName = m.name.toLowerCase().includes(searchQuery);
+          const matchCountry = m.country.toLowerCase().includes(searchQuery);
+          const matchDesc = m.famousFeature.toLowerCase().includes(searchQuery) || m.iconicHighlight.toLowerCase().includes(searchQuery);
+          const matchProfile = m.courseProfile.toLowerCase().includes(searchQuery);
+          return matchName || matchCountry || matchDesc || matchProfile;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      listContainer.innerHTML = filtered.map(m => {
+        const isDone = !!completedState[m.id];
+        const isWish = !!wishlistState[m.id];
+
+        let badgeBg = "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400";
+        if (m.category === 'majors') badgeBg = "bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20";
+        if (m.category === 'europe') badgeBg = "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20";
+        if (m.category === 'destination') badgeBg = "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20";
+
+        return `
+          <div class="group rounded-xl bg-white dark:bg-zinc-900 border ${isDone ? 'border-emerald-500/50 dark:border-emerald-500/40 bg-emerald-50/20 dark:bg-emerald-950/10' : 'border-zinc-200 dark:border-zinc-800'} transition duration-150 hover:border-zinc-300 dark:hover:border-zinc-700 shadow-sm overflow-hidden">
+            
+            <!-- Main Row -->
+            <div class="p-4 sm:p-5 flex items-center justify-between gap-3 cursor-pointer" onclick="toggleDetails('${m.id}')">
+              
+              <div class="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                <!-- Custom Checkbox -->
+                <button 
+                  onclick="event.stopPropagation(); toggleCompleted('${m.id}')"
+                  class="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-lg border ${isDone ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-zinc-300 dark:border-zinc-700 hover:border-emerald-500 text-transparent'} transition flex items-center justify-center focus:outline-none"
+                  aria-label="Mark completed"
+                >
+                  <i class="fa-solid fa-check text-xs sm:text-sm font-bold"></i>
+                </button>
+
+                <!-- Title & Basic Info -->
+                <div class="min-w-0">
+                  <div class="flex items-center space-x-2 flex-wrap gap-y-1">
+                    <h3 class="font-semibold text-base sm:text-lg text-zinc-900 dark:text-zinc-100 truncate ${isDone ? 'line-through text-zinc-400 dark:text-zinc-500' : ''}">
+                      ${m.name}
+                    </h3>
+                    <span class="text-xs px-2 py-0.5 rounded-full font-medium ${badgeBg}">
+                      ${m.categoryLabel}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                    <span>${m.flag} ${m.country}</span>
+                    <span>•</span>
+                    <span><i class="fa-regular fa-calendar text-xs mr-1"></i>${m.month}</span>
+                    <span>•</span>
+                    <span class="truncate hidden sm:inline"><i class="fa-solid fa-person-running text-xs mr-1"></i>${m.courseProfile}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons & Chevron -->
+              <div class="flex items-center space-x-2 flex-shrink-0">
+                <!-- Wishlist Star -->
+                <button 
+                  onclick="toggleWishlist('${m.id}', event)"
+                  class="p-2 rounded-lg text-zinc-400 hover:text-amber-400 transition"
+                  title="Save to Wishlist"
+                >
+                  <i class="${isWish ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base sm:text-lg"></i>
+                </button>
+
+                <!-- Chevron toggle -->
+                <div class="p-1.5 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-200 transition">
+                  <i id="chevron-${m.id}" class="fa-solid fa-chevron-down text-sm transition-transform duration-200"></i>
+                </div>
+              </div>
+            </div>
+
+            <div id="details-${m.id}" class="hidden border-t border-zinc-100 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/50 p-4 sm:p-5 text-sm space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-white dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200/50 dark:border-zinc-700/40">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-zinc-400 block">Course Profile</span>
+                  <span class="text-zinc-700 dark:text-zinc-200 font-medium mt-0.5 block">${m.courseProfile}</span>
+                </div>
+                <div class="bg-white dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200/50 dark:border-zinc-700/40">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-zinc-400 block">Field Size</span>
+                  <span class="text-zinc-700 dark:text-zinc-200 font-medium mt-0.5 block">${m.fieldSize} runners</span>
+                </div>
+                <div class="bg-white dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200/50 dark:border-zinc-700/40">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-zinc-400 block">Race Window</span>
+                  <span class="text-zinc-700 dark:text-zinc-200 font-medium mt-0.5 block">${m.month}</span>
+                </div>
+              </div>
+
+              <div class="space-y-2 pt-1">
+                <div>
+                  <span class="font-semibold text-zinc-800 dark:text-zinc-200">Famous Feature:</span>
+                  <p class="text-zinc-600 dark:text-zinc-400 mt-0.5 leading-relaxed">${m.famousFeature}</p>
+                </div>
+                <div>
+                  <span class="font-semibold text-zinc-800 dark:text-zinc-200">Iconic Highlight:</span>
+                  <p class="text-zinc-600 dark:text-zinc-400 mt-0.5 leading-relaxed">${m.iconicHighlight}</p>
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-end">
+                <a 
+                  href="${m.link}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="inline-flex items-center space-x-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline"
+                >
+                  <span>Official Marathon Website</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.onload = function() {
+      initTheme();
+      loadState();
+      updateStats();
+      renderList();
+    };
+  </script>
+</body>
+</html>
