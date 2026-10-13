@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingeable Authors Reference Guide</title>
+    <!-- Tailwind CSS for modern responsive utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .ghost-card {
+            opacity: 0.4;
+            background-color: #f3f4f6;
+            border: 2px dashed #9ca3af !important;
+        }
+        .dragging {
+            cursor: grabbing !important;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans antialiased transition-colors duration-200">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-200">
+                        <i class="fa-solid fa-book-bookmark text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Bingeable Authors</h1>
+                        <p class="text-xs sm:text-sm text-slate-500 font-medium">Curated Reference Guide & Reading List</p>
+                    </div>
+                </div>
+
+                <!-- Stats counter badges -->
+                <div class="flex items-center space-x-3 text-xs sm:text-sm font-medium">
+                    <div class="bg-slate-100 px-3 py-1.5 rounded-lg text-slate-600 border border-slate-200 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span>Total: <strong id="stat-total" class="text-slate-900">0</strong></span>
+                    </div>
+                    <div class="bg-emerald-50 px-3 py-1.5 rounded-lg text-emerald-700 border border-emerald-200/60 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>Read: <strong id="stat-read" class="text-emerald-900">0</strong></span>
+                    </div>
+                    <div class="bg-amber-50 px-3 py-1.5 rounded-lg text-amber-700 border border-amber-200/60 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span>To-Read: <strong id="stat-toread" class="text-amber-900">0</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Controls Bar -->
+        <section class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/80 mb-8 space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                
+                <!-- Search Input -->
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-input" placeholder="Search by author name, genre, blueprint, or book..." 
+                        class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400">
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <!-- Status Filter Buttons -->
+                    <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200/60 text-xs font-semibold">
+                        <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-lg bg-white text-slate-800 shadow-sm transition-all">All</button>
+                        <button data-filter="toread" class="filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">To Read</button>
+                        <button data-filter="read" class="filter-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">Read</button>
+                    </div>
+
+                    <!-- Category Filter Dropdown -->
+                    <select id="category-filter" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium cursor-pointer">
+                        <option value="all">All Categories</option>
+                        <option value="Masters of Outlining & Structural Precision">Outlining Masters</option>
+                        <option value="Bingeable Modern Thriller Blueprints">Modern Thrillers</option>
+                        <option value="Architects of High-Concept Pacing">High-Concept Pacing</option>
+                    </select>
+
+                    <!-- Reset Ranking Button -->
+                    <button id="reset-order-btn" title="Reset to Default Category Order" class="flex items-center space-x-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-200 transition-colors">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                        <span>Reset Order</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notice Banner for Reordering -->
+            <div class="flex items-center justify-between text-xs text-slate-500 bg-indigo-50/50 border border-indigo-100 px-3.5 py-2 rounded-lg">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-indigo-500"></i>
+                    <span><strong>Pro Tip:</strong> Drag and drop cards using the grab handle <i class="fa-solid fa-grip-vertical text-slate-400 mx-0.5"></i> or use arrow buttons to reorder your preferred reading priority.</span>
+                </span>
+            </div>
+        </section>
+
+        <!-- Author Cards Container -->
+        <div id="authors-container" class="space-y-8">
+            <!-- Dynamic Category Groups or Filtered Card Grid will be inserted here -->
+        </div>
+
+        <!-- Empty Search Result State -->
+        <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300 my-8">
+            <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">No authors found</h3>
+            <p class="text-slate-500 text-sm mt-1 max-w-sm mx-auto">Try adjusting your search criteria or clear filters to see all bingeable authors.</p>
+            <button id="clear-search-btn" class="mt-4 px-4 py-2 bg-indigo-600 text-white font-medium text-xs rounded-xl shadow hover:bg-indigo-700 transition-colors">Clear Search & Filters</button>
+        </div>
+
+    </main>
+
+
+    <script>
+        // Default Author Data Setup
+        const initialAuthors = [
+            {
+                id: "sanderson",
+                name: "Brandon Sanderson",
+                category: "Masters of Outlining & Structural Precision",
+                categoryIcon: "fa-compass-drafting",
+                categoryColor: "amber",
+                blueprint: "Deeply structured world-building, transparent writing style, and meticulously mapped magic systems. Famous for the 'Sanderstorm' where dozens of separate plot points converge into an explosive finale.",
+                genres: ["Epic Fantasy", "Sci-Fi", "Dystopian"],
+                entryPoints: ["Tress of the Emerald Sea (Standalone Fantasy)", "Steelheart (Dystopian Superhero Trilogy)"]
+            },
+            {
+                id: "marrs",
+                name: "John Marrs",
+                category: "Masters of Outlining & Structural Precision",
+                categoryIcon: "fa-compass-drafting",
+                categoryColor: "amber",
+                blueprint: "High-concept speculative sci-fi and psychological thrillers built on rapid-fire, multi-perspective chapters. Every chapter ends on an intense cliffhanger.",
+                genres: ["Psychological Thriller", "Speculative Sci-Fi"],
+                entryPoints: ["The One (DNA matching service thriller)"]
+            },
+            {
+                id: "sager",
+                name: "Riley Sager",
+                category: "Bingeable Modern Thriller Blueprints",
+                categoryIcon: "fa-masks-theater",
+                categoryColor: "rose",
+                blueprint: "Modern popcorn suspense that takes classic horror or thriller tropes (creepy cabins, old estates) and subverts them entirely using highly unreliable narrators and grand third-act twists.",
+                genres: ["Domestic Suspense", "Psychological Thriller"],
+                entryPoints: ["The Only One Left (Gothic house thriller)"]
+            },
+            {
+                id: "lapena",
+                name: "Shari Lapena",
+                category: "Bingeable Modern Thriller Blueprints",
+                categoryIcon: "fa-masks-theater",
+                categoryColor: "rose",
+                blueprint: "'Suburban Chaos' layouts with short, declarative sentences. A crime happens in an affluent neighborhood, and the perspective rotates quickly among suspicious, secretive neighbors.",
+                genres: ["Domestic Thriller"],
+                entryPoints: ["The Couple Next Door (Iconic neighborhood disappearance)"]
+            },
+            {
+                id: "modglin",
+                name: "Kiersten Modglin",
+                category: "Bingeable Modern Thriller Blueprints",
+                categoryIcon: "fa-masks-theater",
+                categoryColor: "rose",
+                blueprint: "Rapid output focusing intensely on marital secrets, breakneck pacing, and exceptionally short chapters. Bypasses heavy description to keep plot velocity at an absolute maximum.",
+                genres: ["Domestic Thriller", "Quick-Read Suspense"],
+                entryPoints: ["The Arrangement", "The Stranger"]
+            },
+            {
+                id: "crouch",
+                name: "Blake Crouch",
+                category: "Architects of High-Concept Pacing",
+                categoryIcon: "fa-atom",
+                categoryColor: "indigo",
+                blueprint: "High-concept sci-fi thrillers propelled by razor-sharp pacing, physics-defying premises, and lean, direct prose. Uses brief, punchy sentences and relentless momentum to explore identity, parallel realities, and memory.",
+                genres: ["Sci-Fi Thriller", "Speculative Suspense"],
+                entryPoints: ["Dark Matter (Alternate timelines)", "Recursion (Memory alteration thriller)"]
+            },
+            {
+                id: "mcfadden",
+                name: "Freida McFadden",
+                category: "Architects of High-Concept Pacing",
+                categoryIcon: "fa-atom",
+                categoryColor: "indigo",
+                blueprint: "Ultra-fast, highly addictive domestic suspense featuring claustrophobic settings, dual timelines, and major third-act reveals. Keeps chapters short and plot velocity at maximum by focusing purely on character friction and hidden motives.",
+                genres: ["Domestic Thriller", "Psychological Suspense"],
+                entryPoints: ["The Housemaid (Twist-heavy family home suspense)"]
+            },
+            {
+                id: "crichton",
+                name: "Michael Crichton",
+                category: "Architects of High-Concept Pacing",
+                categoryIcon: "fa-atom",
+                categoryColor: "indigo",
+                blueprint: "The gold standard of tech-thriller construction. Combines rigorous scientific research with a ticking-clock narrative structure, escalating chaos step-by-step as high-tech systems inevitably fail.",
+                genres: ["Techno-Thriller", "Sci-Fi"],
+                entryPoints: ["Jurassic Park (Classic chaos-theory suspense)", "Sphere (Undersea alien technology)"]
+            }
+        ];
+
+        // State variables
+        let authorOrder = [];
+        let userReadStates = {};
+        let currentFilter = 'all';
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let draggedItemIndex = null;
+
+        // LOCAL STORAGE KEYS
+        const STORAGE_ORDER_KEY = 'bingeable_authors_order_v1';
+        const STORAGE_READ_KEY = 'bingeable_authors_read_states_v1';
+
+        function initData() {
+            // Load saved user order or set default
+            const savedOrder = localStorage.getItem(STORAGE_ORDER_KEY);
+            if (savedOrder) {
+                try {
+                    authorOrder = JSON.parse(savedOrder);
+                    // Handle missing new authors if schema updates
+                    const existingIds = new Set(authorOrder);
+                    initialAuthors.forEach(a => {
+                        if (!existingIds.has(a.id)) authorOrder.push(a.id);
+                    });
+                } catch (e) {
+                    authorOrder = initialAuthors.map(a => a.id);
+                }
+            } else {
+                authorOrder = initialAuthors.map(a => a.id);
+            }
+
+            // Load saved read states
+            const savedStates = localStorage.getItem(STORAGE_READ_KEY);
+            if (savedStates) {
+                try {
+                    userReadStates = JSON.parse(savedStates);
+                } catch (e) {
+                    userReadStates = {};
+                }
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_ORDER_KEY, JSON.stringify(authorOrder));
+            localStorage.setItem(STORAGE_READ_KEY, JSON.stringify(userReadStates));
+            updateStats();
+        }
+
+        // Helper to get full author objects in current user order
+        function getOrderedAuthors() {
+            return authorOrder
+                .map(id => initialAuthors.find(author => author.id === id))
+                .filter(Boolean);
+        }
+
+        function updateStats() {
+            const total = initialAuthors.length;
+            const readCount = Object.values(userReadStates).filter(Boolean).length;
+            const toReadCount = total - readCount;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-read').innerText = readCount;
+            document.getElementById('stat-toread').innerText = toReadCount;
+        }
+
+        function renderAuthors() {
+            const container = document.getElementById('authors-container');
+            const emptyState = document.getElementById('empty-state');
+            container.innerHTML = '';
+
+            const ordered = getOrderedAuthors();
+
+            // Filter logic
+            const filtered = ordered.filter(author => {
+                const isRead = !!userReadStates[author.id];
+                
+                // Status Filter
+                if (currentFilter === 'read' && !isRead) return false;
+                if (currentFilter === 'toread' && isRead) return false;
+
+                // Category Filter
+                if (currentCategory !== 'all' && author.category !== currentCategory) return false;
+
+                // Search Query
+                if (searchQuery.trim() !== '') {
+                    const q = searchQuery.toLowerCase();
+                    const nameMatch = author.name.toLowerCase().includes(q);
+                    const blueprintMatch = author.blueprint.toLowerCase().includes(q);
+                    const genreMatch = author.genres.some(g => g.toLowerCase().includes(q));
+                    const entryMatch = author.entryPoints.some(e => e.toLowerCase().includes(q));
+                    const catMatch = author.category.toLowerCase().includes(q);
+                    return nameMatch || blueprintMatch || genreMatch || entryMatch || catMatch;
+                }
+
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            // Create unified grid list
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+
+
+            filtered.forEach((author) => {
+                const globalIndex = authorOrder.indexOf(author.id);
+                const isRead = !!userReadStates[author.id];
+
+                const card = document.createElement('div');
+                card.className = `author-card bg-white rounded-2xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200/90'} p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group`;
+                card.setAttribute('draggable', 'true');
+                card.setAttribute('data-id', author.id);
+                card.setAttribute('data-index', globalIndex);
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Header & Drag handle -->
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="drag-handle cursor-grab active:cursor-grabbing p-1.5 text-slate-300 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" title="Drag to reorder">
+                                    <i class="fa-solid fa-grip-vertical text-lg"></i>
+                                </span>
+                                <div>
+                                    <span class="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 mb-1">
+                                        ${author.category.split(' ')[0]} ...
+                                    </span>
+                                    <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
+                                        ${author.name}
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <!-- Read Checkbox Control -->
+                            <label class="flex items-center space-x-2 cursor-pointer bg-slate-50 hover:bg-slate-100 p-2 rounded-xl border border-slate-200 transition-colors shrink-0">
+                                <input type="checkbox" data-id="${author.id}" class="read-checkbox w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer" ${isRead ? 'checked' : ''}>
+                                <span class="text-xs font-semibold ${isRead ? 'text-emerald-700' : 'text-slate-500'}">
+                                    ${isRead ? 'Read' : 'To Read'}
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Genre Tags -->
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            ${author.genres.map(g => `<span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">${g}</span>`).join('')}
+                        </div>
+
+                        <!-- The Blueprint Section -->
+                        <div class="bg-slate-50 border border-slate-100 p-3.5 rounded-xl mb-4">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-layer-group text-indigo-500"></i> The Blueprint
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed font-normal">
+                                ${author.blueprint}
+                            </p>
+                        </div>
+
+                        <!-- Entry Points -->
+                        <div class="space-y-1.5 mb-4">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-star text-amber-400"></i> Recommended Entry
+                            </h4>
+                            <ul class="text-xs text-slate-700 space-y-1 pl-1">
+                                ${author.entryPoints.map(e => `<li class="flex items-start gap-1.5"><i class="fa-solid fa-angle-right text-indigo-400 text-[10px] mt-1"></i><span>${e}</span></li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Controls: Ranking & Up/Down shift -->
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                        <span class="font-medium">Priority Rank #${globalIndex + 1}</span>
+                        <div class="flex items-center space-x-1">
+                            <button data-id="${author.id}" data-dir="up" class="move-btn p-1.5 hover:bg-slate-100 hover:text-slate-700 rounded-md transition-colors" title="Move up in rank">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </button>
+                            <button data-id="${author.id}" data-dir="down" class="move-btn p-1.5 hover:bg-slate-100 hover:text-slate-700 rounded-md transition-colors" title="Move down in rank">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            container.appendChild(grid);
+            attachCardEventListeners();
+        }
+
+        function attachCardEventListeners() {
+            // Checkbox event listener
+            document.querySelectorAll('.read-checkbox').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    userReadStates[id] = e.target.checked;
+                    saveData();
+                    renderAuthors();
+                });
+            });
+
+            // Reorder Move Buttons
+            document.querySelectorAll('.move-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.getAttribute('data-id');
+                    const dir = btn.getAttribute('data-dir');
+                    moveAuthor(id, dir);
+                });
+            });
+
+            // Drag and Drop implementation
+            const cards = document.querySelectorAll('.author-card');
+            cards.forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragend', handleDragEnd);
+            });
+        }
+
+        function moveAuthor(id, direction) {
+            const index = authorOrder.indexOf(id);
+            if (index === -1) return;
+
+            if (direction === 'up' && index > 0) {
+                const temp = authorOrder[index];
+                authorOrder[index] = authorOrder[index - 1];
+                authorOrder[index - 1] = temp;
+            } else if (direction === 'down' && index < authorOrder.length - 1) {
+                const temp = authorOrder[index];
+                authorOrder[index] = authorOrder[index + 1];
+                authorOrder[index + 1] = temp;
+            }
+
+            saveData();
+            renderAuthors();
+        }
+
+        // Drag & Drop Handlers
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('ghost-card');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.getAttribute('data-id'));
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            const targetCard = this;
+            if (draggedElement !== targetCard) {
+                const draggedId = draggedElement.getAttribute('data-id');
+                const targetId = targetCard.getAttribute('data-id');
+
+                const fromIndex = authorOrder.indexOf(draggedId);
+                const toIndex = authorOrder.indexOf(targetId);
+
+                if (fromIndex !== -1 && toIndex !== -1) {
+                    authorOrder.splice(fromIndex, 1);
+                    authorOrder.splice(toIndex, 0, draggedId);
+                    saveData();
+                    renderAuthors();
+                }
+            }
+            return false;
+        }
+
+        function handleDragEnd() {
+            this.classList.remove('ghost-card');
+            document.querySelectorAll('.author-card').forEach(card => card.classList.remove('ghost-card'));
+        }
+
+        function setupGlobalEvents() {
+            // Filter status buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-white', 'text-slate-800', 'shadow-sm');
+                        b.classList.add('text-slate-600');
+                    });
+                    btn.classList.add('active', 'bg-white', 'text-slate-800', 'shadow-sm');
+                    btn.classList.remove('text-slate-600');
+                    
+                    currentFilter = btn.getAttribute('data-filter');
+                    renderAuthors();
+                });
+            });
+
+            // Category filter select
+            document.getElementById('category-filter').addEventListener('change', (e) => {
+                currentCategory = e.target.value;
+                renderAuthors();
+            });
+
+            // Search input filter
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderAuthors();
+            });
+
+            // Reset order button
+            document.getElementById('reset-order-btn').addEventListener('click', () => {
+                authorOrder = initialAuthors.map(a => a.id);
+                saveData();
+                renderAuthors();
+            });
+
+            // Clear search empty state action
+            document.getElementById('clear-search-btn').addEventListener('click', () => {
+                searchQuery = '';
+                currentFilter = 'all';
+                currentCategory = 'all';
+                document.getElementById('search-input').value = '';
+                document.getElementById('category-filter').value = 'all';
+                
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-white', 'text-slate-800', 'shadow-sm');
+                    b.classList.add('text-slate-600');
+                });
+                const allBtn = document.querySelector('.filter-btn[data-filter="all"]');
+                allBtn.classList.add('active', 'bg-white', 'text-slate-800', 'shadow-sm');
+                
+                renderAuthors();
+            });
+        }
+
+        // Initialize on DOM load
+        window.onload = function() {
+            initData();
+            updateStats();
+            setupGlobalEvents();
+            renderAuthors();
+        };
+    </script>
+</body>
+</html>
