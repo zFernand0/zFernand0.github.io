@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPulse - Split & Nutrition OS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">FitPulse</span>
+                        <span class="hidden sm:inline-block text-xs text-slate-400 ml-2 font-medium bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">Upper/Lower + 150g Veg</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Tabs -->
+                <nav class="hidden md:flex space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800/80">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 flex items-center space-x-2 text-emerald-400 bg-slate-800">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="switchTab('workout')" id="nav-workout" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200">
+                        <i data-lucide="dumbbell" class="w-4 h-4"></i>
+                        <span>Workouts</span>
+                    </button>
+                    <button onclick="switchTab('nutrition')" id="nav-nutrition" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200">
+                        <i data-lucide="utensils" class="w-4 h-4"></i>
+                        <span>Nutrition</span>
+                    </button>
+                    <button onclick="switchTab('abs')" id="nav-abs" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200">
+                        <i data-lucide="target" class="w-4 h-4"></i>
+                        <span>Abs Calculator</span>
+                    </button>
+                </nav>
+
+                <!-- Quick Date / Reset -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="resetDailyData()" class="p-2 text-slate-400 hover:text-rose-400 bg-slate-800/50 hover:bg-slate-800 rounded-lg border border-slate-700/50 transition-colors" title="Reset Today's Logs">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                    <div class="text-right hidden sm:block">
+                        <div id="current-date" class="text-xs font-semibold text-slate-300"></div>
+                        <div class="text-[10px] text-emerald-400 font-medium">Goal: 150g Protein</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8">
+
+        <!-- ==================== DASHBOARD TAB ==================== -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- Welcome Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-800 p-6 rounded-2xl border border-slate-800">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Daily Performance Hub</h1>
+                    <p class="text-slate-400 text-sm mt-1">High-Efficiency 4-Day Split & Low-Effort 150g Vegetarian Nutrition</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="switchTab('workout')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center space-x-2">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Start Workout</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid Overview -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Protein Progress -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Protein Intake</p>
+                            <h3 class="text-2xl font-black mt-1 text-white"><span id="dash-protein-val">0</span> <span class="text-sm font-medium text-slate-400">/ 150g</span></h3>
+                        </div>
+                        <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
+                            <i data-lucide="beef" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2.5 mt-3 overflow-hidden">
+                        <div id="dash-protein-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="dash-protein-status" class="text-[11px] text-slate-400 mt-2 font-medium">0% of daily target reached</p>
+                </div>
+
+                <!-- Calories Consumed -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Calories</p>
+                            <h3 class="text-2xl font-black mt-1 text-white"><span id="dash-cal-val">0</span> <span class="text-sm font-medium text-slate-400">/ <span id="dash-cal-target">2000</span> kcal</span></h3>
+                        </div>
+                        <div class="p-2.5 bg-sky-500/10 text-sky-400 rounded-xl border border-sky-500/20">
+                            <i data-lucide="flame" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2.5 mt-3 overflow-hidden">
+                        <div id="dash-cal-bar" class="bg-gradient-to-r from-sky-500 to-indigo-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="dash-cal-remaining" class="text-[11px] text-slate-400 mt-2 font-medium">2000 kcal remaining</p>
+                </div>
+
+                <!-- Today's Workout -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Scheduled Today</p>
+                            <h3 id="dash-workout-name" class="text-lg font-bold mt-1 text-white truncate">Upper A (Strength)</h3>
+                        </div>
+                        <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
+                            <i data-lucide="dumbbell" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-4">
+                        <span id="dash-workout-status-badge" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">Pending</span>
+                        <span id="dash-workout-progress" class="text-xs text-slate-400 font-medium">0 / 6 Exercises</span>
+                    </div>
+                </div>
+
+                <!-- Water Tracker -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Water Intake</p>
+                            <h3 class="text-2xl font-black mt-1 text-white"><span id="dash-water-val">0</span> <span class="text-sm font-medium text-slate-400">/ 3.0 L</span></h3>
+                        </div>
+                        <div class="p-2.5 bg-cyan-500/10 text-cyan-400 rounded-xl border border-cyan-500/20">
+                            <i data-lucide="droplet" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-3">
+                        <button onclick="addWater(0.25)" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center justify-center space-x-1">
+                            <span>+250ml</span>
+                        </button>
+                        <button onclick="addWater(0.5)" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center justify-center space-x-1">
+                            <span>+500ml</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Cards Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Fairlife Quick Add Hero Card -->
+                <div class="lg:col-span-1 bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 p-6 rounded-2xl border border-amber-500/30 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 text-amber-500/5 pointer-events-none">
+                        <i data-lucide="zap" class="w-48 h-48"></i>
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mb-3">
+                            <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                            <span>Zero-Prep High Protein Hack</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white">Fairlife Core Power Shake</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Instantly lock in 42g of high-quality milk protein with minimal calories (230 kcal). Perfect post-workout anchor.</p>
+                    </div>
+                    <div class="mt-6">
+                        <button onclick="addFairlifeShake()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center space-x-2">
+                            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                            <span>Quick Add Fairlife Shake (42g)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Daily Checklist / Routine Overview -->
+                <div class="lg:col-span-2 bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i data-lucide="check-square" class="w-5 h-5 text-emerald-400"></i>
+                            <span>Today's Execution Blueprint</span>
+                        </h3>
+                        <span class="text-xs text-slate-400">Keep it consistent</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div id="chk-item-1" onclick="toggleTask('chk-item-1')" class="p-3.5 bg-slate-950 hover:bg-slate-800/80 rounded-xl border border-slate-800/80 cursor-pointer transition-colors flex items-center justify-between group">
+                            <div class="flex items-center space-x-3">
+                                <div class="task-check w-5 h-5 rounded-md border border-slate-600 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 hidden"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-300">Drink 1 bottle Fairlife Shake or protein smoothie (42g)</span>
+                            </div>
+                            <span class="text-xs text-slate-500 font-mono">Nutrition</span>
+                        </div>
+                        <div id="chk-item-2" onclick="toggleTask('chk-item-2')" class="p-3.5 bg-slate-950 hover:bg-slate-800/80 rounded-xl border border-slate-800/80 cursor-pointer transition-colors flex items-center justify-between group">
+                            <div class="flex items-center space-x-3">
+                                <div class="task-check w-5 h-5 rounded-md border border-slate-600 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 hidden"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-300">Complete scheduled lifting session + core exercise</span>
+                            </div>
+                            <span class="text-xs text-slate-500 font-mono">Workout</span>
+                        </div>
+                        <div id="chk-item-3" onclick="toggleTask('chk-item-3')" class="p-3.5 bg-slate-950 hover:bg-slate-800/80 rounded-xl border border-slate-800/80 cursor-pointer transition-colors flex items-center justify-between group">
+                            <div class="flex items-center space-x-3">
+                                <div class="task-check w-5 h-5 rounded-md border border-slate-600 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 hidden"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-300">Hit 8,000–10,000 daily steps for steady fat loss</span>
+                            </div>
+                            <span class="text-xs text-slate-500 font-mono">Activity</span>
+                        </div>
+                        <div id="chk-item-4" onclick="toggleTask('chk-item-4')" class="p-3.5 bg-slate-950 hover:bg-slate-800/80 rounded-xl border border-slate-800/80 cursor-pointer transition-colors flex items-center justify-between group">
+                            <div class="flex items-center space-x-3">
+                                <div class="task-check w-5 h-5 rounded-md border border-slate-600 flex items-center justify-center group-hover:border-emerald-500 transition-colors">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400 hidden"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-300">Log dinner/lunch anchor (Greek yogurt, Tofu, Cottage Cheese, or Seitan)</span>
+                            </div>
+                            <span class="text-xs text-slate-500 font-mono">Nutrition</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== WORKOUT TAB ==================== -->
+        <section id="tab-workout" class="tab-content hidden space-y-6">
+            <!-- Split Selector Buttons -->
+            <div class="flex flex-wrap gap-2 bg-slate-900 p-2 rounded-2xl border border-slate-800">
+                <button onclick="selectDay('upperA')" id="btn-upperA" class="workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 bg-emerald-500 text-slate-950 shadow-md">
+                    Day 1: Upper A
+                </button>
+                <button onclick="selectDay('lowerA')" id="btn-lowerA" class="workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200">
+                    Day 2: Lower A
+                </button>
+                <button onclick="selectDay('upperB')" id="btn-upperB" class="workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200">
+                    Day 3: Upper B
+                </button>
+                <button onclick="selectDay('lowerB')" id="btn-lowerB" class="workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200">
+                    Day 4: Lower B
+                </button>
+            </div>
+
+            <!-- Workout Header Banner -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span id="workout-day-title" class="text-xl font-black text-white">Upper Body A</span>
+                        <span id="workout-focus-tag" class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Strength Focus</span>
+                    </div>
+                    <p id="workout-desc" class="text-xs text-slate-400 mt-1">Focus on compound pushing and pulling with low reps for strength foundation.</p>
+                </div>
+
+                <!-- Timer Bar Integration -->
+                <div class="flex items-center space-x-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="text-right">
+                        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Rest Timer</div>
+                        <div id="timer-display" class="text-lg font-black text-emerald-400 font-mono">01:30</div>
+                    </div>
+                    <div class="flex space-x-1">
+                        <button onclick="startTimer(60)" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-lg border border-slate-700">60s</button>
+                        <button onclick="startTimer(90)" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-lg border border-slate-700">90s</button>
+                        <button onclick="resetTimer()" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-400 rounded-lg border border-slate-700">
+                            <i data-lucide="square" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise Cards Container -->
+            <div id="exercise-list" class="space-y-4">
+                <!-- Exercises dynamically injected here -->
+            </div>
+
+            <!-- Workout Completion Footer -->
+            <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h4 class="text-sm font-bold text-white">Session Notes & History</h4>
+                    <p class="text-xs text-slate-400">Save your set stats to track progressive overload over time.</p>
+                </div>
+                <button onclick="saveWorkoutSession()" class="w-full sm:w-auto px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                    <span>Log Workout Completed</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== NUTRITION TAB ==================== -->
+        <section id="tab-nutrition" class="tab-content hidden space-y-6">
+            <!-- Macro Summary Banner -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Protein Target</span>
+                    <div class="text-2xl font-black text-emerald-400 mt-1"><span id="nutr-p-curr">0</span> / 150g</div>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Calories</span>
+                    <div class="text-2xl font-black text-sky-400 mt-1"><span id="nutr-c-curr">0</span> / 2000</div>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Carbs</span>
+                    <div class="text-2xl font-black text-amber-400 mt-1"><span id="nutr-carb-curr">0</span>g</div>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Fats</span>
+                    <div class="text-2xl font-black text-indigo-400 mt-1"><span id="nutr-fat-curr">0</span>g</div>
+                </div>
+            </div>
+
+            <!-- Quick Add Low-Effort Presets -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i>
+                            <span>Zero-Cook Vegetarian Staples (Click to Add)</span>
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">High-protein options requiring zero kitchen effort</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="preset-foods-grid">
+                    <!-- Dynamic presets inserted via Javascript -->
+                </div>
+            </div>
+
+            <!-- Custom Meal Logger & Daily Log Table -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add Custom Food Form -->
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                        <i data-lucide="plus" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Add Custom Food</span>
+                    </h3>
+                    <form id="custom-food-form" onsubmit="addCustomFood(event)" class="space-y-3">
+                        <div>
+                            <label class="text-xs font-medium text-slate-400">Item Name</label>
+                            <input type="text" id="custom-name" required placeholder="e.g., Tofu Stir Fry" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs font-medium text-slate-400">Protein (g)</label>
+                                <input type="number" id="custom-protein" required min="0" placeholder="25" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium text-slate-400">Calories (kcal)</label>
+                                <input type="number" id="custom-calories" required min="0" placeholder="250" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs font-medium text-slate-400">Carbs (g)</label>
+                                <input type="number" id="custom-carbs" value="0" min="0" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="text-xs font-medium text-slate-400">Fats (g)</label>
+                                <input type="number" id="custom-fats" value="0" min="0" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-sm rounded-xl border border-slate-700 transition-colors flex items-center justify-center space-x-2">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Add To Log</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Today's Logged Meals Table -->
+                <div class="lg:col-span-2 bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-base font-bold text-white">Today's Logged Foods</h3>
+                            <button onclick="clearFoodLog()" class="text-xs text-rose-400 hover:underline">Clear Log</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="border-b border-slate-800 text-slate-400 uppercase font-semibold">
+                                        <th class="py-2.5 px-2">Food</th>
+                                        <th class="py-2.5 px-2 text-right">Protein</th>
+                                        <th class="py-2.5 px-2 text-right">Calories</th>
+                                        <th class="py-2.5 px-2 text-right">Carbs/Fat</th>
+                                        <th class="py-2.5 px-2 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="food-log-tbody" class="divide-y divide-slate-800/50">
+                                    <!-- Dynamic rows injected -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+             <div id="no-food-msg" class="text-center py-8 text-slate-500 text-xs italic">
+                        No food logged yet today. Use the presets above or custom entry.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grocery & Hack Cheat Sheet -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-sky-400"></i>
+                    <span>Lazy Vegetarian Protein Cheat Sheet</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+                        <span class="font-bold text-emerald-400 text-sm block">Tier 1: Zero Cook (Grab & Drink/Eat)</span>
+                        <ul class="space-y-1 text-slate-300 list-disc list-inside">
+                            <li>Fairlife Core Power Elite (42g P)</li>
+                            <li>0% Fat Greek Yogurt Tubs (22g P per cup)</li>
+                            <li>Low-Fat Cottage Cheese (28g P per cup)</li>
+                            <li>Ready-To-Drink Protein Shakes</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+                        <span class="font-bold text-amber-400 text-sm block">Tier 2: 2-Minute Assembly</span>
+                        <ul class="space-y-1 text-slate-300 list-disc list-inside">
+                            <li>Pre-baked Teriyaki/Barbecue Tofu blocks</li>
+                            <li>Frozen Edamame (microwave 2 mins)</li>
+                            <li>Chipotle Veggie Bowls (double beans/fajita)</li>
+                            <li>Ezekiel Sprouted Grain Bread + Egg whites</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+                        <span class="font-bold text-sky-400 text-sm block">Tier 3: 7-Minute Pantry Swap</span>
+                        <ul class="space-y-1 text-slate-300 list-disc list-inside">
+                            <li>Banza Chickpea / Lentil Pasta (20g P)</li>
+                            <li>Vital Wheat Gluten / Seitan Stir-fry</li>
+                            <li>Ultra-filtered milk or Soy Milk</li>
+                            <li>Protein Snack Bars (Barebells / Quest)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ABS & FAT LOSS CALCULATOR TAB ==================== -->
+        <section id="tab-abs" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="p-2.5 bg-rose-500/10 text-rose-400 rounded-xl border border-rose-500/20">
+                        <i data-lucide="target" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">Six-Pack & Fat Loss Timeline Estimator</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Calculate your maintenance calories, fat-loss deficit, and estimated weeks to reveal abs (~10-12% body fat).</p>
+                    </div>
+                </div>
+
+                <form id="abs-calc-form" onsubmit="calculateAbsTimeline(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400">Current Weight (lbs)</label>
+                        <input type="number" id="calc-weight" value="180" required class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400">Current Body Fat % (Est.)</label>
+                        <input type="number" id="calc-bf" value="20" min="5" max="50" required class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400">Target Body Fat %</label>
+                        <input type="number" id="calc-target-bf" value="11" min="5" max="20" required class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400">Daily Activity Level</label>
+                        <select id="calc-activity" class="w-full mt-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                            <option value="1.2">Sedentary (Desk job)</option>
+                            <option value="1.375" selected>Moderate (4-day lifting + 8k steps)</option>
+                            <option value="1.55">Very Active (Lifting + high daily cardio)</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-4 mt-2">
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2">
+                            <i data-lucide="calculator" class="w-5 h-5"></i>
+                            <span>Calculate Six-Pack Projection</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Display Cards -->
+            <div id="abs-results-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center space-y-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Estimated Maintenance</span>
+                    <div id="res-maintenance" class="text-3xl font-black text-white">2,450</div>
+                    <span class="text-xs text-slate-500">kcal / day</span>
+                </div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center space-y-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Recommended Deficit Target</span>
+                    <div id="res-target-cal" class="text-3xl font-black text-emerald-400">1,950</div>
+                    <span class="text-xs text-slate-500">kcal / day (-500 deficit)</span>
+                </div>
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 text-center space-y-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Estimated Time to Six-Pack</span>
+                    <div id="res-weeks" class="text-3xl font-black text-amber-400">14</div>
+                    <span class="text-xs text-slate-500">Weeks (~1.0 lbs fat loss/wk)</span>
+                </div>
+            </div>
+
+            <!-- Abs Blueprint Guidelines -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                    <span>The Golden Rules for Abs & Muscle Retention</span>
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="font-bold text-slate-200 mb-1">1. Keep Protein High (150g+)</p>
+                        <p class="text-slate-400">In a caloric deficit, high protein prevents muscle breakdown and keeps hunger hormones down.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="font-bold text-slate-200 mb-1">2. Direct Abs Work 2-3x/Week</p>
+                        <p class="text-slate-400">Perform progressive heavy core work (Cable Crunches, Weighted Planks, Hanging Raises) to build abdominal wall thickness.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="font-bold text-slate-200 mb-1">3. Prioritize Daily Steps over Intense Cardio</p>
+                        <p class="text-slate-400">8,000–10,000 steps daily burns fat without over-fatiguing your nervous system or increasing ravenous appetite.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="font-bold text-slate-200 mb-1">4. Patient Consistency</p>
+                        <p class="text-slate-400">Aim for 0.5 to 1.5 lbs per week of weight loss. Faster loss often causes muscle wasting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 z-50">
+        <div class="grid grid-cols-4 h-16">
+            <button onclick="switchTab('dashboard')" id="mob-nav-dashboard" class="flex flex-col items-center justify-center space-y-1 text-emerald-400">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Home</span>
+            </button>
+            <button onclick="switchTab('workout')" id="mob-nav-workout" class="flex flex-col items-center justify-center space-y-1 text-slate-400">
+                <i data-lucide="dumbbell" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Workout</span>
+            </button>
+            <button onclick="switchTab('nutrition')" id="mob-nav-nutrition" class="flex flex-col items-center justify-center space-y-1 text-slate-400">
+                <i data-lucide="utensils" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Nutrition</span>
+            </button>
+            <button onclick="switchTab('abs')" id="mob-nav-abs" class="flex flex-col items-center justify-center space-y-1 text-slate-400">
+                <i data-lucide="target" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Abs Calc</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // ==========================================
+        // STATE MANAGEMENT & LOCAL STORAGE SETUP
+        // ==========================================
+        const DEFAULT_STATE = {
+            todayProtein: 0,
+            todayCalories: 0,
+            todayCarbs: 0,
+            todayFats: 0,
+            todayWater: 0,
+            targetCalories: 2000,
+            tasks: {},
+            foodLog: [],
+            currentDayKey: 'upperA',
+            workoutData: {
+                upperA: [
+                    { name: 'Barbell Bench Press / DB Press', sets: 3, reps: '6-8', weight: 135, done: [false, false, false] },
+                    { name: 'Bent-Over Rows / Cable Rows', sets: 3, reps: '6-8', weight: 120, done: [false, false, false] },
+                    { name: 'Overhead DB Shoulder Press', sets: 3, reps: '8-10', weight: 45, done: [false, false, false] },
+                    { name: 'Lat Pulldowns or Pull-ups', sets: 3, reps: '8-10', weight: 110, done: [false, false, false] },
+                    { name: 'Triceps Extensions / Bicep Curls', sets: 3, reps: '10-12', weight: 30, done: [false, false, false] },
+                    { name: '🔥 Cable Crunches (Core Focus)', sets: 3, reps: '12-15', weight: 60, done: [false, false, false] }
+                ],
+                lowerA: [
+                    { name: 'Barbell Squats or Leg Press', sets: 3, reps: '6-8', weight: 185, done: [false, false, false] },
+                    { name: 'Romanian Deadlifts (RDLs)', sets: 3, reps: '8-10', weight: 155, done: [false, false, false] },
+                    { name: 'Walking Lunges / Split Squats', sets: 3, reps: '10-12', weight: 35, done: [false, false, false] },
+                    { name: 'Standing Calf Raises', sets: 3, reps: '12-15', weight: 90, done: [false, false, false] },
+                    { name: '🔥 Weighted Planks or Ab Rollouts', sets: 3, reps: '30-45s', weight: 25, done: [false, false, false] }
+                ],
+                upperB: [
+                    { name: 'Incline Dumbbell Press', sets: 3, reps: '8-12', weight: 55, done: [false, false, false] },
+                    { name: 'Single-Arm DB Rows', sets: 3, reps: '8-12', weight: 50, done: [false, false, false] },
+                    { name: 'Dumbbell Lateral Raises', sets: 4, reps: '12-15', weight: 20, done: [false, false, false, false] },
+                    { name: 'Face Pulls or Rear Delt Flyes', sets: 3, reps: '12-15', weight: 40, done: [false, false, false] },
+                    { name: '🔥 Cable Woodchoppers / Pallof Press', sets: 3, reps: '12-15', weight: 35, done: [false, false, false] }
+                ],
+                lowerB: [
+                    { name: 'Conventional / Trap Bar Deadlifts', sets: 3, reps: '5-6', weight: 225, done: [false, false, false] },
+                    { name: 'Goblet Squats or Hack Squats', sets: 3, reps: '8-12', weight: 60, done: [false, false, false] },
+                    { name: 'Seated Hamstring Curls', sets: 3, reps: '10-12', weight: 80, done: [false, false, false] },
+                    { name: '🔥 Hanging Leg/Knee Raises', sets: 3, reps: '10-15', weight: 0, done: [false, false, false] }
+                ]
+            }
+        };
+
+        let appState = loadState();
+
+        function loadState() {
+            const saved = localStorage.getItem('fitpulse_app_state');
+            return saved ? JSON.parse(saved) : DEFAULT_STATE;
+        }
+
+        function saveState() {
+            localStorage.setItem('fitpulse_app_state', JSON.stringify(appState));
+            updateUI();
+        }
+
+        // ==========================================
+        // PRESET VEGETARIAN FOOD DATA
+        // ==========================================
+        const PRESET_FOODS = [
+            { name: 'Fairlife Core Power Elite Shake', protein: 42, calories: 230, carbs: 8, fat: 3.5, tag: 'Zero Cook' },
+            { name: 'Low-Fat Cottage Cheese (1.25 cups)', protein: 35, calories: 220, carbs: 8, fat: 4, tag: 'Zero Cook' },
+            { name: '0% Plain Greek Yogurt (1.25 cups)', protein: 28, calories: 170, carbs: 10, fat: 0, tag: 'Zero Cook' },
+            { name: 'Pre-Baked Teriyaki Tofu Block (200g)', protein: 26, calories: 240, carbs: 12, fat: 10, tag: 'Quick Grab' },
+            { name: 'Banza Chickpea Pasta Portion', protein: 20, calories: 190, carbs: 32, fat: 3.5, tag: '7-Min Meal' },
+            { name: 'Microwaved Edamame Pods (1.5 cups)', protein: 22, calories: 220, carbs: 16, fat: 8, tag: '2-Min Prep' },
+            { name: 'Barebells High Protein Bar', protein: 20, calories: 200, carbs: 16, fat: 7, tag: 'Snack' }
+        ];
+
+        // ==========================================
+        // INITIALIZATION & TAB NAVIGATION
+        // ==========================================
+        window.onload = function () {
+            // Set Date Display
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            document.getElementById('current-date').innerText = dateStr;
+
+            renderPresets();
+            renderWorkoutDay();
+            calculateAbsTimeline();
+            updateUI();
+            
+            // Initialize Lucide icons
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Nav buttons styling update
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-400', 'bg-slate-800');
+                btn.classList.add('text-slate-400');
+            });
+            const activeDesktop = document.getElementById(`nav-${tabId}`);
+            if (activeDesktop) {
+                activeDesktop.classList.add('text-emerald-400', 'bg-slate-800');
+                activeDesktop.classList.remove('text-slate-400');
+            }
+
+            // Mobile Nav update
+            const mobBtns = ['dashboard', 'workout', 'nutrition', 'abs'];
+            mobBtns.forEach(b => {
+                const mobEl = document.getElementById(`mob-nav-${b}`);
+                if (mobEl) {
+                    if (b === tabId) {
+                        mobEl.className = "flex flex-col items-center justify-center space-y-1 text-emerald-400";
+                    } else {
+                        mobEl.className = "flex flex-col items-center justify-center space-y-1 text-slate-400";
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // UI UPDATE & DASHBOARD
+        // ==========================================
+        function updateUI() {
+            // Protein Updates
+            const pVal = appState.todayProtein || 0;
+            document.getElementById('dash-protein-val').innerText = pVal;
+            document.getElementById('nutr-p-curr').innerText = pVal;
+            const pPercent = Math.min(100, Math.round((pVal / 150) * 100));
+            document.getElementById('dash-protein-bar').style.width = `${pPercent}%`;
+            document.getElementById('dash-protein-status').innerText = `${pPercent}% of 150g target reached`;
+
+            // Calorie Updates
+            const cVal = appState.todayCalories || 0;
+            const cTarget = appState.targetCalories || 2000;
+            document.getElementById('dash-cal-val').innerText = cVal;
+            document.getElementById('nutr-c-curr').innerText = cVal;
+            document.getElementById('dash-cal-target').innerText = cTarget;
+            const cPercent = Math.min(100, Math.round((cVal / cTarget) * 100));
+            document.getElementById('dash-cal-bar').style.width = `${cPercent}%`;
+            document.getElementById('dash-cal-remaining').innerText = `${Math.max(0, cTarget - cVal)} kcal remaining`;
+
+            // Carbs & Fat
+            document.getElementById('nutr-carb-curr').innerText = appState.todayCarbs || 0;
+            document.getElementById('nutr-fat-curr').innerText = appState.todayFats || 0;
+
+            // Water Tracker
+            document.getElementById('dash-water-val').innerText = (appState.todayWater || 0).toFixed(2);
+
+            // Workout summary status on Dashboard
+            updateDashboardWorkoutSummary();
+
+            // Render Food Log
+            renderFoodLogTable();
+        }
+
+        function toggleTask(taskId) {
+            const el = document.getElementById(taskId);
+            if (!el) return;
+            const checkIcon = el.querySelector('.task-check i');
+            const box = el.querySelector('.task-check');
+            
+            appState.tasks[taskId] = !appState.tasks[taskId];
+            
+            if (appState.tasks[taskId]) {
+                checkIcon.classList.remove('hidden');
+                box.classList.add('bg-emerald-500', 'border-emerald-500');
+                el.classList.add('opacity-60');
+            } else {
+                checkIcon.classList.add('hidden');
+                box.classList.remove('bg-emerald-500', 'border-emerald-500');
+                el.classList.remove('opacity-60');
+            }
+            saveState();
+        }
+
+        function addWater(amount) {
+            appState.todayWater = (appState.todayWater || 0) + amount;
+            saveState();
+        }
+
+        function resetDailyData() {
+            if (confirm("Reset today's nutrition, water, and task progress?")) {
+                appState.todayProtein = 0;
+                appState.todayCalories = 0;
+                appState.todayCarbs = 0;
+                appState.todayFats = 0;
+                appState.todayWater = 0;
+                appState.foodLog = [];
+                appState.tasks = {};
+                saveState();
+                location.reload();
+            }
+        }
+
+        // ==========================================
+        // WORKOUT TRACKER LOGIC
+        // ==========================================
+        const WORKOUT_META = {
+            upperA: { title: 'Day 1: Upper Body A', tag: 'Strength Focus', desc: 'Focus on compound pressing & pulling heavy (6-8 reps) for raw power.' },
+            lowerA: { title: 'Day 2: Lower Body A', tag: 'Strength Focus', desc: 'Heavy squats & Romanian deadlifts to stimulate maximum muscle activation.' },
+            upperB: { title: 'Day 3: Upper Body B', tag: 'Hypertrophy Focus', desc: 'Moderate weight, higher volume (8-12 reps) to maximize muscle pump.' },
+            lowerB: { title: 'Day 4: Lower Body B', tag: 'Hypertrophy Focus', desc: 'Deadlift variations and quad focus paired with core stability.' }
+        };
+
+        function selectDay(dayKey) {
+            appState.currentDayKey = dayKey;
+            
+            // Button Styles
+            document.querySelectorAll('.workout-day-btn').forEach(btn => {
+                btn.className = "workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-all duration-200";
+            });
+            const activeBtn = document.getElementById(`btn-${dayKey}`);
+            if (activeBtn) {
+                activeBtn.className = "workout-day-btn flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-emerald-500 text-slate-950 shadow-md transition-all duration-200";
+            }
+
+            renderWorkoutDay();
+            saveState();
+        }
+
+        function renderWorkoutDay() {
+            const key = appState.currentDayKey || 'upperA';
+            const meta = WORKOUT_META[key];
+            document.getElementById('workout-day-title').innerText = meta.title;
+            document.getElementById('workout-focus-tag').innerText = meta.tag;
+            document.getElementById('workout-desc').innerText = meta.desc;
+
+            const exercises = appState.workoutData[key] || [];
+            const container = document.getElementById('exercise-list');
+            container.innerHTML = '';
+
+            exercises.forEach((ex, exIdx) => {
+                const exCard = document.createElement('div');
+                exCard.className = "bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-3";
+                
+                let setsHtml = '';
+                for (let s = 0; s < ex.sets; s++) {
+                    const isDone = ex.done[s] || false;
+                    setsHtml += `
+                        <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+                            <span class="text-xs font-bold text-slate-400 w-16">Set ${s + 1}</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-slate-500">Weight:</span>
+                                <input type="number" value="${ex.weight}" onchange="updateExWeight('${key}', ${exIdx}, this.value)" class="w-16 bg-slate-900 border border-slate-700 text-center rounded-lg py-1 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono">
+                                <span class="text-xs text-slate-500">lbs</span>
+                            </div>
+                            <div class="text-xs font-semibold text-slate-300 w-20 text-center">${ex.reps} reps</div>
+                            <button onclick="toggleSet('${key}', ${exIdx}, ${s})" class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center space-x-1 ${isDone ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-400 hover:text-white'}">
+                                <i data-lucide="${isDone ? 'check' : 'square'}" class="w-3.5 h-3.5"></i>
+                                <span>${isDone ? 'Done' : 'Complete'}</span>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                exCard.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-base font-extrabold text-white flex items-center space-x-2">
+                            <span>${ex.name}</span>
+                        </h4>
+                        <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">${ex.sets} Sets</span>
+                    </div>
+                    <div class="space-y-2 mt-2">
+                        ${setsHtml}
+                    </div>
+                `;
+                container.appendChild(exCard);
+            });
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function toggleSet(dayKey, exIdx, setIdx) {
+            appState.workoutData[dayKey][exIdx].done[setIdx] = !appState.workoutData[dayKey][exIdx].done[setIdx];
+            saveState();
+            renderWorkoutDay();
+            // Trigger 90s timer automatically when completing a set
+            if (appState.workoutData[dayKey][exIdx].done[setIdx]) {
+                startTimer(90);
+            }
+        }
+
+        function updateExWeight(dayKey, exIdx, val) {
+            appState.workoutData[dayKey][exIdx].weight = parseFloat(val) || 0;
+            saveState();
+        }
+
+        function updateDashboardWorkoutSummary() {
+            const key = appState.currentDayKey || 'upperA';
+            const meta = WORKOUT_META[key];
+            const exercises = appState.workoutData[key] || [];
+            
+            let totalSets = 0;
+            let completedSets = 0;
+            exercises.forEach(ex => {
+                totalSets += ex.sets;
+                completedSets += ex.done.filter(Boolean).length;
+            });
+
+            document.getElementById('dash-workout-name').innerText = meta.title.replace('Day ', '');
+            document.getElementById('dash-workout-progress').innerText = `${completedSets} / ${totalSets} Sets Done`;
+            
+            const badge = document.getElementById('dash-workout-status-badge');
+            if (completedSets === totalSets && totalSets > 0) {
+                badge.innerText = "Completed";
+                badge.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            } else if (completedSets > 0) {
+                badge.innerText = "In Progress";
+                badge.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20";
+            } else {
+                badge.innerText = "Pending";
+                badge.className = "px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-800 text-slate-400 border border-slate-700";
+            }
+        }
+
+        function saveWorkoutSession() {
+            alert("Great work! Session logged successfully to local history.");
+        }
+
+        // ==========================================
+        // REST TIMER LOGIC
+        // ==========================================
+        let timerInterval = null;
+        let timerSeconds = 90;
+
+        function startTimer(seconds) {
+            clearInterval(timerInterval);
+            timerSeconds = seconds;
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer-display').innerText = "00:00";
+                    // Brief visual highlight
+                    document.getElementById('timer-display').classList.add('text-rose-400');
+                    setTimeout(() => {
+                        document.getElementById('timer-display').classList.remove('text-rose-400');
+                    }, 3000);
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 0;
+            document.getElementById('timer-display').innerText = "00:00";
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }
+
+        // ==========================================
+        // NUTRITION & FOOD LOGIC
+        // ==========================================
+        function addFairlifeShake() {
+            addFoodItem({ name: 'Fairlife Core Power Elite Shake', protein: 42, calories: 230, carbs: 8, fat: 3.5 });
+        }
+
+        function renderPresets() {
+            const container = document.getElementById('preset-foods-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            PRESET_FOODS.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-950 p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 cursor-pointer transition-all flex justify-between items-center group";
+                card.onclick = () => addFoodItem(item);
+                
+                card.innerHTML = `
+                    <div>
+                        <span class="text-xs font-extrabold text-white group-hover:text-emerald-400 transition-colors block">${item.name}</span>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <span class="text-[10px] font-bold text-emerald-400">${item.protein}g Protein</span>
+                            <span class="text-[10px] text-slate-500">•</span>
+                            <span class="text-[10px] text-slate-400">${item.calories} kcal</span>
+                        </div>
+                    </div>
+                    <div class="p-1.5 bg-slate-800 group-hover:bg-emerald-500 group-hover:text-slate-950 text-slate-400 rounded-lg transition-colors">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addCustomFood(e) {
+            e.preventDefault();
+            const name = document.getElementById('custom-name').value;
+            const protein = parseFloat(document.getElementById('custom-protein').value) || 0;
+            const calories = parseFloat(document.getElementById('custom-calories').value) || 0;
+            const carbs = parseFloat(document.getElementById('custom-carbs').value) || 0;
+            const fat = parseFloat(document.getElementById('custom-fats').value) || 0;
+
+            addFoodItem({ name, protein, calories, carbs, fat });
+            document.getElementById('custom-food-form').reset();
+        }
+
+        function addFoodItem(item) {
+            appState.todayProtein = (appState.todayProtein || 0) + item.protein;
+            appState.todayCalories = (appState.todayCalories || 0) + item.calories;
+            appState.todayCarbs = (appState.todayCarbs || 0) + (item.carbs || 0);
+            appState.todayFats = (appState.todayFats || 0) + (item.fat || 0);
+
+            if (!appState.foodLog) appState.foodLog = [];
+            appState.foodLog.push({ ...item, id: Date.now() });
+
+            saveState();
+        }
+
+        function removeFoodItem(id) {
+            const idx = appState.foodLog.findIndex(i => i.id === id);
+            if (idx > -1) {
+                const item = appState.foodLog[idx];
+                appState.todayProtein = Math.max(0, appState.todayProtein - item.protein);
+                appState.todayCalories = Math.max(0, appState.todayCalories - item.calories);
+                appState.todayCarbs = Math.max(0, appState.todayCarbs - (item.carbs || 0));
+                appState.todayFats = Math.max(0, appState.todayFats - (item.fat || 0));
+                appState.foodLog.splice(idx, 1);
+                saveState();
+            }
+        }
+
+        function clearFoodLog() {
+            if (confirm("Clear all logged items for today?")) {
+                appState.todayProtein = 0;
+                appState.todayCalories = 0;
+                appState.todayCarbs = 0;
+                appState.todayFats = 0;
+                appState.foodLog = [];
+                saveState();
+            }
+        }
+
+        function renderFoodLogTable() {
+            const tbody = document.getElementById('food-log-tbody');
+            const noMsg = document.getElementById('no-food-msg');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            const logs = appState.foodLog || [];
+
+            if (logs.length === 0) {
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+                logs.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-800/30 transition-colors";
+                    tr.innerHTML = `
+                        <td class="py-2.5 px-2 font-medium text-white">${item.name}</td>
+                        <td class="py-2.5 px-2 text-right font-bold text-emerald-400">+${item.protein}g</td>
+                        <td class="py-2.5 px-2 text-right font-mono text-slate-300">${item.calories}</td>
+                        <td class="py-2.5 px-2 text-right text-slate-400 font-mono">${item.carbs || 0}g / ${item.fat || 0}g</td>
+                        <td class="py-2.5 px-2 text-center">
+                            <button onclick="removeFoodItem(${item.id})" class="text-slate-500 hover:text-rose-400 transition-colors">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // ==========================================
+        // ABS TIMELINE CALCULATOR LOGIC
+        // ==========================================
+        function calculateAbsTimeline(e) {
+            if (e) e.preventDefault();
+
+            const weight = parseFloat(document.getElementById('calc-weight').value) || 180;
+            const currentBf = parseFloat(document.getElementById('calc-bf').value) || 20;
+            const targetBf = parseFloat(document.getElementById('calc-target-bf').value) || 11;
+            const activity = parseFloat(document.getElementById('calc-activity').value) || 1.375;
+
+            // Revised Harris-Benedict BMR approximation
+            const bmr = 10 * (weight * 0.453592) + 6.25 * 175 - 5 * 28 + 5;
+            const maintenance = Math.round(bmr * activity);
+            const targetDeficitCal = maintenance - 500;
+
+            // Fat weight calculation
+            const currentFatLbs = weight * (currentBf / 100);
+            const leanMass = weight - currentFatLbs;
+            // Target total weight for target BF%: LeanMass / (1 - targetBF%)
+            const targetTotalWeight = leanMass / (1 - (targetBf / 100));
+            const fatToLose = Math.max(0, weight - targetTotalWeight);
+
+            // Assuming 1 lb fat = ~3500 kcal deficit (500 kcal/day deficit = 1 lb loss/week)
+            const weeksToTarget = Math.ceil(fatToLose / 1.0);
+
+            document.getElementById('res-maintenance').innerText = maintenance.toLocaleString();
+            document.getElementById('res-target-cal').innerText = targetDeficitCal.toLocaleString();
+            document.getElementById('res-weeks').innerText = weeksToTarget;
+
+            // Sync daily target calorie to app state
+            appState.targetCalories = targetDeficitCal;
+            saveState();
+        }
+    </script>
+</body>
+</html>
