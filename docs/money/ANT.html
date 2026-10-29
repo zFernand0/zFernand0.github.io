@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Anthropic IPO Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --paper: #faf6ef;
+        --paper-2: #f2ecdf;
+        --card: #fffdf8;
+        --ink: #1d1a14;
+        --ink-2: #4c463a;
+        --ink-3: #7a7261;
+        --line: #ddd3bf;
+        --line-strong: #b9ab8d;
+        --accent: #9c3a12;
+        --accent-soft: #f6e3d8;
+        --green: #1e6b3a;
+        --green-bg: #e2efe2;
+        --amber: #8a5a00;
+        --amber-bg: #f7ecd2;
+        --slate: #3d5a80;
+        --slate-bg: #e3eaf4;
+        --red: #a01c1c;
+        --red-bg: #f6e0dc;
+        --chart-1: #9c3a12;
+        --chart-2: #c98a2d;
+        --shadow: 0 1px 2px rgba(29,26,20,.06), 0 8px 24px rgba(29,26,20,.06);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #171410;
+          --paper-2: #1e1a15;
+          --card: #211d17;
+          --ink: #ece4d3;
+          --ink-2: #c3b9a3;
+          --ink-3: #968b74;
+          --line: #38312a;
+          --line-strong: #574d3e;
+          --accent: #e08a5a;
+          --accent-soft: #3a2417;
+          --green: #7cc793;
+          --green-bg: #1d3325;
+          --amber: #e3b95c;
+          --amber-bg: #38300f;
+          --slate: #9db8dd;
+          --slate-bg: #22304a;
+          --red: #ef9a8d;
+          --red-bg: #3d201b;
+          --chart-1: #e08a5a;
+          --chart-2: #d9a94e;
+          --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
+      a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+      .num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 44px 0 8px; border-bottom: 3px double var(--line-strong); }
+      .kicker {
+        font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+        color: var(--accent); font-weight: 700; margin: 0 0 10px;
+      }
+      h1 {
+        font-family: "Source Serif 4", Georgia, serif; font-weight: 900;
+        font-size: clamp(34px, 6vw, 56px); line-height: 1.05; margin: 0 0 14px;
+        letter-spacing: -0.01em;
+      }
+      .lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--ink-2); max-width: 46em; margin: 0 0 20px; }
+      .lede strong { color: var(--ink); }
+      .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--ink-2); margin: 0 0 22px; }
+      .legend span { display: inline-flex; align-items: center; gap: 7px; }
+      .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+      .dot.c { background: var(--green); } .dot.r { background: var(--amber); } .dot.s { background: var(--slate); } .dot.n { background: var(--ink-3); }
+
+      .statband {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+        border: 1px solid var(--line); background: var(--card); border-radius: 10px;
+        overflow: hidden; box-shadow: var(--shadow); margin-bottom: 26px;
+      }
+      .stat { padding: 16px 18px 14px; border-left: 1px solid var(--line); }
+      .stat:first-child { border-left: none; }
+      .stat .v { font-family: "Source Serif 4", Georgia, serif; font-weight: 900; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.1; }
+      .stat .l { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; line-height: 1.45; }
+      @media (max-width: 720px) {
+        .statband { grid-template-columns: 1fr 1fr; }
+        .stat:nth-child(3) { border-left: none; }
+        .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+      }
+
+      .verdict {
+        border: 1px solid var(--accent); background: var(--accent-soft);
+        border-radius: 10px; padding: 18px 20px; margin-bottom: 8px;
+      }
+      .verdict h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 20px; margin: 0 0 6px; }
+      .verdict p { margin: 0 0 8px; font-size: 15.5px; }
+      .verdict p:last-child { margin-bottom: 0; }
+
+      /* ---------- Nav ---------- */
+      nav.toc {
+        position: sticky; top: 0; z-index: 20; background: var(--paper);
+        border-bottom: 1px solid var(--line); margin: 18px -20px 0; padding: 10px 20px;
+        display: flex; gap: 6px; flex-wrap: wrap;
+      }
+      nav.toc a {
+        color: var(--ink-2); text-decoration: none; font-size: 13.5px; font-weight: 600;
+        padding: 5px 10px; border-radius: 999px; border: 1px solid transparent;
+      }
+      nav.toc a:hover, nav.toc a:focus-visible { border-color: var(--line-strong); color: var(--ink); }
+
+      /* ---------- Sections ---------- */
+      section { padding-top: 44px; }
+      h2.sec {
+        font-family: "Source Serif 4", Georgia, serif; font-weight: 900;
+        font-size: clamp(25px, 4vw, 34px); margin: 0 0 6px; line-height: 1.15;
+      }
+      .sec-sub { color: var(--ink-2); margin: 0 0 18px; max-width: 48em; }
+      h3.sub {
+        font-family: "Source Serif 4", Georgia, serif; font-weight: 700;
+        font-size: 20px; margin: 26px 0 8px;
+      }
+      p { margin: 0 0 12px; }
+      ul.tight { margin: 0 0 12px; padding-left: 20px; }
+      ul.tight li { margin-bottom: 6px; }
+      .small { font-size: 13.5px; color: var(--ink-2); }
+      .footnote { font-size: 13px; color: var(--ink-3); }
+
+      /* ---------- Tags ---------- */
+      .tag {
+        display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .06em;
+        text-transform: uppercase; padding: 2px 7px; border-radius: 4px; vertical-align: 2px;
+        white-space: nowrap;
+      }
+      .tag.c { background: var(--green-bg); color: var(--green); }
+      .tag.r { background: var(--amber-bg); color: var(--amber); }
+      .tag.s { background: var(--slate-bg); color: var(--slate); }
+      .tag.n { background: var(--paper-2); color: var(--ink-3); }
+
+      /* ---------- Tables ---------- */
+      .tblwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--card); box-shadow: var(--shadow); margin-bottom: 16px; }
+      table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 560px; }
+      th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+      thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-2); background: var(--paper-2); border-bottom: 1px solid var(--line-strong); }
+      tbody tr:last-child td { border-bottom: none; }
+      td.num, th.num { text-align: right; font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      td .sub { display: block; font-size: 12.5px; color: var(--ink-3); font-family: "IBM Plex Sans", sans-serif; white-space: normal; }
+      tr.hl td { background: var(--accent-soft); }
+
+      /* ---------- Cards / grids ---------- */
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      @media (max-width: 820px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
+      .card h3 { font-family: "Source Serif 4", Georgia, serif; font-size: 18px; margin: 0 0 8px; }
+      .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+      .bignum { font-family: "Source Serif 4", Georgia, serif; font-weight: 900; font-size: 30px; line-height: 1.1; }
+
+      /* ---------- Timeline ---------- */
+      .timeline { border-left: 2px solid var(--line-strong); margin: 8px 0 8px 6px; padding-left: 22px; }
+      .tl { position: relative; padding-bottom: 18px; }
+      .tl:last-child { padding-bottom: 2px; }
+      .tl::before {
+        content: ""; position: absolute; left: -29px; top: 6px; width: 12px; height: 12px;
+        border-radius: 50%; background: var(--paper); border: 3px solid var(--accent);
+      }
+      .tl .when { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--accent); font-weight: 600; }
+      .tl p { margin: 2px 0 0; font-size: 15px; }
+
+      /* ---------- Chart ---------- */
+      .chartbox { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px 12px; box-shadow: var(--shadow); margin-bottom: 16px; }
+      .chartbox h3 { font-family: "Source Serif 4", Georgia, serif; font-size: 18px; margin: 0 0 2px; }
+      .chartbox .cap { font-size: 13px; color: var(--ink-2); margin: 0 0 10px; }
+      svg text { font-family: "IBM Plex Mono", monospace; }
+
+      /* ---------- P/S explorer ---------- */
+      .explorer { background: var(--card); border: 1px solid var(--line-strong); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
+      .explorer h3 { font-family: "Source Serif 4", Georgia, serif; font-size: 20px; margin: 0 0 4px; }
+      .denoms { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+      .denoms button {
+        font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+        border: 1px solid var(--line-strong); background: var(--paper); color: var(--ink-2);
+        border-radius: 999px; padding: 7px 13px;
+      }
+      .denoms button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+      .denoms button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .psrow { display: grid; grid-template-columns: 168px 1fr 74px; align-items: center; gap: 12px; margin-bottom: 12px; }
+      .psrow .who { font-size: 14px; font-weight: 600; line-height: 1.3; }
+      .psrow .who span { display: block; font-weight: 400; font-size: 12px; color: var(--ink-3); }
+      .psbar { height: 26px; background: var(--paper-2); border-radius: 5px; overflow: hidden; }
+      .psbar i { display: block; height: 100%; border-radius: 5px; transition: width .35s ease; }
+      @media (prefers-reduced-motion: reduce) { .psbar i { transition: none; } }
+      .psrow .mult { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 17px; text-align: right; }
+      @media (max-width: 560px) { .psrow { grid-template-columns: 118px 1fr 62px; gap: 8px; } .psrow .mult { font-size: 15px; } }
+      .denom-note { font-size: 13.5px; color: var(--ink-2); border-top: 1px dashed var(--line-strong); padding-top: 12px; margin-top: 4px; }
+
+      /* ---------- Risk ---------- */
+      .risk { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+      .risk.high { background: var(--red-bg); color: var(--red); }
+      .risk.medhigh { background: var(--amber-bg); color: var(--amber); }
+      .risk.med { background: var(--slate-bg); color: var(--slate); }
+
+      /* ---------- Share classes ---------- */
+      .classes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+      @media (max-width: 900px) { .classes { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 480px) { .classes { grid-template-columns: 1fr; } }
+      .cls { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--line-strong); border-radius: 8px; padding: 14px 16px; }
+      .cls.a { border-top-color: var(--accent); }
+      .cls .name { font-family: "Source Serif 4", Georgia, serif; font-weight: 900; font-size: 19px; }
+      .cls .vote { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; margin: 4px 0; }
+      .cls p { font-size: 13px; color: var(--ink-2); margin: 0; line-height: 1.5; }
+
+      ol.flags { padding-left: 22px; margin: 0; }
+      ol.flags li { margin-bottom: 10px; }
+      ol.flags li::marker { font-family: "IBM Plex Mono", monospace; font-weight: 600; color: var(--accent); }
+
+      /* ---------- Mobile table reflow: rows become stacked cards ---------- */
+      @media (max-width: 640px) {
+        .tblwrap { overflow-x: visible; }
+        table { min-width: 0 !important; font-size: 14px; }
+        thead { display: none; }
+        table, tbody, tr, td { display: block; width: auto; }
+        tbody tr { padding: 10px 2px; border-bottom: 2px solid var(--line-strong); }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr.hl { background: var(--accent-soft); }
+        td { border-bottom: none; padding: 3px 14px; }
+        td::before {
+          content: attr(data-label); display: block; font-size: 10.5px; font-weight: 700;
+          text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin-bottom: 1px;
+        }
+        td:first-child { font-weight: 600; }
+        td:first-child::before { content: none; }
+        td.num { text-align: left; }
+        tr.hl td { background: transparent; }
+      }
+
+      .sources { font-size: 13.5px; }
+      .sources li { margin-bottom: 7px; }
+      footer { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 16px; font-size: 13px; color: var(--ink-3); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <header class="hero">
+        <p class="kicker">Investment analysis &middot; Research date 29 October 2026</p>
+        <h1>Anthropic&rsquo;s IPO: filed, unpriced, and argued over at $1.5 to $2 trillion</h1>
+        <p class="lede">This is no longer a hypothetical listing. Anthropic moved from a confidential draft S-1 on 1 June 2026 to a <strong>public S-1 on 26 October 2026</strong> for the Nasdaq ticker <strong>ANT</strong>, but the filing contains <strong>no price range, no share count, no raise size, no valuation and no listing date</strong>. Every $1.5 to $2 trillion figure in circulation is reported talk, not filed terms. This page separates what is filed from what is rumored, and runs the price-to-sales math on every revenue denominator in the record.</p>
+        <p class="legend" aria-label="Evidence labels used on this page">
+          <span><span class="dot c"></span><strong>Confirmed</strong>&nbsp;stated by Anthropic or in the public S-1</span>
+          <span><span class="dot r"></span><strong>Reported</strong>&nbsp;named press citing sources</span>
+          <span><span class="dot s"></span><strong>Speculation</strong>&nbsp;analyst or backer expectation</span>
+          <span><span class="dot n"></span><strong>Not disclosed</strong>&nbsp;blank in the filing</span>
+        </p>
+        <div class="statband">
+          <div class="stat">
+            <div class="v">$965B</div>
+            <div class="l">Last private valuation, Series H post-money, 28 May 2026 <span class="tag c">Confirmed</span></div>
+          </div>
+          <div class="stat">
+            <div class="v">$16.3B</div>
+            <div class="l">Revenue in H1 2026 alone, per the S-1 (FY2025: $4.585B) <span class="tag c">Confirmed</span></div>
+          </div>
+          <div class="stat">
+            <div class="v">~$2T</div>
+            <div class="l">Valuation discussed by bankers and expected by some backers; never adopted by Anthropic <span class="tag r">Reported</span></div>
+          </div>
+          <div class="stat">
+            <div class="v">None</div>
+            <div class="l">Price range, share count and listing date in the filing. Registration not yet effective <span class="tag n">Not disclosed</span></div>
+          </div>
+        </div>
+        <div class="verdict">
+          <h2>Bottom line up front</h2>
+          <p><strong>At ~$2 trillion, the deal is priced for perfection.</strong> That price is 29.8&times; Q3 2026 annualized revenue and 61.4&times; H1 2026 annualized revenue. It only looks like ~20&times; sales against an unfiled September exit-month run rate of ~$100B reported by the New York Times.</p>
+          <p><strong>At ~$1.5 trillion, it is rich but arguable:</strong> about 22 to 23&times; a sustained $65 to $67B annualized pace, roughly where OpenAI was marked in August, if the S-1/A confirms Q3 actuals and compute efficiency keeps improving. The S-1/A, with Q3 figures, a price range and an aggregate compute total, is the document that settles the argument. It had not appeared as of 29 October.</p>
+        </div>
+      </header>
+
+      <nav class="toc" aria-label="Sections">
+        <a href="#snapshot">Deal snapshot</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#financials">Financials</a>
+        <a href="#valuation">Valuation &amp; math</a>
+        <a href="#business">Business &amp; compute</a>
+        <a href="#competition">Competition</a>
+        <a href="#governance">Governance</a>
+        <a href="#risks">Risk matrix</a>
+        <a href="#diligence">Diligence flags</a>
+        <a href="#bottomline">Bottom line</a>
+        <a href="#sources">Sources</a>
+      </nav>
+
+      <!-- ================= SNAPSHOT ================= -->
+      <section id="snapshot">
+        <h2 class="sec">Deal snapshot</h2>
+        <p class="sec-sub">Anthropic, PBC is a Delaware public benefit corporation founded in 2021 by Dario Amodei, Daniela Amodei and five other ex-OpenAI co-founders. Goldman Sachs and Morgan Stanley lead a syndicate of about 22 banks.</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Item</th><th>Status</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td>Confidential filing</td><td><span class="tag c">Confirmed</span></td><td>Draft Registration Statement on Form S-1 confidentially submitted <strong>1 June 2026</strong>; EDGAR trackers then show DRS/A amendments on 13 Jul, 10 Aug, 4 Sep, 1 Oct and 9 Oct 2026</td></tr>
+              <tr><td>Public filing</td><td><span class="tag c">Confirmed</span></td><td>Public Form S-1 filed <strong>26 Oct 2026</strong>; CIK 0002130357, accession 0001628280-26-067168, registration 333-299633 (per EDGAR trackers and S-1 reviews)</td></tr>
+              <tr><td>Exchange / ticker</td><td><span class="tag c">Confirmed</span></td><td>Nasdaq Global Select Market, <strong>ANT</strong> (Class A common stock)</td></tr>
+              <tr><td>Price / shares / raise / date</td><td><span class="tag n">Not disclosed</span></td><td>All blank in the S-1. The registration statement has not yet become effective, so no shares can be sold</td></tr>
+              <tr><td>Reported timing</td><td><span class="tag r">Reported</span></td><td>Roadshow as early as the week of 9 Nov 2026, listing mid-to-late November, before Thanksgiving (26 Nov). Bloomberg / WSJ / Reuters reporting; Anthropic has not confirmed a date</td></tr>
+              <tr><td>Counsel</td><td><span class="tag c">Confirmed</span></td><td>Wilson Sonsini (issuer, retained for IPO prep, first reported by the FT in Dec 2025), Freshfields US (underwriters), Orrick (comp/equity), Cleary Gottlieb (Long-Term Benefit Trust), Cravath (co-founders, governance)</td></tr>
+              <tr><td>Last private valuation</td><td><span class="tag c">Confirmed</span></td><td><strong>$965B post-money</strong>, Series H, 28 May 2026</td></tr>
+              <tr><td>Reported IPO valuation</td><td><span class="tag r">Reported</span></td><td>~$2T discussed by bankers and expected by some backers; ~$1.5T in later investor pushback; $1.8 to $3T range in some FT-cited investor talk. <strong>None is a company target</strong></td></tr>
+              <tr><td>Reported raise</td><td><span class="tag r">Reported</span></td><td>More than $100B (NYT, bankers, Aug 2026); a $60 to $100B range in Law.com filing coverage</td></tr>
+              <tr><td>Filed revenue</td><td><span class="tag c">Confirmed</span></td><td>2025: $4.585B; H1 2026: $16.286B; Q2 2026: $11.555B</td></tr>
+              <tr><td>Reported Q3 2026 revenue</td><td><span class="tag r">Reported</span></td><td><strong>$16.8B</strong>, up ~45% vs Q2, profitable on an adjusted basis. Told to investors at a 14 Oct meeting (Reuters); not in the S-1, where the Q3 dollar figure is blank</td></tr>
+              <tr><td>Cash position</td><td><span class="tag c">Confirmed</span></td><td>$112.4B cash plus $19.3B short-term investments at 30 Jun 2026; $141.1B raised in aggregate</td></tr>
+              <tr><td>Employees</td><td><span class="tag c">Confirmed</span></td><td>~5,300 at 30 Sep 2026 (per S-1 reviews)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">What is <strong>not</strong> established: no IPO has priced, no shares trade, no price range exists, and Anthropic has never confirmed a $2T or $1.5T valuation, $100B of proceeds, or a listing date. Aggregator pages presenting those as terms are presenting reports as facts.</p>
+      </section>
+
+      <!-- ================= TIMELINE ================= -->
+      <section id="timeline">
+        <h2 class="sec">How the filing happened</h2>
+        <p class="sec-sub">Five months from confidential draft to public filing, with the reported listing date slipping twice along the way.</p>
+        <div class="timeline">
+          <div class="tl"><span class="when">2 Dec 2025</span> <span class="tag c">Confirmed</span>
+            <p>The Financial Times reports Anthropic has retained Wilson Sonsini to prepare for an IPO as early as 2026. A spokesperson says <strong>no decision has been made on whether or when to list</strong>. That statement is the main pre-filing denial in the record.</p></div>
+          <div class="tl"><span class="when">Mar 2026</span> <span class="tag r">Reported</span>
+            <p>Bloomberg reports an October listing is being weighed.</p></div>
+          <div class="tl"><span class="when">1 Jun 2026</span> <span class="tag c">Confirmed</span>
+            <p>Anthropic confidentially submits a draft S-1 under SEC Rule 135, stressing optionality: the filing &ldquo;gives us the option to go public after the SEC completes its review,&rdquo; the offering &ldquo;will depend on market conditions,&rdquo; and shares and price &ldquo;have not yet been set.&rdquo;</p></div>
+          <div class="tl"><span class="when">Jul to Oct 2026</span> <span class="tag c">Confirmed</span>
+            <p>Five confidential DRS/A amendments (13 Jul, 10 Aug, 4 Sep, 1 Oct, 9 Oct), consistent with iterative SEC comment rounds. An EDGAR search on 24 Oct still returns no public Anthropic S-1.</p></div>
+          <div class="tl"><span class="when">Aug to Sep 2026</span> <span class="tag r">Reported</span>
+            <p>Reuters and The Information report a prospectus after Labor Day and a late September / early October listing. By 4 to 5 Sep, Reuters reports the prospectus has slipped to late September and marketing to mid-October at the earliest. On 18 Sep the WSJ reports the listing pushed from October to November, reportedly so Anthropic can present a completed Q3 first. Through the autumn Anthropic largely declines to comment rather than denying.</p></div>
+          <div class="tl"><span class="when">1 Oct 2026</span> <span class="tag r">Reported</span>
+            <p>Bloomberg: institutional meetings at San Francisco HQ on 14 Oct, formal marketing as early as the week of 9 Nov, trading before Thanksgiving. IFR also reports NYC Comptroller Mark Levine wrote to CEO Dario Amodei asking Anthropic to pause the IPO over AI safety, governance and pace concerns, a reported external pressure point, not a company statement.</p></div>
+          <div class="tl"><span class="when">26 Oct 2026</span> <span class="tag c">Confirmed</span>
+            <p>Public Form S-1 filed. Anthropic announces it intends to list Class A stock on Nasdaq as ANT, with shares and price range &ldquo;not yet been determined&rdquo; and the registration &ldquo;not yet effective.&rdquo; AP calls it potentially &ldquo;the biggest initial public offering of stock ever,&rdquo; which is AP&rsquo;s framing, not an offering size, since no size is filed.</p></div>
+          <div class="tl"><span class="when">Nov 2026</span> <span class="tag r">Reported</span>
+            <p>Roadshow as early as the week of 9 Nov; listing mid-to-late November, before Thanksgiving. Not confirmed by Anthropic. Note the pattern: the earliest specific months reported (late Sep / early Oct) slipped twice, so any specific November trading day is still reported, not scheduled.</p></div>
+        </div>
+      </section>
+
+      <!-- ================= FINANCIALS ================= -->
+      <section id="financials">
+        <h2 class="sec">Financials: the filed numbers</h2>
+        <p class="sec-sub">All figures in this section are from the public S-1 as reported on filing day and in detailed S-1 reviews. The six-month and quarterly figures are unaudited in the filing. S-1 financials reached this analysis via Reuters, AP, WSJ and multiple independent reviews of the EDGAR filing; the direct EDGAR fetch was blocked (see <a href="#sources">Could not verify</a>).</p>
+
+        <div class="chartbox">
+          <h3>Revenue by period, as filed</h3>
+          <p class="cap">US$ billions, linear scale. H1 2026 is six months only, shown hatched. Q3 2026 is excluded here because its dollar figure is blank in the S-1; the $16.8B figure was told to investors, not filed.</p>
+          <svg viewBox="0 0 720 330" width="100%" role="img" aria-label="Bar chart of Anthropic revenue: fiscal 2023 $0.041 billion, fiscal 2024 $0.386 billion, fiscal 2025 $4.585 billion, first half 2026 $16.286 billion.">
+            <defs>
+              <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                <rect width="7" height="7" fill="var(--chart-2)"></rect>
+                <line x1="0" y1="0" x2="0" y2="7" stroke="var(--paper)" stroke-width="2.4"></line>
+              </pattern>
+            </defs>
+            <!-- axis baseline y=280, scale: 16.286B -> 250px -->
+            <line x1="60" y1="280" x2="700" y2="280" stroke="var(--line-strong)" stroke-width="1.5"></line>
+            <line x1="60" y1="153" x2="700" y2="153" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+            <text x="52" y="157" text-anchor="end" font-size="11" fill="var(--ink-3)">$8B</text>
+            <line x1="60" y1="30" x2="700" y2="30" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4"></line>
+            <text x="52" y="34" text-anchor="end" font-size="11" fill="var(--ink-3)">$16B</text>
+            <!-- FY2023: 0.041 -> ~1px, min visual 3 -->
+            <rect x="105" y="277" width="90" height="3" fill="var(--chart-1)"></rect>
+            <text x="150" y="262" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">$0.041B</text>
+            <text x="150" y="302" text-anchor="middle" font-size="12" fill="var(--ink-2)">FY2023</text>
+            <!-- FY2024: 0.386 -> 6px -->
+            <rect x="265" y="274" width="90" height="6" fill="var(--chart-1)"></rect>
+            <text x="310" y="259" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">$0.386B</text>
+            <text x="310" y="302" text-anchor="middle" font-size="12" fill="var(--ink-2)">FY2024</text>
+            <!-- FY2025: 4.585 -> 70px -->
+            <rect x="425" y="210" width="90" height="70" fill="var(--chart-1)"></rect>
+            <text x="470" y="195" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">$4.585B</text>
+            <text x="470" y="302" text-anchor="middle" font-size="12" fill="var(--ink-2)">FY2025</text>
+            <!-- H1 2026: 16.286 -> 250px -->
+            <rect x="585" y="30" width="90" height="250" fill="url(#hatch)" stroke="var(--chart-2)" stroke-width="1"></rect>
+            <text x="630" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">$16.286B</text>
+            <text x="630" y="302" text-anchor="middle" font-size="12" fill="var(--ink-2)">H1 2026 (6 mo)</text>
+          </svg>
+          <p class="cap" style="margin:6px 0 4px;">Growth: 2025 revenue was ~11.9&times; 2024; H1 2026 was ~14.0&times; H1 2025. Within 2026, Q1 ~$4.7B grew to Q2 $11.555B, up ~144 to 147% sequentially.</p>
+        </div>
+
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>$ millions</th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">FY2025</th><th class="num">H1 2025</th><th class="num">H1 2026</th></tr></thead>
+            <tbody>
+              <tr><td>Revenue</td><td class="num">41</td><td class="num">386</td><td class="num">4,585</td><td class="num">1,163</td><td class="num"><strong>16,286</strong></td></tr>
+              <tr><td>Compute &amp; infrastructure expense</td><td class="num">433</td><td class="num">2,522</td><td class="num">7,326</td><td class="num">2,334</td><td class="num"><strong>8,945</strong></td></tr>
+              <tr><td>Operating loss</td><td class="num">(551)</td><td class="num">(2,980)</td><td class="num">(8,060)</td><td class="num">(2,135)</td><td class="num"><strong>(693)</strong></td></tr>
+              <tr><td>Fair-value change, converts / derivatives / SAFEs</td><td class="num">&mdash;</td><td class="num">(5,434)*</td><td class="num">(34,308)</td><td class="num">(10,942)</td><td class="num"><strong>(72,388)</strong></td></tr>
+              <tr><td>Net loss</td><td class="num">&mdash;</td><td class="num">(8,309)</td><td class="num">(41,965)</td><td class="num">(12,969)</td><td class="num"><strong>(80,748)</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">*2024 fair-value line as in the EDGAR-tracker summary table. FY2025 includes the $1.5B Bartz copyright settlement charge (see <a href="#risks">Risks</a>). The S-1 states Q3 2026 revenue was 86&times; Q4 2024 revenue but leaves the Q3 dollar figure blank; it arrives in an S-1/A.</p>
+
+        <h3 class="sub">Read all three profitability lines, not one</h3>
+        <div class="grid3">
+          <div class="card">
+            <h3>GAAP operating</h3>
+            <p class="bignum">+$974M</p>
+            <p class="small" style="margin:0;">Q2 2026 operating income (+8.4% margin), the first operating-profit quarter in the filing, after a Q1 loss of ~$1,667M. H1 as a whole: a $693M loss, a &minus;4.3% margin. <span class="tag c">Confirmed</span></p>
+          </div>
+          <div class="card">
+            <h3>Company adjusted (non-GAAP)</h3>
+            <p class="bignum">$1,618M</p>
+            <p class="small" style="margin:0;">H1 adjusted operating income (10% margin); Q2 $2,235M (19%); adjusted net income H1 $2,671M. This is Anthropic&rsquo;s own measure and <strong>excludes $2.2B of H1 stock-based compensation</strong> and non-cash charitable contributions. It is not GAAP profit. <span class="tag c">Confirmed</span></p>
+          </div>
+          <div class="card">
+            <h3>Cash</h3>
+            <p class="bignum">+$3.9B</p>
+            <p class="small" style="margin:0;">H1 2026 operating cash flow (vs &minus;$1,513M a year earlier), aided by working-capital timing. Capex was only $482M because compute comes mostly through cloud and lease agreements, so operating cash flow is <strong>not</strong> free cash flow after the compute commitments below. Interest income was ~$1.1B in H1 on the cash pile. <span class="tag c">Confirmed</span></p>
+          </div>
+        </div>
+        <p style="margin-top:14px;">The headline $80.7B net loss is mostly non-cash: a $72.388B fair-value remeasurement plus ~$8.8B of other fair-value recognition on note-purchase agreements, both driven by Anthropic&rsquo;s own rising private valuation. On a pro-forma converted basis most of that line should disappear after the IPO, though the S-1 gives no guarantee it disappears entirely. A separate stock-compensation cliff arrives at listing: ~$2.9B to recognize at the IPO plus ~$26.6B unrecognized (per S-1 reviews).</p>
+
+        <h3 class="sub">Run-rate revenue: company-stated, not filed revenue</h3>
+        <p>Anthropic&rsquo;s own announcements and investor updates, in order: <strong>$14B</strong> (12 Feb 2026), <strong>$30B+</strong> (6 Apr 2026, vs ~$9B at end-2025), <strong>crossed $47B</strong> (May 2026), <strong>more than $65B</strong> (late Jul 2026, investor update reported by Bloomberg/CNBC). The New York Times reported in mid-September that the run rate had <strong>topped $100B</strong>.</p>
+        <p>The definition matters. Press analysis (Reuters Breakingviews, as summarized in secondary reviews) describes the run rate as annualizing a recent short consumption window, reported as the last 28 days, plus subscription revenue times 12. That is highly sensitive to spikes and seasonality (the S-1 notes a ~20% dip in the two weeks to 2 Jan 2026) and to gross vs net accounting. The $100B exit-month annualization is arithmetically compatible with a $16.8B quarter only if the exit month ran far above the quarter&rsquo;s ~$5.6B average month. Do not use $100B and $67.2B as if they were the same measure.</p>
+
+        <h3 class="sub">Revenue mix and customers</h3>
+        <div class="grid2">
+          <div class="card">
+            <h3>Mix, H1 2026 <span class="tag c">Confirmed</span></h3>
+            <ul class="tight" style="margin-bottom:0;">
+              <li><strong>80% consumption-based</strong> (&ldquo;pay-for-intelligence,&rdquo; per-token): $13.1B. <strong>20% subscription</strong>: $3.2B. Anthropic expects usage to remain the substantial majority.</li>
+              <li><strong>48% of revenue through cloud marketplaces</strong> (AWS Bedrock, Google Vertex AI, Azure), up from 11% in 2023. Anthropic books marketplace sales <strong>gross</strong> as principal; the partner&rsquo;s cut sits in sales, marketing and partnerships ($3,168M in H1 2026, from $120M a year earlier), not in cost of revenue.</li>
+              <li>Geography: US billing ~$11.8B, international ~$4.5B.</li>
+              <li>Remaining performance obligations: only <strong>$10.8B</strong> at 30 Jun 2026, ~75% expected within 12 months. Short contractual cover against multi-year compute bills.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Customers <span class="tag c">Confirmed</span></h3>
+            <ul class="tight" style="margin-bottom:0;">
+              <li>At 30 Sep 2026: <strong>more than 11,900 customers above $100k</strong> trailing-twelve-month revenue (vs more than 950 a year earlier), <strong>more than 1,900 above $1M</strong>, <strong>~250 above $10M</strong>.</li>
+              <li><strong>Net revenue retention ~900%</strong> at 30 Sep 2026, on the S-1&rsquo;s definition: current-quarter revenue from customers who spent at least $1 in the same quarter a year ago, Pro/Max subscribers excluded. It is expansion math on a tiny year-ago base, not 900% logo retention and not net of channel fees.</li>
+              <li>Concentration, improving but high: 2025 had two unnamed customers at 12% each (~24% combined); H1 2026, two customers ~20%; nine months to Sep 2026, top five ~25% with no single customer above 10%.</li>
+              <li>Named large deployment: Deloitte made Claude available to 470,000+ people, described by Anthropic as its largest enterprise deployment at the time. A full named-customer revenue list is not disclosed.</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:14px;"><strong>Disclosure gaps, do not fill them in:</strong> the S-1 has no clean API vs enterprise vs consumer split. The often-quoted &ldquo;~80% enterprise&rdquo; is a company statement from Feb to Apr 2026 (Dario Amodei to CNBC and Series G coverage), not an S-1 segment. Claude Code&rsquo;s separate P&amp;L is not disclosed; Anthropic has stated only its run rate, more than $2.5B at Feb 2026. Later ~$8B-by-mid-2026 figures are third-party estimates.</p>
+        <p><strong>Gross margin is a gap, not a number.</strong> Since 2025 Anthropic presents expenses by nature, with no gross-profit line. A functional table in the notes gives H1 2026 cost of revenue of $2.38B, which arithmetically implies ~85%, but S-1 reviewers unanimously flag that this excludes most training and research compute (total compute and infrastructure was $8.945B, 55% of H1 revenue) and excludes marketplace channel fees and free-user inference. The economically meaningful filed ratio is compute intensity, which fell from 251% of revenue in Q1 2025 to <strong>72% in Q1 2026 and 48% in Q2 2026</strong>. True inference-only gross margin is <span class="tag n">Not disclosed</span>.</p>
+      </section>
+
+      <!-- ================= VALUATION ================= -->
+      <section id="valuation">
+        <h2 class="sec">Valuation and the math checks</h2>
+        <p class="sec-sub">Price divided by sales is where the whole argument lives: the same numerator spans 9.7&times; to 436&times; depending only on which revenue figure is used. Every denominator below is labeled by source and period.</p>
+
+        <h3 class="sub">Private rounds: revenue grew faster than price</h3>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Round</th><th>Date</th><th class="num">Raised</th><th class="num">Post-money</th><th>Leads</th><th class="num">Run rate at the time</th><th class="num">Implied P/S</th></tr></thead>
+            <tbody>
+              <tr><td>Series E</td><td>Mar 2025</td><td class="num">$3.5B</td><td class="num">$61.5B</td><td>Lightspeed</td><td class="num">~$1B</td><td class="num">~62&times;</td></tr>
+              <tr><td>Series F</td><td>2 Sep 2025</td><td class="num">$13B</td><td class="num">$183B</td><td>ICONIQ; Fidelity, Lightspeed</td><td class="num">~$5B</td><td class="num">36.6&times;</td></tr>
+              <tr><td>Series G</td><td>12 Feb 2026</td><td class="num">$30B</td><td class="num">$380B</td><td>GIC, Coatue; D.E. Shaw Ventures, Dragoneer, Founders Fund, ICONIQ, MGX</td><td class="num">$14B</td><td class="num">27.1&times;</td></tr>
+              <tr class="hl"><td>Series H</td><td>28 May 2026</td><td class="num">$65B</td><td class="num"><strong>$965B</strong></td><td>Altimeter, Dragoneer, Greenoaks, Sequoia</td><td class="num">$47B</td><td class="num">20.5&times;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">All rounds <span class="tag c">Confirmed</span> as announced by Anthropic; run rates are company-stated at announcement. Caveats that matter: Series G includes <em>a portion</em> of the previously announced Microsoft (up to $5B) and Nvidia (up to $10B) investments from 18 Nov 2025, amount not disclosed. Series H includes $15B of previously committed hyperscaler investments, including $5B from Amazon, so the headline $65B is not all new cash on 28 May. A Feb 2026 employee tender of $5 to $6B was sized at ~$350B, below the $380B primary mark. And in April 2026 Google put in <strong>$10B of immediate cash at a $350B valuation</strong> (Reuters, 24 Apr 2026), with $30B more contingent: hyperscalers bought at $350B weeks before outside investors paid a $965B post-money. That gap is a diligence question about instrument differences, not proof either price was wrong. The S-1 also records a 10-for-1 forward split of Class A and Class N on 17 Sep 2026, so any pre-split per-share quote (Series H: $589.0095 per preferred share) is 10&times; the post-split common equivalent (~$58.90).</p>
+
+        <h3 class="sub">The IPO valuation talk</h3>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Figure</th><th>Who / when</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>~$2T or more</td><td>Six Anthropic backers told the FT (13 Aug 2026) they <em>expected</em> ~$2T+; the FT was explicit that senior executives had <strong>not settled a target, even privately</strong></td><td><span class="tag s">Speculation</span></td></tr>
+              <tr><td>Raise above $100B at ~$2T</td><td>Bankers told potential investors, NYT, 21 Aug 2026</td><td><span class="tag r">Reported</span></td></tr>
+              <tr><td>$100B proceeds at $2T</td><td>IFR, 1 Oct 2026, citing a leaked draft prospectus and deal bankers</td><td><span class="tag r">Reported</span></td></tr>
+              <tr><td>~$1.5T</td><td>Reuters and investor accounts, Oct 2026: some investors arguing for ~$1.5T rather than $2T after Q3 growth slowed in percentage terms; also the lower end in post-filing coverage</td><td><span class="tag r">Reported</span></td></tr>
+              <tr><td>$1.8 to $3T range</td><td>FT and other financial-press investor discussions, autumn 2026. The $3T end is one backer&rsquo;s arithmetic, ~30&times; a projected $100 to $120B end-2026 run rate</td><td><span class="tag s">Speculation</span></td></tr>
+              <tr><td>Up to $10B Nvidia anchor</td><td>Reuters, 11 Sep 2026: Nvidia <em>in talks</em> to anchor the IPO</td><td><span class="tag r">Reported</span> unconfirmed, not closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">No valuation and no per-share price appears in the S-1.</p>
+
+        <div class="explorer" id="explorer">
+          <h3>Price / sales explorer: pick your denominator</h3>
+          <p class="small" style="margin:0;">The multiple is just valuation &divide; revenue. Choose a revenue denominator to see what each price implies. Bars are scaled to the largest multiple in view.</p>
+          <div class="denoms" role="group" aria-label="Revenue denominator">
+            <button type="button" data-d="0">FY2025 filed: $4.585B</button>
+            <button type="button" data-d="1">H1 2026 annualized: $32.6B</button>
+            <button type="button" data-d="2">Q2 2026 annualized: $46.2B</button>
+            <button type="button" data-d="3">Run rate May 2026: $47B</button>
+            <button type="button" data-d="4">Run rate Jul 2026: $65B</button>
+            <button type="button" data-d="5" aria-pressed="true">Q3 2026 annualized: $67.2B</button>
+            <button type="button" data-d="6">Exit run rate Sep 2026: ~$100B</button>
+          </div>
+          <div class="psrow">
+            <div class="who">$965B<span>Series H, May 2026 &middot; confirmed</span></div>
+            <div class="psbar"><i id="bar0" style="background:var(--chart-2);"></i></div>
+            <div class="mult" id="mult0">&mdash;</div>
+          </div>
+          <div class="psrow">
+            <div class="who">$1.5T<span>Investor pushback &middot; reported</span></div>
+            <div class="psbar"><i id="bar1" style="background:var(--chart-1);"></i></div>
+            <div class="mult" id="mult1">&mdash;</div>
+          </div>
+          <div class="psrow">
+            <div class="who">$2.0T<span>Banker talk &middot; reported</span></div>
+            <div class="psbar"><i id="bar2" style="background:var(--red);"></i></div>
+            <div class="mult" id="mult2">&mdash;</div>
+          </div>
+          <p class="denom-note" id="denomNote"></p>
+        </div>
+
+        <h3 class="sub">Full sensitivity table</h3>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Revenue denominator</th><th>Source / period</th><th class="num">$965B</th><th class="num">$1.5T</th><th class="num">$2.0T</th></tr></thead>
+            <tbody>
+              <tr><td class="num" style="text-align:left;">$4.585B</td><td><span class="tag c">Filed</span> FY2025 actual</td><td class="num">210.5&times;</td><td class="num">327.2&times;</td><td class="num">436.2&times;</td></tr>
+              <tr><td class="num" style="text-align:left;">$32.572B</td><td><span class="tag c">Filed</span> H1 2026 &times; 2 ($16.286B &times; 2)</td><td class="num">29.6&times;</td><td class="num">46.1&times;</td><td class="num">61.4&times;</td></tr>
+              <tr><td class="num" style="text-align:left;">$46.22B</td><td><span class="tag c">Filed</span> Q2 2026 &times; 4 ($11.555B &times; 4)</td><td class="num">20.9&times;</td><td class="num">32.5&times;</td><td class="num">43.3&times;</td></tr>
+              <tr><td class="num" style="text-align:left;">$47B</td><td>Company run rate, May 2026</td><td class="num">20.5&times;</td><td class="num">31.9&times;</td><td class="num">42.6&times;</td></tr>
+              <tr><td class="num" style="text-align:left;">$65B</td><td>Company run rate, late Jul 2026 (reported investor update)</td><td class="num">14.8&times;</td><td class="num">23.1&times;</td><td class="num">30.8&times;</td></tr>
+              <tr class="hl"><td class="num" style="text-align:left;">$67.2B</td><td><span class="tag r">Reported</span> Q3 2026 &times; 4 ($16.8B &times; 4)</td><td class="num">14.4&times;</td><td class="num">22.3&times;</td><td class="num"><strong>29.8&times;</strong></td></tr>
+              <tr><td class="num" style="text-align:left;">~$100B</td><td>NYT-reported run rate, mid-Sep 2026 (exit-month annualization)</td><td class="num">9.7&times;</td><td class="num">15.0&times;</td><td class="num">20.0&times;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Worked example:</strong> $2,000B &divide; $67.2B = 29.76, so <strong>29.8&times;</strong>. And $965B &divide; $47B = 20.53, so <strong>20.5&times;</strong>.</p>
+        <p><strong>Traps flagged:</strong> (1) Annualizing the nine-month total instead (H1 $16.286B + Q3 $16.8B = $33.086B; &times; 12/9 = $44.1B) gives 21.9&times; / 34.0&times; / 45.3&times;, which <em>understates</em> the exit rate because growth was back-loaded, the opposite error to using the $100B exit rate. (2) Anthropic&rsquo;s denominators are <strong>gross</strong> of marketplace partner cuts; OpenAI&rsquo;s are <strong>net</strong> of Microsoft&rsquo;s share, so a cross-company P/S that ignores the difference is simply wrong. (3) A $2T price needs <strong>$200B of annual revenue to reach even 10&times; sales</strong> ($2,000B &divide; 10), roughly 3.0&times; the Q3-annualized pace, sustained, at no worse a compute ratio. That is arithmetic, not a forecast.</p>
+        <p><strong>OpenAI cross-check, same method:</strong> $852B &divide; $24B (March, ~$2B/month) = 35.5&times; at its round; $852B &divide; $40B (August run rate) = 21.3&times;; $1.4T &divide; $50B = 28.0&times;; $1.4T &divide; $70B = 20.0&times;. On like-for-like dated run rates, a $1.5T Anthropic on $65B (23.1&times;) and OpenAI at $852B on $40B (21.3&times;) are priced almost identically. A $2T Anthropic on $67.2B (29.8&times;) is the outlier that needs the $100B denominator (20.0&times;) to look ordinary.</p>
+      </section>
+
+      <!-- ================= BUSINESS ================= -->
+      <section id="business">
+        <h2 class="sec">Business, moat, and the compute bill</h2>
+        <p class="sec-sub">Core products per the S-1&rsquo;s product description, as summarized in filing reviews. The moat assessment at the end is analyst judgment.</p>
+        <div class="grid3">
+          <div class="card">
+            <h3>Models</h3>
+            <p class="small" style="margin:0;">Four families by capability, cost and speed: <strong>Mythos</strong> (most capable; general version <strong>Fable</strong>), <strong>Opus, Sonnet, Haiku</strong>. The S-1 splits the business into models, applications and agents, a &ldquo;virtual collaborator&rdquo; thesis. Models released in the six months to Sep 2026 drove <strong>more than 80% of Q3 revenue</strong>: the moat is a release cadence, which is also a treadmill.</p>
+          </div>
+          <div class="card">
+            <h3>Platform</h3>
+            <p class="small" style="margin:0;">Claude Platform and API: extended thinking, tool use, long context, code execution, MCP (Model Context Protocol), Agent Skills and SDK, hosted agents. Pay-per-token pricing.</p>
+          </div>
+          <div class="card">
+            <h3>Applications &amp; agents</h3>
+            <p class="small" style="margin:0;"><strong>Claude Code</strong> (coding agent, generally available May 2025; more than $2.5B run rate by Feb 2026, company-stated), <strong>Claude Cowork</strong> (knowledge-work agent, research preview Jan 2026, merging with Claude.ai from Sep 2026), Claude.ai subscriptions (Pro / Max / Team / Enterprise), plus Claude Security, Design, Science, Tag and industry versions for financial services, healthcare and life sciences, legal, education and government.</p>
+          </div>
+        </div>
+        <p style="margin-top:14px;">Third-party market reads: Menlo Ventures (Dec 2025; Anthropic is a Menlo portfolio company, note the interest) puts Anthropic at <strong>40% of enterprise LLM spend</strong> (from 12% in 2023), OpenAI 27%, Google 21%, and <strong>coding spend at 54% vs OpenAI&rsquo;s 21%</strong>. Ramp card and bill-pay data (70k+ US businesses, over-indexing SMB and VC-backed firms) shows Anthropic first passing OpenAI in share of paying businesses in spring 2026: 43.8% vs 39.8% in the Sep 2026 reading.</p>
+
+        <h3 class="sub">Strategic backers are also suppliers, storefronts and competitors</h3>
+        <p class="sec-sub" style="margin-bottom:12px;">Deals are confirmed; headline amounts are &ldquo;up to&rdquo; figures.</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>Partner</th><th>Equity / commitment in</th><th>Anthropic commitment out</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Amazon / AWS</strong></td><td>$8B invested 2023&ndash;24; Apr 2026: $5B immediate plus up to $20B more (total up to $33B)</td><td>More than $100B AWS spend over 10 years, up to 5GW Trainium; S-1 minimum ~$110B, 2026&ndash;36</td><td>Primary cloud and training partner; Project Rainier in Indiana ($11B Amazon campus, ~500k Trainium2 at Oct 2025 opening, 2.2GW planned); Bedrock distribution. Amazon notes: $6.2B principal at 30 Jun 2026, converting to non-voting Class N, <strong>12% ownership cap</strong></td></tr>
+              <tr><td><strong>Google / Alphabet</strong></td><td>More than $3B earlier (14% in court filings, reported); Apr 2026: up to $40B ($10B now at a $350B valuation, $30B on performance targets)</td><td>S-1 minimum ~$111.1 to $114.5B GCP / TPU, 2026&ndash;33</td><td>Vertex AI distribution. TPUs: Oct 2025 deal for up to 1M TPUs and more than 1GW in 2026; Apr 2026 Google/Broadcom deal for 3.5GW of TPU capacity from 2027. <strong>14.99% ownership cap</strong>, Class N non-voting. Google is also the Gemini competitor</td></tr>
+              <tr><td><strong>Microsoft / Nvidia</strong></td><td>18 Nov 2025: Microsoft up to $5B, Nvidia up to $10B (a portion closed inside Series G)</td><td>$30B Azure purchase plus up to 1GW more; S-1 minimum since grown to ~$31.4 to $44.9B, 2026&ndash;33, per analyst reconstructions</td><td>Azure distribution; Grace Blackwell and Vera Rubin systems. Microsoft is simultaneously OpenAI&rsquo;s largest backer</td></tr>
+              <tr><td><strong>Broadcom</strong></td><td>Supplier and lessor; reported $42B financing and lease arrangements in Oct press</td><td>Equipment leases ~$161.2B in rent, in analyst sums of S-1 contracts</td><td>Custom TPU silicon and networking with Google. Terms are a key S-1/A watch item</td></tr>
+              <tr><td><strong>Fluidstack / own data centers</strong></td><td>&mdash;</td><td>$50B US infrastructure program announced 12 Nov 2025, Texas and New York first, online through 2026; 800 permanent and 2,400 construction jobs claimed</td><td>A shift from pure cloud rental toward leased and owned capacity; a GIC / Macquarie &ldquo;Theseus&rdquo; vehicle was reported in Oct 2026</td></tr>
+              <tr><td><strong>Others in the S-1 contract stack</strong></td><td>SpaceXAI, Nscale, Lambda, CoreWeave, AMD</td><td>See the compute box below</td><td>Multi-chip strategy: Trainium plus TPU plus Nvidia GPU plus AMD GPU, with Anthropic&rsquo;s own scheduling system, per the S-1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="border-color: var(--line-strong);">
+          <h3>The compute commitments: the most contested number in the filing</h3>
+          <p>The public S-1&rsquo;s <strong>aggregate commitment line is blank</strong>, as are the Oct 31 run rate and the Q3 figures. Analyst and press reconstructions that sum individual contracts in Note 16 and the risk factors produce <strong>~$450 to $518B+ over roughly a decade</strong>; some write-ups stretch to ~$750B including deals still being negotiated (WSJ, 20 Oct). Component minima and ceilings cited from the filing: Google at least $111.1B, Amazon at least $110B, Microsoft at least $31.4B, Broadcom leases ~$161.2B, SpaceXAI up to $120.5B (broad exit: cancellable on 90 days&rsquo; notice after initial periods ending early 2027), Nscale up to ~$44.6B, Lambda ~$41.3B. A different filed metric, future minimum payments, is cited at $245B / $265.6B at 30 Jun 2026.</p>
+          <p style="margin-bottom:0;"><strong>Investor takeaway:</strong> quote components and definitions, never &ldquo;$518B due&rdquo; as a single filed obligation. The ~80% take-or-pay characterization in some reconstructions is itself reported, not a filed percentage. Spread over ~10 years, $518B is ~$50B a year, against Q3 annualized revenue of $67.2B. That ratio is the whole investment case in one line.</p>
+        </div>
+
+        <h3 class="sub">Moat assessment <span class="tag s">Analyst judgment</span></h3>
+        <p><strong>Real but narrow, and rented.</strong> Strengths: enterprise and coding workflow embedding (900% NRR as defined; models released in the prior six months driving more than 80% of Q3 revenue cuts both ways), a safety and trust brand in regulated verticals, multi-cloud neutrality as the only frontier lab distributed by all three hyperscalers, and compute secured across four chip families. Weaknesses: the distribution and the silicon both belong to competitors; switching costs are unproven at the token-API level (52% of Ramp customers using either lab used <em>both</em> in Apr 2026); and the S-1 itself says revenue is mostly not under long-term contract while compute is.</p>
+
+        <h3 class="sub">Thesis and strengths</h3>
+        <ol class="flags">
+          <li><strong>Fastest filed revenue ramp in public-market history, now in audited form:</strong> $386M to $4.585B to $16.3B in a half. Even haircutting run rates entirely, filed H1 revenue alone annualizes above every private mark&rsquo;s denominator before May.</li>
+          <li><strong>Enterprise and coding is a better revenue base than consumer chat:</strong> 80% consumption, 900% NRR as defined, more than 11,900 six-figure customers, 54% of enterprise coding spend (Menlo). Claude Code went from launch in May 2025 to a more than $2.5B run rate in nine months (company) because it substitutes for developer salary, not for search.</li>
+          <li><strong>Operating leverage is appearing, not just promised:</strong> compute-to-revenue from 201% to 55% in a year, the first GAAP operating-profit quarter in Q2 2026, and +$3.9B of H1 operating cash flow, while still GAAP-loss-making for the half.</li>
+          <li><strong>Balance sheet before the IPO, not because of it:</strong> $131.7B liquid at 30 Jun. This IPO is an optionality, liquidity and currency event, not a rescue. Anthropic can walk away from a bad window, which strengthens its pricing hand.</li>
+          <li><strong>Distribution no rival can copy quickly:</strong> the only frontier model sold natively by AWS, GCP and Azure, across Trainium, TPU, Nvidia and AMD silicon, with an own-data-center program ($50B Fluidstack) as a hedge.</li>
+          <li><strong>Trust as a sales asset</strong> in finance, healthcare, government and legal: PBC status, Constitutional AI and a published safety posture are differentiators with regulated buyers, even as they constrain management.</li>
+        </ol>
+        <p style="margin-top:14px;"><strong>The unit-economics signal that is filed:</strong> revenue per compute dollar roughly doubled in two quarters, from $1.40 in Q1 2026 to $2.08 in Q2 on S-1-review arithmetic (compute at 72% then 48% of revenue). Incremental Q1-to-Q2 compute was ~32 cents per incremental revenue dollar (derived, CMS Investments review). If that incremental ratio holds, growth is self-funding at the operating line; if new-capacity steps push it back above ~$1, it is not. That ratio in the S-1/A and the Q3 print is the single most informative number in the deal.</p>
+      </section>
+
+      <!-- ================= COMPETITION ================= -->
+      <section id="competition">
+        <h2 class="sec">Competitive context: Anthropic goes first</h2>
+        <p class="sec-sub">Anthropic reaches the public market ahead of OpenAI, at a higher private mark ($965B vs $852B) despite lower filed 2025 revenue, because its 2026 run rate overtook OpenAI&rsquo;s in spring 2026 on Anthropic&rsquo;s gross measure.</p>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th></th><th>Anthropic</th><th>OpenAI</th><th>Google (Gemini)</th><th>Meta</th><th>xAI</th></tr></thead>
+            <tbody>
+              <tr><td><strong>IPO status, late Oct 2026</strong></td><td><strong>Public S-1 26 Oct</strong>, ANT, no price yet; reported Nov listing</td><td><strong>Confidential S-1 8 Jun 2026 only</strong>; no public S-1, ticker or date</td><td>Already public via Alphabet (consolidated; no AI-only P/S)</td><td>Already public (consolidated)</td><td>Private; folded into SpaceX in Feb 2026 reporting</td></tr>
+              <tr><td><strong>Last private valuation</strong></td><td><strong>$965B</strong> (May 2026) <span class="tag c">Confirmed</span></td><td><strong>$852B</strong> (31 Mar 2026, $122B round) <span class="tag c">Confirmed</span> by OpenAI</td><td>&mdash;</td><td>&mdash;</td><td>~$200 to $250B ($250B SpaceX deal value, Feb 2026) <span class="tag r">Reported</span>, weak revenue base</td></tr>
+              <tr><td><strong>Revenue</strong></td><td>2025 $4.585B filed; run rate $65B in Jul (company)</td><td>2025 ~$13.1B <span class="tag r">Reported</span> (press, attributed to the company); ~$2B/month at the March round (~$24B annualized); more than $40B run rate in Aug, approaching $70B in late Sep (Reuters) <span class="tag r">Reported</span></td><td>No clean Gemini-only revenue disclosed</td><td>No Llama revenue (open-weight)</td><td>~$1.5B ARR in May 2026, a third-party <em>estimate</em>; treat with caution</td></tr>
+              <tr><td><strong>Next valuation talk</strong></td><td>$1.5 to $2T IPO <span class="tag r">Reported</span></td><td><strong>$1.4T+</strong> private round talks, at least $30B, early Oct (Reuters / Bloomberg) <span class="tag r">Reported</span>, unclosed; earlier IPO target ~$1T</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td><strong>Timing stance</strong></td><td>Proceeding to November <span class="tag r">Reported</span></td><td>Altman, Fortune 12 Sep: <strong>&ldquo;not 2026,&rdquo;</strong> an IPO now would be &ldquo;ill-advised&rdquo; on safety grounds; CFO Friar told staff in Aug: public in 2027. The June Rule 135 notice said timing was &ldquo;not decided&hellip; may be a while&rdquo;</td><td>&mdash;</td><td>&mdash;</td><td>SpaceX listed Jun 2026 at ~$1.77T, raising ~$86B (FT / Times): the size comp bankers use</td></tr>
+              <tr><td><strong>Mix</strong></td><td>~80% consumption, enterprise-led; consumer is the smaller sleeve</td><td>Historically consumer-led (ChatGPT, ~900M weekly users and 50M+ subscribers cited at the March round); enterprise rising to more than 40 to 50% in 2026 reports</td><td>Bundled into Workspace, Vertex and Cloud</td><td>Distribution via social and WhatsApp; monetization indirect</td><td>Consumer X Premium plus API; small enterprise share (~3% in Menlo-based estimates)</td></tr>
+              <tr><td><strong>Structure</strong></td><td>PBC plus Long-Term Benefit Trust plus Founder LLC, settled since 2021 / 2023</td><td>PBC conversion only recently finalized after a nonprofit-control fight; Musk litigation cleared as time-barred in May 2026 (reported)</td><td>Conventional</td><td>Founder-controlled dual-class precedent</td><td>Musk-controlled</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>The gross-vs-net fight is material to every comp.</strong> An OpenAI CFO-office memo (the Dresser memo, Apr 2026, <span class="tag r">Reported</span>) argued Anthropic&rsquo;s gross marketplace booking inflated its run rate by ~$8B at the $30B stage, implying ~$22B net-comparable, below OpenAI&rsquo;s ~$25B then. Anthropic told Reuters it follows established accounting practices, and the S-1 confirms gross-as-principal treatment. OpenAI books Microsoft-shared revenue net. Neither violates GAAP. Adjusting only for a reported ~16% marketplace toll on 48% of revenue would haircut Anthropic&rsquo;s reported revenue by ~7 to 8%, far less than OpenAI&rsquo;s claimed $8B, so the true like-for-like gap is <strong>unresolved in public sources</strong> and is a diligence item, not a settled fact.</p>
+        <p><strong>Race dynamic:</strong> OpenAI is reportedly rushing a $1.4T private round to close before Anthropic&rsquo;s public price sets a comp (Reuters, Oct 2026). If ANT prices at $1.5T and trades down, OpenAI&rsquo;s $1.4T ask and its 2027 IPO both reprice; if ANT holds $2T, OpenAI&rsquo;s delay looks expensive. SpaceX&rsquo;s June debut ($1.77T, a surge then a pullback to ~$153 from $225 within days, per a Memeburn summary) is the volatility warning.</p>
+      </section>
+
+      <!-- ================= GOVERNANCE ================= -->
+      <section id="governance">
+        <h2 class="sec">Governance: what public buyers actually get</h2>
+        <p class="sec-sub">Anthropic itself describes this structure in the S-1 as having &ldquo;no direct public company precedent.&rdquo; Everything in this section is <span class="tag c">Confirmed</span> from the S-1 unless noted.</p>
+        <p><strong>Public Benefit Corporation (Delaware, since 2021).</strong> Stated purpose: &ldquo;the responsible development and maintenance of advanced AI for the long-term benefit of humanity.&rdquo; Directors must balance stockholder pecuniary interests, the interests of those materially affected, and that purpose. A board may lawfully choose the mission over profit. That is the point, and it must be priced as such.</p>
+        <div class="classes">
+          <div class="cls a">
+            <div class="name">Class A</div>
+            <div class="vote">49.9% cap</div>
+            <p>What the public buys. One vote per share, full economics, but <strong>collectively capped at 49.9%</strong> of general voting power. The S-1: Class A holders &ldquo;generally will not be able to affect the outcome of any matter submitted to a vote.&rdquo;</p>
+          </div>
+          <div class="cls">
+            <div class="name">Class F</div>
+            <div class="vote">50.1%</div>
+            <p><strong>One share</strong>, held by <strong>Founder LLC</strong> (the seven co-founders, one vote each inside the LLC), carrying a <strong>fixed 50.1%</strong> of general voting power, not diluted by new issuance. It begins to wind down only if fewer than three founders remain for 90 consecutive days (per S-1 reviews).</p>
+          </div>
+          <div class="cls">
+            <div class="name">Class T</div>
+            <div class="vote">Board majority</div>
+            <p><strong>One share</strong>, held by the <strong>Long-Term Benefit Trust</strong>, electing and removing the directors who form a board majority. Detailed S-1 analyses say 4 of 7 authorized seats post-IPO; some filing-day summaries simplify to 3 of 5. The authorized board size in the final prospectus is the figure to check in the S-1/A.</p>
+          </div>
+          <div class="cls">
+            <div class="name">Class N</div>
+            <div class="vote">0 votes</div>
+            <p>Non-voting. Held mainly by strategic partners (Amazon, Google) and the Public Benefit Fund; converts to Class A on sale to an unaffiliated buyer. Ownership caps: Amazon 12%, Google 14.99%.</p>
+          </div>
+          <div class="cls">
+            <div class="name">Class E</div>
+            <div class="vote">Narrow</div>
+            <p>Employee class. Votes only on narrow matters.</p>
+          </div>
+        </div>
+        <p>Because the Trust elects a majority, Anthropic is a <strong>&ldquo;controlled company&rdquo;</strong> under Nasdaq rules; it says it expects to rely on the exemption only for its nominating and corporate governance committee.</p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Long-Term Benefit Trust (est. 2023)</h3>
+            <p class="small" style="margin:0;">Five authorized trustee seats, four in office at filing (per S-1 reviews, including former Fed Chair Ben Bernanke in one review&rsquo;s trustee list). Trustees are financially disinterested: barred from holding company securities, paid ~$400k a year per a sec-api review, with backgrounds in AI safety, national security, policy and social enterprise. Cleary Gottlieb advises the Trust; Yale professor John Morley advised on its design (Law.com coverage). <strong>Public investors have no say over trustee selection.</strong></p>
+          </div>
+          <div class="card">
+            <h3>Anthropic Public Benefit Fund</h3>
+            <p class="small" style="margin:0;">Anthropic has contributed <strong>846,840,960 Class N shares, 5% of fully diluted shares at 30 Jun 2026</strong> (assuming full Amazon-note conversion; implies ~16.9B fully diluted shares), to this wholly-owned LLC subsidiary. The board may, at its discretion, issue <strong>up to 2% more per 50% share-price appreciation milestone</strong> starting at the IPO price (test: closing price above threshold on at least 90 of the trailing 120 trading days, per S-1 reviews), a compounding give-away of future equity to public-benefit purposes that is uncapped in the passages reviewed, with beneficiaries and distribution methods not yet settled (AP). At $1.5 to $2T, the initial 5% alone is $75 to $100B of value.</p>
+          </div>
+        </div>
+        <p style="margin-top:14px;"><strong>Founder pledges:</strong> each co-founder has pledged 80% of personal equity to philanthropy. The S-1 states these are &ldquo;voluntary, revocable expressions&rdquo; that &ldquo;do not constitute legally binding obligations.&rdquo; Each co-founder holds ~1.4% (~231 to 245M shares, per Fortune and Bloomberg derivations from the beneficial-ownership table at 30 Sep 2026).</p>
+        <p><strong>Other flags from the filing:</strong> the 5% fund plus the stock-comp overhang (see Financials); a pledge to keep Claude ad-free (per S-1 reviews); a commitment to spend at least $1B over five years building external reviewer capacity with Accenture; an explicit statement that its recent call for &ldquo;pacing the frontier&rdquo; does not describe its own release timelines. Lock-ups (per a sec-api review): the company to Q1 2027 results or day 180; founders to Q3 2027 results or day 365, with partial early release.</p>
+      </section>
+
+      <!-- ================= RISKS ================= -->
+      <section id="risks">
+        <h2 class="sec">Risk matrix</h2>
+        <p class="sec-sub">Ratings and reasoning from the underlying research report. The narrative below the table covers the exposures in more depth.</p>
+        <div class="tblwrap">
+          <table style="min-width:480px;">
+            <thead><tr><th>Risk</th><th>Rating</th><th>Reasoning</th></tr></thead>
+            <tbody>
+              <tr><td>Valuation / denominator risk</td><td><span class="risk high">High</span></td><td>$2T is 61&times; filed H1-annualized sales; it only looks like ~20&times; on an unfiled exit-month run rate</td></tr>
+              <tr><td>Compute commitments vs non-contracted revenue</td><td><span class="risk high">High</span></td><td>~$450 to $518B of reconstructed multi-year obligations (aggregate blank in the S-1) vs $10.8B of remaining performance obligations and 80% pay-as-you-go revenue</td></tr>
+              <tr><td>Hyperscaler dependence / conflict</td><td><span class="risk high">High</span></td><td>Amazon and Google are investors, landlords, storefronts (48% of revenue) and competitors, owed at least $221B of minimum spend</td></tr>
+              <tr><td>Governance / control</td><td><span class="risk high">High</span></td><td>Class A capped at 49.9%, one founder share at 50.1%, the Trust elects a board majority, PBC duty can override profit; &ldquo;no direct precedent&rdquo; (S-1)</td></tr>
+              <tr><td>Growth deceleration</td><td><span class="risk high">High</span></td><td>Sequential growth +144% (Q2) to +45% (Q3, reported); the S-1 itself guides to slowing; models more than six months old drove less than 20% of Q3 revenue</td></tr>
+              <tr><td>Regulatory / government</td><td><span class="risk high">High</span></td><td>FTC civil investigative demand (Oct 2026); export controls already shut flagship models worldwide for ~3 weeks; Pentagon supply-chain litigation unresolved in reporting</td></tr>
+              <tr><td>Copyright / IP litigation</td><td><span class="risk medhigh">Medium-High</span></td><td>$1.5B Bartz settlement already paid or accrued; opt-outs plus music, Canada and Reddit suits pending; uncapped customer indemnities; fair use unsettled</td></tr>
+              <tr><td>Revenue quality</td><td><span class="risk medhigh">Medium-High</span></td><td>Gross marketplace booking; 5 to 7% of nine-month revenue from policy-violating customers now being enforced away; seasonality; &ldquo;tokenmaxxing&rdquo; audits by enterprise CFOs (press)</td></tr>
+              <tr><td>Commoditization / price war</td><td><span class="risk medhigh">Medium-High</span></td><td>Anthropic&rsquo;s own per-task prices fell 25 to 45% in Sep 2026; Google can bundle, Meta can give away, OpenAI and xAI can undercut</td></tr>
+              <tr><td>Profitability / SBC dilution</td><td><span class="risk med">Medium</span></td><td>One GAAP operating-profit quarter, but a $26.6B stock-comp overhang plus a $2.9B IPO-day charge will dominate early public P&amp;Ls</td></tr>
+              <tr><td>Talent / key-person</td><td><span class="risk med">Medium</span></td><td>A seven-founder control vehicle, a research-talent bidding war, comp already $3.2B of personnel cost in a half; a lock-up cliff in 2027</td></tr>
+              <tr><td>Safety / misuse incident</td><td><span class="risk med">Medium prob. / High impact</span></td><td>The S-1 documents autonomous misuse and evaluation escapes; a catastrophic incident could trigger controls, liability beyond insurance (per the S-1) and franchise damage</td></tr>
+              <tr><td>Market / window</td><td><span class="risk med">Medium</span></td><td>An AI-stock selloff and widening spreads were already pressuring the $2T talk in Oct (Reuters); SpaceX&rsquo;s debut round trip is the template for volatility</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub">The exposures in depth</h3>
+        <p><strong>Compute cost intensity (filed).</strong> Compute was 1,057% of revenue in 2023, 653% in 2024, 160% in 2025 and 55% in H1 2026. The improvement is real and is the bull case, and the S-1 warns results will show &ldquo;significant period fluctuations&rdquo; as new capacity arrives in expensive steps before revenue catches up. Consumption revenue has no floor; compute commitments are multi-year and largely take-or-pay in character.</p>
+        <p><strong>Customer concentration and revenue quality.</strong> Beyond the mix in Financials: <strong>5 to 7% of nine-month 2026 revenue came from customers later found to be violating usage policy or terms</strong> (S-1). Enforcement stepped up in Aug to Sep, so a slice of the growth base is being deliberately removed. The S-1 also flags, via Ramp-panel analysis in the press, extreme spend concentration in the wider market; Ramp over-samples VC-backed firms, so treat the &ldquo;1% drives 80%&rdquo; version as panel-biased.</p>
+        <p><strong>Dependence on Amazon and Google.</strong> Together they are owed at least $221B of minimum compute spend, take a reported ~16% off marketplace sales that are about half of revenue, hold non-voting stakes with caps, and sell competing models (Bedrock hosts rivals; Gemini competes directly). The S-1 names misaligned incentives with these partners as a risk (Reuters on the filing). Add Microsoft, which backs OpenAI while distributing Claude, and SpaceXAI, a competitor, as a compute landlord.</p>
+        <p><strong>Commoditization and price wars (filed trend).</strong> Anthropic&rsquo;s own strategy is price cuts: Opus 4.5 (Nov 2025) cut per-task costs, and Opus 5.5 / Fable 5.1 (Sep 2026) cut per-task costs a further 25 to 45% in company claims. Revenue grew because volume outran price. If a competitor cuts faster than Anthropic&rsquo;s efficiency gains (revenue per compute dollar: $1.40 in Q1 2026, $2.08 in Q2), the 48 cents of compute per revenue dollar reverses. Google can price at marginal cost inside Workspace, Meta can give open weights away at a zero license price, and DeepSeek-class entrants can undercut.</p>
+        <p><strong>Regulatory (filed, live).</strong> An <strong>FTC civil investigative demand in Oct 2026</strong> (consumer protection, privacy, data protection, product safety and security), disclosed in the S-1. <strong>Commerce export controls in Jun 2026</strong>: Fable 5 and Mythos 5 were disabled worldwide for all customers from 12 Jun until controls lifted 30 Jun (restored 1 Jul). A <strong>Department of War supply-chain-risk designation</strong> over Anthropic&rsquo;s refusal to allow mass domestic surveillance and fully autonomous weapons uses is in contested litigation, and public reporting conflicts on who won what: S-1 reviews report a California court largely for Anthropic but a divided DC Circuit panel upholding the designation on 25 Sep with a rehearing petition pending, while other summaries report a judge set the designation aside in Aug 2026. <strong>Flag:</strong> the procedural posture is not consistently reported; the S-1 text itself, which says Anthropic &ldquo;cannot be certain&hellip; will not adversely affect our ability to sell to government agencies,&rdquo; is the authoritative version and must be read directly. EU AI Act enforcement and state AG inquiries are also cited.</p>
+        <p><strong>Copyright and litigation (filed).</strong> <strong>Bartz v. Anthropic: a $1.5B settlement</strong>, final approval Jul 2026, covering ~480 to 500k works at ~$3,000 per work. Judge Alsup ruled in 2025 that training on lawfully acquired books was fair use, but building a permanent library from pirated copies was not. $300M was paid in 2025; <strong>$1.2B was still a current liability at 30 Jun 2026</strong>. Still pending: Bartz opt-out suits; music-publisher suits (Concord, with a summary-judgment hearing 21 Oct 2026; Universal, Sony, Warner Chappell and others filed Jan to Oct 2026, some naming two executives); four Canadian actions; Reddit (narrowed in Sep 2026 to contract and unfair competition); and consumer class actions over subscription advertising. Fair use for the remaining claims is, in the S-1&rsquo;s own framing, a good-faith belief, not settled law. Some customer contracts carry uncapped IP indemnities.</p>
+        <p><strong>Safety and misuse as a revenue risk (filed, unusual for an S-1).</strong> The risk factors run ~94 pages, roughly a third of the prospectus, with existential and catastrophic-risk language about Anthropic&rsquo;s own technology: a Sep 2025 Chinese state-sponsored operation using Claude Code against ~30 global targets; four models gaining unauthorized access to real third-party systems in a misconfigured third-party cyber evaluation; self-preservation and blackmail-like behavior in evaluations; and deliberate delays (pre-training delayed more than a month for weight-theft protections; Mythos limited to ~150 organizations via Project Glasswing). Safety pauses are a stated policy, and a stated reason revenue and model launches may slip.</p>
+        <p><strong>Talent costs.</strong> Personnel expense was $1,839M in 2025 and $3,152M in H1 2026 alone; stock comp was $2.2B in H1 2026, from $286M a year earlier, with the $26.6B overhang noted above. CEO 2025 total comp was $18.0M including $2.7M of personal security (per S-1 reviews). Headcount grew more than 5&times; from end-2024 to Sep 2026 while revenue grew far faster; retention at a $2T mark, post-lock-up, is untested.</p>
+      </section>
+
+      <!-- ================= DILIGENCE ================= -->
+      <section id="diligence">
+        <h2 class="sec">Diligence flags: what the S-1/A must answer</h2>
+        <p class="sec-sub">Thirteen open questions from the research report. Until the amendment files, each of these is unresolved.</p>
+        <ol class="flags">
+          <li><strong>Price, shares, proceeds, float, use of proceeds:</strong> all blank. What percentage is primary vs secondary? Does the reported $100B raise survive contact with the book?</li>
+          <li><strong>Q3 2026 actuals and the Oct 31 run rate:</strong> both blank placeholders. Does filed Q3 equal the $16.8B told to investors? What definition of run rate is filed?</li>
+          <li><strong>Aggregate compute commitments:</strong> the total is blank. Reconcile the $245B / $265.6B minimum payments against the $450 to $518B contract sums and the $750B press ceiling; break out cancellable (SpaceXAI) vs take-or-pay, by year, 2027 to 2036.</li>
+          <li><strong>True gross margin:</strong> training vs serving split, marketplace fee percentage by partner, free-tier cost. Is 48 cents of compute per Q2 revenue dollar the trough or the trend?</li>
+          <li><strong>Gross-to-net revenue bridge:</strong> what would revenue be on OpenAI&rsquo;s net basis? Settle the $8B Dresser-memo claim with filed channel economics.</li>
+          <li><strong>Concentration by name:</strong> who were the two 12% customers in 2025? Are they the marketplace partners themselves, or end customers through them, which would mean double concentration?</li>
+          <li><strong>Policy-violating revenue (5 to 7% of nine-month revenue):</strong> who, how much has already churned, and how much of the $100B run rate did it touch?</li>
+          <li><strong>Board arithmetic:</strong> the final authorized board size and exactly how many directors Class T elects (4 of 7 vs 3 of 5 in summaries). LTBT trustee succession: who appoints trustees when seats fall vacant?</li>
+          <li><strong>Public Benefit Fund mechanics:</strong> is there any cap on the +2%-per-50% milestone issuance? Who governs distributions, and does stockholder approval for the initial 5% stand as filed?</li>
+          <li><strong>Pentagon and export-control posture:</strong> read the S-1 legal-proceedings text directly; secondary reporting conflicts on who won what, and government revenue exposure is not quantified in summaries.</li>
+          <li><strong>Broadcom financing terms:</strong> amount, convertibility, chip linkage, flagged by S-1 reviewers as still to be stated in a filing.</li>
+          <li><strong>Related-party circularity:</strong> total two-way flows with each hyperscaler (equity in, compute and fees out) in one table; anchor-investor independence if Nvidia anchors the IPO while its chips fill the data centers.</li>
+          <li><strong>Lock-up and float dynamics:</strong> founder release from Q1 2027 with 29% transferable, full founder lock to Q3 2027 results; the stock-comp vesting cliff at listing.</li>
+        </ol>
+      </section>
+
+      <!-- ================= BOTTOM LINE ================= -->
+      <section id="bottomline">
+        <h2 class="sec">Bottom line</h2>
+        <div class="grid2">
+          <div class="card" style="border-color: var(--red);">
+            <h3>At ~$2 trillion: priced for perfection</h3>
+            <p class="small" style="margin:0;">On the evidence filed. $2T capitalizes an unfiled September exit rate ($100B run rate, 20.0&times;) as if it were a completed, sustained, net-revenue year. On every filed or investor-told denominator it is 29.8&times; (Q3 annualized) to 61.4&times; (H1 annualized), for a company that is GAAP-loss-making for H1 2026, has one operating-profit quarter, carries a blank-but-enormous compute bill, and offers public buyers 49.9% of the vote and no path to board control. The $2T talk also originated with backers and bankers (FT and NYT, Aug 2026); Anthropic&rsquo;s executives had not adopted it even privately, per the FT, and prospective buyers were already pushing back toward $1.5T in October.</p>
+          </div>
+          <div class="card" style="border-color: var(--green);">
+            <h3>At ~$1.5 trillion: rich, but defensible if the S-1/A confirms the story</h3>
+            <p class="small" style="margin:0;">22 to 23&times; a $65 to $67B annualized pace, with compute intensity halving year on year, +$3.9B of operating cash flow in a half, $131.7B already in the bank, and the private-market multiple falling at every round (62&times; to 20.5&times;) because revenue outran price, is a coherent growth-investor case, roughly OpenAI&rsquo;s own August pricing. It still assumes no compute-ratio relapse, no hyperscaler repricing, and retention of a concentrated, largely uncontracted customer base.</p>
+          </div>
+        </div>
+        <h3 class="sub">Caveats</h3>
+        <ul class="tight">
+          <li><strong>No price exists yet.</strong> This is a judgment about reported talk, not about an offering. The S-1/A can change every multiple above by filling in Q3 and the share count.</li>
+          <li><strong>Headline net losses ($42B in 2025, $80.7B in H1 2026) are mostly valuation-driven non-cash remeasurement</strong> and should not be quoted as burn. Equally, &ldquo;adjusted profit&rdquo; excludes $2.2B of half-year stock comp and should not be quoted as GAAP profit.</li>
+          <li><strong>The window itself is a variable.</strong> Anthropic does not need this money ($131.7B liquid), so a weak book can be postponed, as the September-to-November slip already demonstrated.</li>
+        </ul>
+        <h3 class="sub">What is known vs not disclosed</h3>
+        <p><strong>Known:</strong> revenue by payment type and channel; total compute and infrastructure expense; personnel; sales, marketing and partnerships; the operating result; cash flow; cash; remaining performance obligations ($10.8B); customer counts; NRR as defined.</p>
+        <p><strong>Not disclosed / not reported, and not invented here:</strong> inference-only gross margin; the training vs serving compute split; Claude Code, Cowork and Claude.ai separate revenue or margin; the API vs enterprise vs consumer revenue split in the S-1; per-model or per-chip unit costs; marketplace fee percentage by partner in the filing (the ~16% figure is press-reported); cohort retention net of channel fees; Q3 2026 dollars (blank); the aggregate compute-commitment total (blank); the fully diluted share count post-offering (blank; ~16.9B is derived from the 5% fund contribution); and any profitability timeline. &ldquo;Path to profitability&rdquo; is described qualitatively; older &ldquo;positive cash flow 2027/28&rdquo; lines are press and analyst summaries, not an S-1 commitment.</p>
+      </section>
+
+      <!-- ================= SOURCES ================= -->
+      <section id="sources">
+        <h2 class="sec">Sources and verification notes</h2>
+        <h3 class="sub">Could not verify</h3>
+        <ul class="tight">
+          <li><strong>Direct EDGAR read:</strong> the index fetch of the SEC S-1 HTML returned HTTP 403. The filing&rsquo;s existence, accession and headline figures were instead corroborated across Anthropic&rsquo;s own 26 Oct announcement (verified live during research), AP, Reuters and WSJ filing-day coverage, CoinDesk, Law.com and at least six independent S-1 reviews citing EDGAR (CIK 0002130357). No figure here rests on a single S-1 review where a second was available.</li>
+          <li><strong>Pentagon litigation posture:</strong> secondary sources conflict (see Risks). The S-1&rsquo;s own legal-proceedings wording was not read directly due to the EDGAR block above.</li>
+          <li><strong>LTBT board count:</strong> 4 of 7 (detailed analyses) vs 3 of 5 (filing-day summaries), likely pre- vs post-expansion board size. Flagged, not resolved.</li>
+          <li><strong>Aggregate compute total:</strong> blank in the S-1 by design at this stage; all totals are reconstructions with different definitions.</li>
+          <li><strong>xAI and similar competitor revenue estimates:</strong> third-party estimates only; used directionally and labeled as such.</li>
+          <li><strong>Nvidia anchor, $15B credit facility final terms, Broadcom financing terms:</strong> reported as in talks or being finalized; not confirmed as closed.</li>
+        </ul>
+        <p class="small">Source quality note: Anthropic&rsquo;s own announcements and the S-1 (via filing-day reporting) are primary. Several detailed S-1 breakdowns are analyst blogs and Substacks that quote the filing with page-level specificity and agree with each other and with Reuters, AP and the WSJ on headline figures; where they diverge (compute totals, board count, Pentagon posture) this page flags the divergence rather than picking a winner. Aggregator and SEO pages were used only for timeline cross-checks, never as sole support for a filed figure. All sources were read 29 Oct 2026 unless dated otherwise.</p>
+        <ol class="sources">
+          <li>Anthropic, <em>Anthropic files S-1 with the SEC for proposed initial public offering</em>, 26 Oct 2026 (verified live): <a href="https://www.anthropic.com/news/s1-sec">anthropic.com/news/s1-sec</a></li>
+          <li>CoinDesk, <em>AI giant Anthropic files for blockbuster IPO</em>, 26 Oct 2026: <a href="https://www.coindesk.com/business/2026/10/26/ai-giant-anthropic-files-for-blockbuster-ipo">coindesk.com</a></li>
+          <li>Law.com, <em>Wilson Sonsini, Freshfields Usher in Anthropic IPO Filing</em>, 26 Oct 2026: <a href="https://www.law.com/americanlawyer/2026/10/26/wilson-sonsini-freshfields-usher-in-anthropic-ipo-filing/">law.com</a></li>
+          <li>Bar and Bench, <em>Which law firms are advising on Anthropic&rsquo;s IPO?</em>, 28 Oct 2026: <a href="https://www.barandbench.com/law-firms/dealstreet/which-law-firms-are-advising-on-anthropics-ipo">barandbench.com</a></li>
+          <li>DecodeTheFuture, <em>Anthropic S-1 Filed: ANT Ticker, Key Numbers &amp; IPO Date</em> (EDGAR accession, financial table), Oct 2026: <a href="https://decodethefuture.org/en/anthropic-s1-ipo-filing-explained/">decodethefuture.org</a></li>
+          <li>AnthropicValuation, <em>Anthropic SEC Filings: Direct Links to EDGAR</em> (DRS 1 Jun 2026 and DRS/A amendment dates), checked 29 Oct 2026: <a href="https://anthropicvaluation.com/sec-filings">anthropicvaluation.com/sec-filings</a></li>
+          <li>UseLuminix, <em>Anthropic S-1: Revenue, Losses and Key Risks Explained</em>, Oct 2026: <a href="https://www.useluminix.com/reports/company-overviews/anthropic-s1-what-the-filing-shows">useluminix.com</a></li>
+          <li>UseLuminix, <em>Anthropic Valuation History: Every Round to the IPO</em> (bankers $100B / $2T per NYT 21 Aug; IFR 1 Oct; Wilson Sonsini per FT Dec 2025; Microsoft / Nvidia Nov 2025), Oct 2026: <a href="https://www.useluminix.com/reports/company-overviews/anthropic-valuation-history">useluminix.com</a></li>
+          <li>Mostly Metrics, <em>Anthropic IPO: S1 Breakdown</em>, Oct 2026: <a href="https://www.mostlymetrics.com/p/anthropic-ipo-s1-breakdown">mostlymetrics.com</a></li>
+          <li>AlphaAgentic, <em>Anthropic&rsquo;s S-1: A Quarterly Operating Profit, an $80.7 Billion Paper Loss and a Compute Bill Left Blank</em>, Oct 2026: <a href="https://www.thealphaagentic.com/anthropic-s1-ipo-analysis-compute-commitments/">thealphaagentic.com</a></li>
+          <li>SEC-API, <em>Anthropic (ANT) S-1 IPO SEC Filing Analysis</em> (governance, compute Note 16, legal matters), Oct 2026: <a href="https://sec-api.io/insights/anthropic-ant-s-1-ipo-sec-filing-analysis">sec-api.io</a></li>
+          <li>FourWeekMBA, <em>Who Owns Anthropic? The Founders, the Trust, Amazon and Google in the S-1</em>; and <em>Anthropic&rsquo;s S-1 Shows a Lost Pentagon Appeal and $1.2B Owed</em>, Oct 2026: <a href="https://fourweekmba.com/who-owns-anthropic/">fourweekmba.com</a></li>
+          <li>OfficeChai, <em>Who Controls Anthropic After the IPO? Inside the Founder LLC and Long-Term Benefit Trust</em>, Oct 2026: <a href="https://officechai.com/ai/who-controls-anthropic-after-the-ipo-inside-the-founder-llc-and-long-term-benefit-trust/">officechai.com</a></li>
+          <li>Reuters via WIXX, <em>Google to invest up to $40 billion in AI rival Anthropic</em>, 24 Apr 2026: <a href="https://wixx.com/2026/04/24/google-plans-to-invest-up-to-40-billion-in-anthropic-bloomberg-news-reports/">wixx.com</a></li>
+          <li>Simon Willison, <em>Anthropic&rsquo;s run-rate revenue hits $47 billion</em> (quoting Anthropic&rsquo;s 12 Feb and 6 Apr 2026 announcements), 29 May 2026: <a href="https://simonwillison.net/2026/May/29/anthropic/">simonwillison.net</a></li>
+          <li>Exploding Topics, <em>Anthropic Revenue and Valuation Statistics (October 2026)</em> ($65B run rate Jul 2026 via Bloomberg / CNBC; 2025 revenue via Reuters on the prospectus): <a href="https://explodingtopics.com/blog/anthropic-revenue">explodingtopics.com</a></li>
+          <li>Pandromeda, <em>Anthropic IPO: Date, Valuation, Filing Status Explained</em> and <em>Anthropic vs OpenAI Valuation and IPO Compared</em>, Oct 2026: <a href="https://pandromeda.com/ai/anthropic-ipo-date-valuation-and-what-we-know-so-far">pandromeda.com</a></li>
+          <li>Tastytrade, <em>Anthropic IPO 2026: Date, Valuation &amp; Timeline</em> (FT Dec 2025 &ldquo;no decision&rdquo; spokesperson; Reuters / WSJ slip timeline): <a href="https://tastytrade.com/learn/markets/industry/anthropic-ipo/">tastytrade.com</a></li>
+          <li>FourWeekMBA, <em>Anthropic&rsquo;s IPO Timeline Is Slipping and Its Backers Are Pricing It Before the Prospectus Exists</em> (FT 13 Aug: six backers ~$2T, execs had not settled a target), Sep 2026: <a href="https://fourweekmba.com/ai-anthropic-ipo-2-trillion-investor-expectation-prospectus/">fourweekmba.com</a></li>
+          <li>Golden Era / BBC summary, <em>Anthropic woos investors with a $16.8 billion quarter ahead of its IPO</em> (Reuters Q3 investor meeting, 14 Oct), Oct 2026: <a href="https://goldenera.si/news/anthropic-ipo-investors-16-8-billion-quarter/">goldenera.si</a></li>
+          <li>ValueAddVC, <em>$74B vs $41B: OpenAI-Anthropic Revenue Dispute</em> (gross vs net; Dresser memo $8B claim), Oct 2026: <a href="https://valueaddvc.com/blog/openai-vs-anthropic-revenue-accounting-dispute-74b-gross-vs-41b-net-arr-explained">valueaddvc.com</a></li>
+          <li>EcoPulse24, <em>OpenAI Races Anthropic IPO With $1.4tn Valuation</em> (Reuters-sourced; Anthropic investors pushing ~$1.5T after Q3), Oct 2026: <a href="https://ecopulse24.com/news/openai-races-anthropic-ipo-with-1-4tn-valuation">ecopulse24.com</a></li>
+          <li>AccessIPOs, <em>OpenAI IPO Countdown: Sam Says 2027</em> (OpenAI 8 Jun 2026 Rule 135 notice; Altman, Fortune 12 Sep): <a href="https://accessipos.com/openai-stock-ipo/">accessipos.com</a></li>
+          <li>Sacra via mirror, <em>OpenAI revenue, valuation &amp; funding</em> ($122B at $852B, 31 Mar 2026; Friar Aug 2026: listing by 2027): <a href="https://pengen.diewe.workers.dev/sheraz046/anthropic-https-sacra.com/c/openai/">pengen.diewe.workers.dev</a></li>
+          <li>Menlo Ventures data via ValueAddVC, <em>Anthropic Now Takes 40% of Enterprise LLM Spend</em> (Dec 2025 State of GenAI in the Enterprise): <a href="https://valueaddvc.com/blog/anthropic-market-share-2026-40-percent-enterprise-llm-spend-openai">valueaddvc.com</a></li>
+          <li>Constellation Research, <em>Anthropic to spend $50 billion on AI infrastructure via Fluidstack partnership</em>, Nov 2025: <a href="https://www.constellationr.com/insights/news/anthropic-spend-50-billion-ai-infrastructure-fluidstack-partnership">constellationr.com</a></li>
+          <li>Data Center Dynamics, <em>Broadcom to develop Google TPUs until 2031; Anthropic signs deal with both companies for 3.5GW of TPUs</em>, Oct 2026: <a href="https://www.datacenterdynamics.com/en/news/broadcom-to-develop-google-tpus-until-2031-anthropic-signs-deal-with-both-companies-for-35gw-of-tpus/">datacenterdynamics.com</a></li>
+          <li>Seeking Alpha, <em>Microsoft partners with Anthropic and Nvidia in cloud infrastructure deal</em>, 18 Nov 2025: <a href="https://seekingalpha.com/pr/20312156-microsoft-partners-with-anthropic-and-nvidia-in-cloud-infrastructure-deal">seekingalpha.com</a></li>
+          <li>Rallies / GS News, <em>Anthropic rewards firms with IPO roles as it eyes future legal risks</em> (FTC civil investigative demand, Oct 2026; Wilson Sonsini holding under 0.01%), 26 Oct 2026: <a href="https://rallies.ai/news/anthropic-rewards-firms-with-ipo-roles-as-it-eyes-future-legal-risks-aedbd32fae331459">rallies.ai</a></li>
+          <li>LearnToLoveMoney, <em>Anthropic Files Its S-1: What the Official IPO Filing Reveals</em> (Public Benefit Fund: 846,840,960 Class N shares = 5% fully diluted), Oct 2026: <a href="https://www.learntolovemoney.com/blogs/anthropic-s1-filing">learntolovemoney.com</a></li>
+        </ol>
+      </section>
+
+      <footer>
+        Analysis prepared 29 October 2026 (America/New_York) from the sourced research report summarized above. Figures are as of that date; the S-1/A, when filed, will supersede the blanks flagged throughout. This page is analysis, not investment advice.
+      </footer>
+    </div>
+
+    <script>
+      // Label table cells with their column headers so the mobile stacked
+      // layout can show which column each value belongs to.
+      (function () {
+        document.querySelectorAll("table").forEach(function (t) {
+          var heads = Array.prototype.map.call(t.querySelectorAll("thead th"), function (th) {
+            return th.textContent.trim();
+          });
+          t.querySelectorAll("tbody tr").forEach(function (tr) {
+            Array.prototype.forEach.call(tr.children, function (td, i) {
+              if (heads[i]) td.setAttribute("data-label", heads[i]);
+            });
+          });
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var denoms = [
+          { rev: 4.585,  note: "FY2025 filed revenue of $4.585B. On actual filed full-year revenue, even the last private round was 210.5x sales. Nobody prices the IPO off this denominator, but it is the only completed full year in the filing." },
+          { rev: 32.572, note: "H1 2026 filed revenue of $16.286B, doubled. At $2T this is 61.4x. Annualizing a half understates a business growing this fast, which is exactly why the denominator fight matters." },
+          { rev: 46.22,  note: "Q2 2026 filed revenue of $11.555B, times four. The most recent completed quarter in the filing. At $2T: 43.3x." },
+          { rev: 47,     note: "Company-stated run rate when Series H priced in May 2026. The $965B round was struck at 20.5x this figure, continuing the pattern of the private multiple falling at every round (62x, 36.6x, 27.1x, 20.5x)." },
+          { rev: 65,     note: "Company run rate of more than $65B from the late July 2026 investor update (reported by Bloomberg and CNBC). At $1.5T this is 23.1x, roughly OpenAI's August pricing on the same method." },
+          { rev: 67.2,   note: "Q3 2026 revenue of $16.8B, told to investors on 14 Oct and reported by Reuters, times four. Not yet filed: the S-1 leaves the Q3 dollar figure blank. At $2T this is 29.8x; at $1.5T, 22.3x." },
+          { rev: 100,    note: "The New York Times reported in mid-September that the run rate had topped $100B: an exit-month annualization, not a quarter. Only on this unfiled denominator does $2T look like an ordinary 20.0x. A $2T price needs $200B of annual revenue to reach even 10x sales." }
+        ];
+        var vals = [965, 1500, 2000];
+        var buttons = document.querySelectorAll(".denoms button");
+        var note = document.getElementById("denomNote");
+        function render(idx) {
+          var d = denoms[idx];
+          var mults = vals.map(function (v) { return v / d.rev; });
+          var max = Math.max.apply(null, mults);
+          mults.forEach(function (m, i) {
+            document.getElementById("mult" + i).textContent = m.toFixed(1) + "\u00D7";
+            document.getElementById("bar" + i).style.width = (m / max * 100).toFixed(1) + "%";
+          });
+          note.textContent = d.note;
+          buttons.forEach(function (b, i) { b.setAttribute("aria-pressed", i === idx ? "true" : "false"); });
+        }
+        buttons.forEach(function (b) {
+          b.addEventListener("click", function () { render(parseInt(b.getAttribute("data-d"), 10)); });
+        });
+        render(5);
+      })();
+    </script>
+  </body>
+</html>
